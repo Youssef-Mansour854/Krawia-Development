@@ -1,0 +1,47 @@
+import Link from "next/link";
+import ProjectForm from "@/components/ProjectForm";
+import FlowingUnderline from "@/components/FlowingUnderline";
+
+export const dynamic = "force-dynamic";
+
+export default function NewProjectPage() {
+  return (
+    <div className="min-h-screen bg-paper text-ink font-sans flex flex-col">
+      {/* Top Header */}
+      <header className="border-b border-border bg-white px-6 py-4">
+        <div className="mx-auto max-w-7xl flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-2.5 py-1 border border-amber-200">
+              لوحة التحكم
+            </span>
+            <h1 className="text-lg font-medium text-ink">
+              أسماء كراوية للتطوير العقاري
+            </h1>
+          </div>
+
+          <Link
+            href="/admin"
+            className="text-xs font-medium text-muted hover:text-ink transition-colors"
+          >
+            ← العودة للوحة التحكم
+          </Link>
+        </div>
+      </header>
+
+      {/* Main Container */}
+      <main className="mx-auto max-w-7xl w-full px-6 py-10 flex-1 space-y-8">
+        <div className="border-b border-border pb-6">
+          <span className="text-xs font-semibold uppercase tracking-widest text-muted">
+            إدارة الأعمال المعمارية
+          </span>
+          <h2 className="text-2xl font-medium text-ink mt-1">
+            إضافة مشروع معماري جديد
+          </h2>
+          <FlowingUnderline className="w-40 h-3 text-accent" />
+        </div>
+
+        <ProjectForm mode="create" />
+      </main>
+    </div>
+  );
+}

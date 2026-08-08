@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" rx="6" fill="#1a1a1a"/>
+  <!-- Architectural drafting lines & building geometry -->
+  <path d="M16 5L5 12V27H27V12L16 5Z" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 11L10 15V27H22V15L16 11Z" fill="#d97706" opacity="0.3"/>
+  <line x1="16" y1="5" x2="16" y2="27" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <line x1="9" y1="21" x2="23" y2="21" stroke="#d97706" stroke-width="1.5"/>
+</svg>

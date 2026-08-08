@@ -1,0 +1,34 @@
+{
+  "name": "portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "seed": "node seed_direct.js"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.7.0",
+    "mongoose": "^9.9.1",
+    "next": "16.3.0",
+    "pdfjs-dist": "^6.2.108",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "react-pdf": "^10.4.1",
+    "transliteration": "^2.6.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.0",
+    "mongodb-memory-server": "^11.2.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
