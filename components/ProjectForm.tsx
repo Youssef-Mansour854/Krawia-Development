@@ -418,7 +418,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
           </div>
 
           {coverImage && (
-            <div className="relative h-48 w-72 border border-border overflow-hidden bg-slate-100 mt-2">
+            <div className="relative h-48 w-full max-w-xs sm:w-72 border border-border overflow-hidden bg-slate-100 mt-2">
               <Image
                 src={coverImage}
                 alt="معاينة الغلاف"
@@ -528,7 +528,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
                         value={bp.name}
                         onChange={(e) => updateBlueprintName(idx, e.target.value)}
                         placeholder="عنوان المخطط..."
-                        className="border border-border bg-white px-3 py-1.5 text-xs text-ink focus:border-accent focus:outline-none w-64"
+                        className="border border-border bg-white px-3 py-1.5 text-xs text-ink focus:border-accent focus:outline-none w-full sm:w-64"
                       />
                       <p className="text-[10px] text-muted truncate max-w-xs" dir="ltr">
                         {bp.pdfUrl}

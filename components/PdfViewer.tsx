@@ -243,7 +243,7 @@ export default function PdfViewer({ pdfUrl, title, onClose }: PdfViewerProps) {
 
         {/* Footer Navigation Bar */}
         {numPages && (
-          <div className="flex items-center justify-between border-t border-border bg-white px-6 py-3 shrink-0">
+          <div className="flex flex-wrap items-center justify-center sm:justify-between gap-3 border-t border-border bg-white px-4 sm:px-6 py-3 shrink-0">
             <button
               type="button"
               onClick={() => setPageNumber((prev) => Math.max(prev - 1, 1))}

@@ -24,7 +24,7 @@ export default async function EditProjectPage({ params }: EditProjectPageProps) 
     <div className="min-h-screen bg-paper text-ink font-sans flex flex-col">
       {/* Top Header */}
       <header className="border-b border-border bg-white px-6 py-4">
-        <div className="mx-auto max-w-7xl flex items-center justify-between">
+        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-2.5 py-1 border border-amber-200">
               لوحة التحكم
