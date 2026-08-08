@@ -1,14 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <rect width="512" height="512" rx="112" fill="#0f172a"/>
-  <!-- Gold accent inner border outline -->
-  <rect x="28" y="28" width="456" height="456" rx="84" fill="none" stroke="#d97706" stroke-width="10" stroke-opacity="0.4"/>
-  <!-- Stylized Architectural Building Monogram -->
-  <g fill="none" stroke="#f59e0b" stroke-width="26" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Apex & Outer Structure -->
-    <path d="M256 96 L112 384 H200 L256 264 L312 384 H400 Z"/>
-    <!-- Golden Horizon Beam -->
-    <line x1="170" y1="288" x2="342" y2="288" stroke="#fbbf24" stroke-width="22"/>
-    <!-- Vertical Apex Center Line -->
-    <line x1="256" y1="96" x2="256" y2="288" stroke="#d97706" stroke-width="16" stroke-dasharray="16 12"/>
-  </g>
+  <!-- Gold accent border -->
+  <rect x="24" y="24" width="464" height="464" rx="88" fill="none" stroke="#d97706" stroke-width="12" stroke-opacity="0.5"/>
+  <!-- Serif AK Monogram -->
+  <text x="256" y="320" font-family="Georgia, 'Times New Roman', serif" font-size="210" font-weight="bold" fill="#f59e0b" text-anchor="middle" letter-spacing="-10">AK</text>
+  <!-- Flowing Underline Beam -->
+  <path d="M120 370 Q256 410 392 370" fill="none" stroke="#d97706" stroke-width="18" stroke-linecap="round"/>
 </svg>

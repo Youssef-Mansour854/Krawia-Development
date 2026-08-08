@@ -78,13 +78,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom Rights Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
+        <div className="pt-8 flex items-center justify-center text-xs text-slate-400">
           <p>© {new Date().getFullYear()} تصاميم أسماء كراوية للتطوير العقاري. جميع الحقوق محفوظة.</p>
-          <div className="flex items-center gap-6">
-            <Link href="/admin" className="hover:text-amber-400 transition-colors">
-              بوابة الأدمن
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
