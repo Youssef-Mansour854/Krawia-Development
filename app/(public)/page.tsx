@@ -56,9 +56,10 @@ export default async function HomePage() {
             alt="تصاميم معمارية فاخرة"
             fill
             priority
-            className="object-cover object-center brightness-105"
+            unoptimized
+            quality={100}
+            className="object-cover object-center contrast-[1.04] saturate-[1.06] brightness-[1.02]"
             sizes="100vw"
-            quality={95}
           />
           {/* Very Subtle Soft Dark Tint Overlay (25%) */}
           <div className="absolute inset-0 bg-slate-950/25 backdrop-blur-[1px]" />
