@@ -5,11 +5,10 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { upload } from "@vercel/blob/client";
-import { pdfjs } from "react-pdf";
 import { IProject } from "@/models/Project";
 
-// Configure pdfjs worker for PDF thumbnail generation
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.mjs`;
+// Placeholder thumbnail shown for PDF blueprints (no heavy canvas rendering)
+const PDF_PLACEHOLDER_URL = "https://placehold.co/400x300/1a1a2e/c8a96a?text=PDF";
 
 interface BlueprintItem {
   name: string;
@@ -22,44 +21,23 @@ interface ProjectFormProps {
   initialData?: IProject;
 }
 
+// Upload file to Vercel Blob with a 60-second timeout
 async function uploadFileToBlob(
   file: File | Blob,
   filename: string
 ): Promise<string> {
-  const blob = await upload(filename, file, {
-    access: "public",
-    handleUploadUrl: "/api/upload",
-  });
-  return blob.url;
-}
-
-async function generatePdfThumbnailBlob(file: File): Promise<Blob> {
-  const arrayBuffer = await file.arrayBuffer();
-  const loadingTask = pdfjs.getDocument({ data: arrayBuffer });
-  const pdfDoc = await loadingTask.promise;
-  const page = await pdfDoc.getPage(1);
-
-  const viewport = page.getViewport({ scale: 1.0 });
-  const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d");
-  canvas.height = viewport.height;
-  canvas.width = viewport.width;
-
-  if (!context) throw new Error("Could not initialize canvas context");
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await page.render({ canvasContext: context, viewport, canvas: canvas as any }).promise;
-
-  return new Promise<Blob>((resolve, reject) => {
-    canvas.toBlob(
-      (blob) => {
-        if (blob) resolve(blob);
-        else reject(new Error("Canvas conversion to Blob failed"));
-      },
-      "image/jpeg",
-      0.85
-    );
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 60_000);
+  try {
+    const blob = await upload(filename, file, {
+      access: "public",
+      handleUploadUrl: "/api/upload",
+      abortSignal: controller.signal,
+    });
+    return blob.url;
+  } finally {
+    clearTimeout(timeoutId);
+  }
 }
 
 export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
@@ -170,19 +148,8 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
           `blueprint-${Date.now()}-${pdfFile.name}`
         );
 
-        // 2. Render Page 1 to Canvas & Upload Thumbnail
-        let thumbnailUrl = "";
-        try {
-          const thumbnailBlob = await generatePdfThumbnailBlob(pdfFile);
-          thumbnailUrl = await uploadFileToBlob(
-            thumbnailBlob,
-            `thumb-${Date.now()}-${pdfFile.name}.jpg`
-          );
-        } catch (thumbErr) {
-          console.warn("Failed to generate PDF thumbnail canvas:", thumbErr);
-          thumbnailUrl =
-            "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=600&q=80";
-        }
+        // 2. Use a static placeholder thumbnail (no heavy canvas rendering)
+        const thumbnailUrl = PDF_PLACEHOLDER_URL;
 
         const defaultLabel =
           pdfFile.name.replace(/\.[^/.]+$/, "") || "المخطط المعماري";
