@@ -32,17 +32,15 @@ export default function ServicesSection() {
   return (
     <section id="services" className="border-t border-border bg-white py-20 px-6 w-full font-sans">
       <div className="mx-auto max-w-7xl space-y-12">
-        <div className="border-b border-border pb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <span className="text-xs font-semibold uppercase tracking-widest text-accent">
-              خدماتنا ونطاق العمل
-            </span>
-            <h2 className="font-serif text-3xl font-medium text-ink mt-1">
-              مجالات التميز والحلول المعمارية
-            </h2>
-            <FlowingUnderline className="w-36 h-3 text-accent" />
-          </div>
-          <p className="text-xs text-muted max-w-md">
+        <div className="border-b border-border pb-6 space-y-2">
+          <span className="text-xs font-semibold uppercase tracking-widest text-accent">
+            خدماتنا ونطاق العمل
+          </span>
+          <h2 className="font-serif text-3xl font-medium text-ink">
+            مجالات التميز والحلول المعمارية
+          </h2>
+          <FlowingUnderline className="w-36 h-3 text-accent" />
+          <p className="text-xs text-muted max-w-2xl pt-2 leading-relaxed font-normal">
             نقدم حزمة خدمات معمارية وهندسية متكاملة تضمن تحويل الرؤية الاستثمارية والسكنية إلى واقع أيقوني ملموس.
           </p>
         </div>
