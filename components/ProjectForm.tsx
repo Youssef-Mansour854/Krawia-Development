@@ -26,23 +26,11 @@ async function uploadFileToBlob(
   file: File | Blob,
   filename: string
 ): Promise<string> {
-  try {
-    const blob = await upload(filename, file, {
-      access: "public",
-      handleUploadUrl: "/api/upload",
-    });
-    return blob.url;
-  } catch (err) {
-    console.warn(
-      "[Blob Upload Warning] Falling back to Data URL for dev environment:",
-      err
-    );
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result as string);
-      reader.readAsDataURL(file);
-    });
-  }
+  const blob = await upload(filename, file, {
+    access: "public",
+    handleUploadUrl: "/api/upload",
+  });
+  return blob.url;
 }
 
 async function generatePdfThumbnailBlob(file: File): Promise<Blob> {
@@ -274,22 +262,31 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
 
       const res = await fetch(targetUrl, {
         method,
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
+      let data: { success?: boolean; error?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        setError(`خطأ في الخادم (${res.status}): ${res.statusText || "لم يتم استلام رد من الخادم"}`);
+        setSubmitting(false);
+        return;
+      }
 
       if (!res.ok || !data.success) {
-        setError(data.error || "فشل حفظ بيانات المشروع.");
+        setError(data.error || `خطأ (${res.status}): فشل حفظ بيانات المشروع.`);
         setSubmitting(false);
         return;
       }
 
       router.push("/admin");
       router.refresh();
-    } catch {
-      setError("حدث خطأ غير متوقع في الشبكة أثناء الحفظ.");
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setError(`خطأ في الاتصال: ${msg}`);
       setSubmitting(false);
     }
   };
