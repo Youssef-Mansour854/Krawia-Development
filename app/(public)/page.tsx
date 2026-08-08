@@ -47,32 +47,48 @@ export default async function HomePage() {
     <div className="min-h-screen bg-paper text-ink flex flex-col font-sans scroll-smooth">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-white to-paper px-6 py-20 sm:py-28">
-        <div className="mx-auto max-w-5xl text-center space-y-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-1.5 text-xs font-medium text-muted shadow-sm">
-            الهندسة المعمارية والتطوير العقاري
+      {/* Hero Section with Architectural Image Background */}
+      <section className="relative overflow-hidden border-b border-border py-28 sm:py-36 px-6">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/img/hero-bg.jpg"
+            alt="تصاميم معمارية فاخرة"
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="100vw"
+            quality={90}
+          />
+          {/* Rich Dark Gradient Overlay for Contrast */}
+          <div className="absolute inset-0 bg-slate-950/75 backdrop-blur-[2px] bg-gradient-to-b from-slate-950/85 via-slate-950/70 to-slate-950/90" />
+        </div>
+
+        {/* Hero Content Overlay */}
+        <div className="relative z-10 mx-auto max-w-5xl text-center space-y-8 text-white">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-4 py-1.5 text-xs font-medium text-amber-300 shadow-sm">
+            ✨ الهندسة المعمارية والتطوير العقاري الفاخر
           </div>
 
           <div className="space-y-4">
-            <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-medium tracking-tight text-ink leading-tight">
+            <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-medium tracking-tight text-white leading-tight drop-shadow-sm">
               مساحات مبتكرة ومعالم معمارية فاخرة
             </h1>
             <div className="flex justify-center">
-              <FlowingUnderline className="w-56 h-4 text-accent" />
+              <FlowingUnderline className="w-56 h-4 text-amber-500" />
             </div>
           </div>
 
-          <p className="mx-auto max-w-2xl text-base sm:text-lg text-muted leading-relaxed font-normal">
+          <p className="mx-auto max-w-2xl text-base sm:text-lg text-slate-200 leading-relaxed font-normal">
             تقدم تصاميم أسماء كراوية مفاهيم معمارية رؤيوية تتحول إلى واقع ملموس. متخصصون في المجمعات السكنية الفاخرة، الأبراج التجارية الأيقونية، والمشاريع متعددة الاستخدامات.
           </p>
 
           <div className="flex justify-center pt-4">
             <a
               href="#featured"
-              className="inline-flex items-center justify-center bg-accent px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-white hover:bg-accent-hover transition-colors shadow-sm"
+              className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-white transition-colors shadow-lg shadow-amber-950/50 border border-amber-500/30"
             >
-              استكشف أحدث المشاريع المعمارية
+              استكشف أحدث المشاريع المعمارية ←
             </a>
           </div>
         </div>
