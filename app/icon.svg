@@ -1,8 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <rect width="32" height="32" rx="6" fill="#1a1a1a"/>
-  <!-- Architectural drafting lines & building geometry -->
-  <path d="M16 5L5 12V27H27V12L16 5Z" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M16 11L10 15V27H22V15L16 11Z" fill="#d97706" opacity="0.3"/>
-  <line x1="16" y1="5" x2="16" y2="27" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2 2"/>
-  <line x1="9" y1="21" x2="23" y2="21" stroke="#d97706" stroke-width="1.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="112" fill="#0f172a"/>
+  <!-- Gold accent inner border outline -->
+  <rect x="28" y="28" width="456" height="456" rx="84" fill="none" stroke="#d97706" stroke-width="10" stroke-opacity="0.4"/>
+  <!-- Stylized Architectural Building Monogram -->
+  <g fill="none" stroke="#f59e0b" stroke-width="26" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Apex & Outer Structure -->
+    <path d="M256 96 L112 384 H200 L256 264 L312 384 H400 Z"/>
+    <!-- Golden Horizon Beam -->
+    <line x1="170" y1="288" x2="342" y2="288" stroke="#fbbf24" stroke-width="22"/>
+    <!-- Vertical Apex Center Line -->
+    <line x1="256" y1="96" x2="256" y2="288" stroke="#d97706" stroke-width="16" stroke-dasharray="16 12"/>
+  </g>
 </svg>
