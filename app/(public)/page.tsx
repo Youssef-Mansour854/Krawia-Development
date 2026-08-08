@@ -47,46 +47,46 @@ export default async function HomePage() {
     <div className="min-h-screen bg-paper text-ink flex flex-col font-sans scroll-smooth">
       <Navbar />
 
-      {/* Hero Section with Architectural Image Background */}
-      <section className="relative overflow-hidden border-b border-border py-28 sm:py-36 px-6">
-        {/* Background Image */}
+      {/* Hero Section with Bright Clear Architectural Background */}
+      <section className="relative overflow-hidden border-b border-border py-20 sm:py-28 px-6">
+        {/* Background Image - Bright & Clear */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/img/hero-bg.jpg"
             alt="تصاميم معمارية فاخرة"
             fill
             priority
-            className="object-cover object-center"
+            className="object-cover object-center brightness-105"
             sizes="100vw"
-            quality={90}
+            quality={95}
           />
-          {/* Rich Dark Gradient Overlay for Contrast */}
-          <div className="absolute inset-0 bg-slate-950/75 backdrop-blur-[2px] bg-gradient-to-b from-slate-950/85 via-slate-950/70 to-slate-950/90" />
+          {/* Light Ambient Overlay */}
+          <div className="absolute inset-0 bg-white/40" />
         </div>
 
-        {/* Hero Content Overlay */}
-        <div className="relative z-10 mx-auto max-w-5xl text-center space-y-8 text-white">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-4 py-1.5 text-xs font-medium text-amber-300 shadow-sm">
-            ✨ الهندسة المعمارية والتطوير العقاري الفاخر
+        {/* Hero Content Card Overlay - Bright Luxury Glassmorphism */}
+        <div className="relative z-10 mx-auto max-w-4xl text-center space-y-8 bg-paper/90 backdrop-blur-md border border-border p-8 sm:p-14 shadow-xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-1.5 text-xs font-medium text-accent shadow-sm">
+            الهندسة المعمارية والتطوير العقاري الفاخر
           </div>
 
           <div className="space-y-4">
-            <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-medium tracking-tight text-white leading-tight drop-shadow-sm">
+            <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-medium tracking-tight text-ink leading-tight">
               مساحات مبتكرة ومعالم معمارية فاخرة
             </h1>
             <div className="flex justify-center">
-              <FlowingUnderline className="w-56 h-4 text-amber-500" />
+              <FlowingUnderline className="w-56 h-4 text-accent" />
             </div>
           </div>
 
-          <p className="mx-auto max-w-2xl text-base sm:text-lg text-slate-200 leading-relaxed font-normal">
+          <p className="mx-auto max-w-2xl text-base sm:text-lg text-muted leading-relaxed font-normal">
             تقدم تصاميم أسماء كراوية مفاهيم معمارية رؤيوية تتحول إلى واقع ملموس. متخصصون في المجمعات السكنية الفاخرة، الأبراج التجارية الأيقونية، والمشاريع متعددة الاستخدامات.
           </p>
 
-          <div className="flex justify-center pt-4">
+          <div className="flex justify-center pt-2">
             <a
               href="#featured"
-              className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-white transition-colors shadow-lg shadow-amber-950/50 border border-amber-500/30"
+              className="inline-flex items-center justify-center bg-accent hover:bg-accent-hover px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-white transition-colors shadow-md"
             >
               استكشف أحدث المشاريع المعمارية ←
             </a>
