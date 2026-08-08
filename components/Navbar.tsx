@@ -5,13 +5,16 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-paper/90 backdrop-blur-md font-sans">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-        <Link href="/" className="group flex flex-col">
+        <Link href="/" className="group flex flex-col" dir="ltr">
           <div className="flex items-baseline gap-2">
             <span className="font-serif text-2xl font-semibold tracking-tight text-ink">
-              تصاميم أسماء كراوية
+              Asmaa Krawia
+            </span>
+            <span className="text-xs font-light tracking-widest text-muted uppercase">
+              Designs
             </span>
           </div>
-          <FlowingUnderline className="w-36 h-2 -mt-1 text-accent transition-transform duration-300 group-hover:scale-x-105 origin-right" />
+          <FlowingUnderline className="w-28 h-2 -mt-1 text-accent transition-transform duration-300 group-hover:scale-x-105 origin-left" />
         </Link>
 
         {/* Navigation Links in Arabic pointing to dedicated routes & sections */}

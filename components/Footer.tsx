@@ -8,13 +8,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
           {/* Column 1: Brand Info */}
           <div className="space-y-4 md:col-span-1">
-            <Link href="/" className="group inline-flex flex-col">
+            <Link href="/" className="group inline-flex flex-col" dir="ltr">
               <div className="flex items-baseline gap-2">
                 <span className="font-serif text-2xl font-semibold tracking-tight text-white">
-                  تصاميم أسماء كراوية
+                  Asmaa Krawia
+                </span>
+                <span className="text-xs font-light tracking-widest text-amber-400 uppercase">
+                  Designs
                 </span>
               </div>
-              <FlowingUnderline className="w-36 h-2 -mt-1 text-amber-500" />
+              <FlowingUnderline className="w-28 h-2 -mt-1 text-amber-500" />
             </Link>
             <p className="text-xs text-slate-400 leading-relaxed">
               شركة رائدة في التطوير العقاري والهندسة المعمارية، تبتكر معالم فاخرة تدمج بين الأصالة الاستثنائية والتصميم الرؤيوي المعاصر.
