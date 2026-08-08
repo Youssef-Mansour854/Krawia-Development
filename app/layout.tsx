@@ -20,6 +20,13 @@ export const metadata: Metadata = {
   title: "تصاميم أسماء كراوية | التطوير العقاري والهندسة المعمارية",
   description:
     "معرض الأعمال المعمارية والمشاريع السكنية والتجارية الفاخرة لشركة أسماء كراوية للتطوير العقاري.",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
