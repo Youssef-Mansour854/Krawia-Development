@@ -51,15 +51,13 @@ export default async function HomePage() {
       <section className="relative overflow-hidden border-b border-border py-20 sm:py-28 px-6">
         {/* Background Image - Bright & Clear */}
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/img/hero-bg.jpg"
+          {/* Raw Ultra-HD 4K Resolution Image */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/img/hero-bg.jpg?v=2"
             alt="تصاميم معمارية فاخرة"
-            fill
-            priority
-            unoptimized
-            quality={100}
-            className="object-cover object-center contrast-[1.04] saturate-[1.06] brightness-[1.02]"
-            sizes="100vw"
+            className="w-full h-full object-cover object-center scale-100 image-rendering-crisp"
+            style={{ imageRendering: "-webkit-optimize-contrast" }}
           />
           {/* Very Subtle Soft Dark Tint Overlay (25%) */}
           <div className="absolute inset-0 bg-slate-950/25 backdrop-blur-[1px]" />
