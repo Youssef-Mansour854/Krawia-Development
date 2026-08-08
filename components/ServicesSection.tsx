@@ -64,13 +64,6 @@ export default function ServicesSection() {
                   {service.description}
                 </p>
               </div>
-
-              <a
-                href="/projects"
-                className="pt-4 border-t border-border/60 text-xs font-semibold text-accent uppercase tracking-wider flex items-center gap-1 group-hover:-translate-x-1 transition-transform"
-              >
-                تصفح المشاريع ←
-              </a>
             </div>
           ))}
         </div>
