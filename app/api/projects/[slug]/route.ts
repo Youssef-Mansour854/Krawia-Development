@@ -116,6 +116,7 @@ export async function PUT(req: NextRequest, { params }: RouteParams) {
 
     // On-demand revalidation for instant public updates
     revalidatePath("/");
+    revalidatePath("/projects");
     revalidatePath(`/projects/${slug}`);
     if (updatedProject?.slug && updatedProject.slug !== slug) {
       revalidatePath(`/projects/${updatedProject.slug}`);
@@ -170,6 +171,7 @@ export async function DELETE(req: NextRequest, { params }: RouteParams) {
 
     // On-demand revalidation for instant public & admin updates
     revalidatePath("/");
+    revalidatePath("/projects");
     revalidatePath("/admin");
     revalidatePath(`/projects/${slug}`);
 

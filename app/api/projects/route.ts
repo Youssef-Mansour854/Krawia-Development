@@ -82,6 +82,7 @@ export async function POST(req: NextRequest) {
 
     // On-demand revalidation for instant public & admin updates
     revalidatePath("/");
+    revalidatePath("/projects");
     revalidatePath("/admin");
     revalidatePath(`/projects/${newProject.slug}`);
 
