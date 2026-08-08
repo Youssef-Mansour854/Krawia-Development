@@ -60,8 +60,8 @@ export default async function HomePage() {
             sizes="100vw"
             quality={95}
           />
-          {/* Light Ambient Overlay */}
-          <div className="absolute inset-0 bg-white/40" />
+          {/* Very Subtle Soft Dark Tint Overlay (25%) */}
+          <div className="absolute inset-0 bg-slate-950/25 backdrop-blur-[1px]" />
         </div>
 
         {/* Hero Content Card Overlay - Bright Luxury Glassmorphism */}
