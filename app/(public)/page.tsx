@@ -47,11 +47,10 @@ export default async function HomePage() {
     <div className="min-h-screen bg-paper text-ink flex flex-col font-sans scroll-smooth">
       <Navbar />
 
-      {/* Hero Section with Bright Clear Architectural Background */}
-      <section className="relative overflow-hidden border-b border-border py-20 sm:py-28 px-6">
-        {/* Background Image - Bright & Clear */}
+      {/* Full-Bleed 4K Architectural Hero Section (No White Box) */}
+      <section className="relative overflow-hidden border-b border-border py-28 sm:py-36 px-6">
+        {/* Background Image - Full Bleed 4K */}
         <div className="absolute inset-0 z-0">
-          {/* Raw Ultra-HD 4K Resolution Image */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/img/hero-bg.jpg?v=2"
@@ -59,33 +58,33 @@ export default async function HomePage() {
             className="w-full h-full object-cover object-center scale-100 image-rendering-crisp"
             style={{ imageRendering: "-webkit-optimize-contrast" }}
           />
-          {/* Very Subtle Soft Dark Tint Overlay (25%) */}
-          <div className="absolute inset-0 bg-slate-950/25 backdrop-blur-[1px]" />
+          {/* Rich Ambient Overlay - Keeps Image Visible & Text Crisp */}
+          <div className="absolute inset-0 bg-slate-950/50 bg-gradient-to-b from-slate-950/65 via-slate-950/45 to-slate-950/75 backdrop-blur-[1px]" />
         </div>
 
-        {/* Hero Content Card Overlay - Bright Luxury Glassmorphism */}
-        <div className="relative z-10 mx-auto max-w-4xl text-center space-y-8 bg-paper/90 backdrop-blur-md border border-border p-8 sm:p-14 shadow-xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-1.5 text-xs font-medium text-accent shadow-sm">
-            الهندسة المعمارية والتطوير العقاري الفاخر
+        {/* Hero Content Floating Directly over 4K Image */}
+        <div className="relative z-10 mx-auto max-w-5xl text-center space-y-8 text-white">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-5 py-2 text-xs font-semibold text-amber-300 shadow-md">
+            ✨ الهندسة المعمارية والتطوير العقاري الفاخر
           </div>
 
           <div className="space-y-4">
-            <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-medium tracking-tight text-ink leading-tight">
+            <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-medium tracking-tight text-white leading-tight drop-shadow-md">
               مساحات مبتكرة ومعالم معمارية فاخرة
             </h1>
             <div className="flex justify-center">
-              <FlowingUnderline className="w-56 h-4 text-accent" />
+              <FlowingUnderline className="w-56 h-4 text-amber-500" />
             </div>
           </div>
 
-          <p className="mx-auto max-w-2xl text-base sm:text-lg text-muted leading-relaxed font-normal">
+          <p className="mx-auto max-w-3xl text-base sm:text-xl text-slate-100 leading-relaxed font-normal drop-shadow-sm">
             تقدم تصاميم أسماء كراوية مفاهيم معمارية رؤيوية تتحول إلى واقع ملموس. متخصصون في المجمعات السكنية الفاخرة، الأبراج التجارية الأيقونية، والمشاريع متعددة الاستخدامات.
           </p>
 
-          <div className="flex justify-center pt-2">
+          <div className="flex justify-center pt-4">
             <a
               href="#featured"
-              className="inline-flex items-center justify-center bg-accent hover:bg-accent-hover px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-white transition-colors shadow-md"
+              className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-white transition-all shadow-xl shadow-amber-950/60 border border-amber-400/40 hover:scale-105"
             >
               استكشف أحدث المشاريع المعمارية ←
             </a>
