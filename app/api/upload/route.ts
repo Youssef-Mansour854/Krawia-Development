@@ -1,19 +1,9 @@
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextRequest, NextResponse } from "next/server";
-import { isAuthorizedAdmin } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  // Auth check at the route level using the proper NextRequest (with cookies)
-  const isAuthorized = await isAuthorizedAdmin(req);
-  if (!isAuthorized) {
-    return NextResponse.json(
-      { success: false, error: "Unauthorized: Admin access required" },
-      { status: 401 }
-    );
-  }
-
   const body = (await req.json()) as HandleUploadBody;
 
   try {
