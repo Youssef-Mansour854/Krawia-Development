@@ -226,7 +226,7 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
                 className="h-10 sm:h-12 w-auto object-contain drop-shadow-sm"
               />
               <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-2.5 py-1 border border-amber-200 whitespace-nowrap">
-                إدارة عينات الأعمال الميدانية
+                إدارة عينات الأعمال الميدانية ({samples.length})
               </span>
             </div>
 
@@ -279,15 +279,9 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
       <main className="mx-auto max-w-7xl w-full px-4 sm:px-6 py-6 sm:py-10 flex-1 space-y-6 sm:space-y-8">
         {/* Title Bar */}
         <div className="border-b border-border pb-6 space-y-2">
-          <div className="flex flex-wrap items-center gap-3">
-            <h2 className="text-2xl sm:text-3xl font-serif font-medium text-ink">
-              عينات من أعمالنا الميدانية
-            </h2>
-            <span className="text-xs font-semibold text-amber-900 bg-amber-100/80 border border-amber-300 px-3 py-1 rounded-sm flex items-center gap-1.5 shadow-2xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse"></span>
-              <span>{samples.length} عينة مسجلة</span>
-            </span>
-          </div>
+          <h2 className="text-2xl sm:text-3xl font-serif font-medium text-ink">
+            عينات من أعمالنا الميدانية ({samples.length})
+          </h2>
           <FlowingUnderline className="w-48 h-3 text-accent" />
         </div>
 
