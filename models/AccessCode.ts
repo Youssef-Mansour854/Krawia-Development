@@ -1,6 +1,15 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
-export interface IAccessCode extends Document {
+export interface IAccessCodeData {
+  _id: string;
+  label: string;
+  code: string;
+  active: boolean;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+}
+
+export interface IAccessCodeDoc extends Document {
   label: string;
   code: string;
   active: boolean;
@@ -8,7 +17,7 @@ export interface IAccessCode extends Document {
   updatedAt: Date;
 }
 
-const AccessCodeSchema: Schema<IAccessCode> = new Schema(
+const AccessCodeSchema: Schema<IAccessCodeDoc> = new Schema(
   {
     label: { type: String, required: true, trim: true },
     code: { type: String, required: true, trim: true },
@@ -17,6 +26,6 @@ const AccessCodeSchema: Schema<IAccessCode> = new Schema(
   { timestamps: true }
 );
 
-export const AccessCode: Model<IAccessCode> =
+export const AccessCode: Model<IAccessCodeDoc> =
   mongoose.models.AccessCode ||
-  mongoose.model<IAccessCode>("AccessCode", AccessCodeSchema);
+  mongoose.model<IAccessCodeDoc>("AccessCode", AccessCodeSchema);

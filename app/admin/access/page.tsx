@@ -1,5 +1,5 @@
 import { connectToDatabase } from "@/lib/db";
-import { AccessCode, IAccessCode } from "@/models/AccessCode";
+import { AccessCode, IAccessCodeData } from "@/models/AccessCode";
 import AdminAccessCodesView from "@/components/AdminAccessCodesView";
 
 export const dynamic = "force-dynamic";
@@ -10,10 +10,9 @@ export default async function AdminAccessCodesPage() {
 
   const codesRaw = await AccessCode.find()
     .sort({ createdAt: -1 })
-    .lean()
-    .exec();
+    .lean();
 
-  const initialCodes: IAccessCode[] = JSON.parse(JSON.stringify(codesRaw));
+  const initialCodes: IAccessCodeData[] = JSON.parse(JSON.stringify(codesRaw));
 
   return <AdminAccessCodesView initialCodes={initialCodes} />;
 }

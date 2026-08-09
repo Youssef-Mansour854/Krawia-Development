@@ -39,8 +39,8 @@ export async function PUT(
     }
 
     await codeDoc.save();
-
-    return NextResponse.json({ success: true, data: codeDoc });
+    const serializedCode = JSON.parse(JSON.stringify(codeDoc));
+    return NextResponse.json({ success: true, data: serializedCode });
   } catch (error) {
     console.error("PUT /api/access-codes/[id] error:", error);
     return NextResponse.json(

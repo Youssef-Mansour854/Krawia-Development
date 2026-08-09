@@ -3,11 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { IAccessCode } from "@/models/AccessCode";
+import { IAccessCodeData } from "@/models/AccessCode";
 import FlowingUnderline from "@/components/FlowingUnderline";
 
 interface AdminAccessCodesViewProps {
-  initialCodes: IAccessCode[];
+  initialCodes: IAccessCodeData[];
 }
 
 function generateRandomCode(): string {
@@ -20,7 +20,7 @@ function generateRandomCode(): string {
 export default function AdminAccessCodesView({
   initialCodes,
 }: AdminAccessCodesViewProps) {
-  const [codes, setCodes] = useState<IAccessCode[]>(initialCodes);
+  const [codes, setCodes] = useState<IAccessCodeData[]>(initialCodes);
   const [label, setLabel] = useState("");
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);

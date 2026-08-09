@@ -67,7 +67,8 @@ export async function POST(req: NextRequest) {
       active: true,
     });
 
-    return NextResponse.json({ success: true, data: newCode }, { status: 201 });
+    const serializedCode = JSON.parse(JSON.stringify(newCode));
+    return NextResponse.json({ success: true, data: serializedCode }, { status: 201 });
   } catch (error) {
     console.error("POST /api/access-codes error:", error);
     return NextResponse.json(

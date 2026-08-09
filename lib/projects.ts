@@ -10,7 +10,7 @@ export interface ProjectFilters {
 }
 
 export interface PaginatedProjectsResult {
-  projects: IProject[];
+  data: IProject[];
   total: number;
   page: number;
   limit: number;
@@ -68,7 +68,7 @@ export async function getPaginatedProjects(
     const totalPages = Math.ceil(total / limit) || 1;
 
     return {
-      projects: JSON.parse(JSON.stringify(projects)),
+      data: JSON.parse(JSON.stringify(projects)),
       total,
       page,
       limit,
@@ -77,7 +77,7 @@ export async function getPaginatedProjects(
   } catch (error) {
     console.error("Error fetching paginated projects from MongoDB:", error);
     return {
-      projects: [],
+      data: [],
       total: 0,
       page: 1,
       limit: 12,
@@ -90,7 +90,7 @@ export async function getAllProjects(
   filters?: ProjectFilters
 ): Promise<IProject[]> {
   const paginated = await getPaginatedProjects({ ...filters, limit: 1000 });
-  return paginated.projects;
+  return paginated.data;
 }
 
 export async function getProjectBySlug(
