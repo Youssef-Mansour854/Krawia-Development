@@ -26,6 +26,11 @@ const AccessCodeSchema: Schema<IAccessCodeDoc> = new Schema(
   { timestamps: true }
 );
 
+// Indexes for blazingly fast authentication lookups
+AccessCodeSchema.index({ active: 1 });
+AccessCodeSchema.index({ code: 1 });
+
+
 export const AccessCode: Model<IAccessCodeDoc> =
   mongoose.models.AccessCode ||
   mongoose.model<IAccessCodeDoc>("AccessCode", AccessCodeSchema);
