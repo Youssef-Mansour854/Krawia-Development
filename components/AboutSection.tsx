@@ -7,17 +7,29 @@ export default function AboutSection() {
     {
       title: "ابتكار التصميم المعماري",
       desc: "نصمم مباني تجمع بين الجمالية النحتية والرؤية العصرية لتشكل معالم حضارية فريدة تترك أثراً دائماً.",
-      icon: "🏛️",
+      icon: (
+        <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.7} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h4m-4 0V11m0 0H9m4 0h2m-4 0v-4m0 0H9m4 0h2m-6 4v4m0 0H9m4 0h2" />
+        </svg>
+      ),
     },
     {
       title: "دقة التنفيذ الهندسي",
       desc: "نلتزم بأعلى معايير الهندسة الإنشائية والتنفيذ الدقيق للمخططات مع اختيار أنبل المواد والخامات.",
-      icon: "📐",
+      icon: (
+        <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.7} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+        </svg>
+      ),
     },
     {
       title: "الاستدامة ورفاهية العيش",
       desc: "ندمج الحلول البيئية الذكية والمساحات الخضراء لتهيئة بيئات سكنية وتجارية تحقق أقصى درجات الراحة.",
-      icon: "🌿",
+      icon: (
+        <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.7} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+        </svg>
+      ),
     },
   ];
 
@@ -27,7 +39,7 @@ export default function AboutSection() {
         {/* Left/Text Side */}
         <div className="lg:col-span-7 space-y-6">
           <div className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-3 py-1 border border-amber-200 inline-block">
+            <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-3 py-1 border border-amber-200 inline-block rounded-sm">
               عن المهندسة والشركة
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-medium text-ink leading-tight">
@@ -47,9 +59,11 @@ export default function AboutSection() {
           {/* Pillars List */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-border">
             {pillars.map((item, idx) => (
-              <div key={idx} className="space-y-2">
-                <span className="text-2xl">{item.icon}</span>
-                <h4 className="text-sm font-semibold text-ink">{item.title}</h4>
+              <div key={idx} className="space-y-2 group">
+                <div className="p-2.5 bg-amber-50 border border-amber-200/80 inline-block rounded-sm transition-transform duration-300 group-hover:scale-110">
+                  {item.icon}
+                </div>
+                <h3 className="text-sm font-bold text-ink">{item.title}</h3>
                 <p className="text-xs text-muted leading-relaxed font-normal">
                   {item.desc}
                 </p>
@@ -73,7 +87,7 @@ export default function AboutSection() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
             <div className="absolute bottom-4 right-4 text-white space-y-1">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-slate-950/80 px-2.5 py-1 border border-amber-400/30 backdrop-blur-md">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-amber-300 bg-slate-950/80 px-2.5 py-1 border border-amber-400/30 backdrop-blur-md">
                 القيادة والإبداع المعماري
               </span>
               <h3 className="font-serif text-xl font-bold text-white">

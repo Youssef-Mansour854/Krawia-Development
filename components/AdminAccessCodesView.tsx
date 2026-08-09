@@ -198,24 +198,33 @@ export default function AdminAccessCodesView({
           <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 scrollbar-none">
             <Link
               href="/admin/admins"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2.5 py-1.5 bg-paper border border-border whitespace-nowrap"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2.5 py-1.5 bg-paper border border-border whitespace-nowrap flex items-center gap-1.5"
             >
-              👥 الحسابات الإدارية
+              <svg className="w-3.5 h-3.5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+              <span>الحسابات الإدارية</span>
             </Link>
             <Link
               href="/admin/account"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2.5 py-1.5 bg-paper border border-border whitespace-nowrap"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2.5 py-1.5 bg-paper border border-border whitespace-nowrap flex items-center gap-1.5"
             >
-              🔒 كلمة السر
+              <svg className="w-3.5 h-3.5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <span>كلمة السر</span>
             </Link>
             <Link
               href="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 transition-colors flex items-center gap-1 whitespace-nowrap"
+              className="text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 transition-colors flex items-center gap-1.5 whitespace-nowrap"
               title="معاينة البورتفوليو الخاص بالعملاء في تبويب جديد"
             >
-              🌐 معرض الأعمال ↗
+              <svg className="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+              <span>معرض الأعمال ↗</span>
             </Link>
             <Link
               href="/admin"

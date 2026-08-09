@@ -135,24 +135,33 @@ export default function AdminDashboardView({
             </Link>
             <Link
               href="/admin/access"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2.5 py-1.5 bg-paper border border-border whitespace-nowrap"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2.5 py-1.5 bg-paper border border-border whitespace-nowrap flex items-center gap-1.5"
             >
-              🔑 أكواد الدخول
+              <svg className="w-3.5 h-3.5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+              </svg>
+              <span>أكواد الدخول</span>
             </Link>
             <Link
               href="/admin/account"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2.5 py-1.5 bg-paper border border-border whitespace-nowrap"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2.5 py-1.5 bg-paper border border-border whitespace-nowrap flex items-center gap-1.5"
             >
-              🔒 كلمة السر
+              <svg className="w-3.5 h-3.5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <span>كلمة السر</span>
             </Link>
             <Link
               href="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 transition-colors flex items-center gap-1 whitespace-nowrap"
+              className="text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 transition-colors flex items-center gap-1.5 whitespace-nowrap"
               title="معاينة البورتفوليو الخاص بالعملاء في تبويب جديد"
             >
-              🌐 معرض الأعمال ↗
+              <svg className="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+              <span>معرض الأعمال ↗</span>
             </Link>
             <button
               onClick={handleLogout}
@@ -195,8 +204,10 @@ export default function AdminDashboardView({
         {/* Brand Search Bar */}
         <div className="bg-white border border-border p-4 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
           <div className="relative flex-1">
-            <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-accent text-base">
-              🔍
+            <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-accent">
+              <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
             </div>
             <input
               type="text"

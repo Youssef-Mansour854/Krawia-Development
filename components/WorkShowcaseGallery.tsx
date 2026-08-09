@@ -130,7 +130,10 @@ export default function WorkShowcaseGallery() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-border pb-6">
           <div className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-3 py-1 border border-amber-200 inline-block">
+            <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-3 py-1 border border-amber-200 inline-flex items-center gap-1.5 rounded-sm">
+              <svg className="w-3.5 h-3.5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
               معرض النماذج الحية والتنفيذ الواقعي
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-medium text-ink">
@@ -143,40 +146,40 @@ export default function WorkShowcaseGallery() {
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
             <button
               onClick={() => setActiveTab("all")}
-              className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-colors whitespace-nowrap ${
+              className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap rounded-sm ${
                 activeTab === "all"
                   ? "bg-accent text-white shadow-sm"
-                  : "bg-white text-muted hover:text-ink border border-border"
+                  : "bg-white text-muted hover:text-ink border border-border hover:border-accent"
               }`}
             >
               الكل ({SHOWCASE_ITEMS.length})
             </button>
             <button
               onClick={() => setActiveTab("interiors")}
-              className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-colors whitespace-nowrap ${
+              className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap rounded-sm ${
                 activeTab === "interiors"
                   ? "bg-accent text-white shadow-sm"
-                  : "bg-white text-muted hover:text-ink border border-border"
+                  : "bg-white text-muted hover:text-ink border border-border hover:border-accent"
               }`}
             >
               تشطيبات وديكورات
             </button>
             <button
               onClick={() => setActiveTab("execution")}
-              className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-colors whitespace-nowrap ${
+              className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap rounded-sm ${
                 activeTab === "execution"
                   ? "bg-accent text-white shadow-sm"
-                  : "bg-white text-muted hover:text-ink border border-border"
+                  : "bg-white text-muted hover:text-ink border border-border hover:border-accent"
               }`}
             >
               تنفيذ وتطوير
             </button>
             <button
               onClick={() => setActiveTab("lighting")}
-              className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-colors whitespace-nowrap ${
+              className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap rounded-sm ${
                 activeTab === "lighting"
                   ? "bg-accent text-white shadow-sm"
-                  : "bg-white text-muted hover:text-ink border border-border"
+                  : "bg-white text-muted hover:text-ink border border-border hover:border-accent"
               }`}
             >
               إضاءات وحديثة
@@ -190,7 +193,7 @@ export default function WorkShowcaseGallery() {
             <div
               key={item.id}
               onClick={() => setSelectedImage(item)}
-              className="group relative bg-white border border-border overflow-hidden cursor-pointer shadow-sm hover:shadow-md hover:border-accent transition-all duration-300"
+              className="group relative bg-white border border-border overflow-hidden cursor-pointer shadow-sm hover:shadow-md hover:border-accent transition-all duration-300 rounded-sm"
             >
               <div className="relative h-64 sm:h-72 w-full bg-slate-100 overflow-hidden">
                 <Image
@@ -203,14 +206,17 @@ export default function WorkShowcaseGallery() {
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
 
                 <div className="absolute top-3 right-3">
-                  <span className="bg-amber-500/95 text-slate-950 text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 backdrop-blur-md shadow-sm">
+                  <span className="bg-amber-500/95 text-slate-950 text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 backdrop-blur-md shadow-sm rounded-sm">
                     {item.categoryLabel}
                   </span>
                 </div>
 
                 <div className="absolute bottom-4 right-4 left-4 space-y-1 text-white">
-                  <p className="text-[11px] text-amber-300 font-medium">
-                    📍 {item.location}
+                  <p className="text-[11px] text-amber-300 font-medium flex items-center gap-1">
+                    <svg className="w-3.5 h-3.5 text-amber-400 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                    </svg>
+                    {item.location}
                   </p>
                   <h3 className="font-serif text-lg font-medium text-white leading-snug">
                     {item.title}
@@ -224,11 +230,11 @@ export default function WorkShowcaseGallery() {
         {/* Modal Preview with Navigation Arrows */}
         {selectedImage && (
           <div
-            className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6"
+            className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in"
             onClick={() => setSelectedImage(null)}
           >
             <div
-              className="relative max-w-4xl w-full bg-white border border-border p-4 sm:p-6 space-y-4 shadow-2xl"
+              className="relative max-w-4xl w-full bg-white border border-border p-4 sm:p-6 space-y-4 shadow-2xl rounded-sm"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Top Bar */}
@@ -245,7 +251,7 @@ export default function WorkShowcaseGallery() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-semibold text-muted bg-paper px-2.5 py-1 border border-border">
+                  <span className="text-xs font-semibold text-muted bg-paper px-2.5 py-1 border border-border rounded-sm">
                     {currentIndex + 1} / {filteredItems.length}
                   </span>
                   <button
@@ -259,7 +265,7 @@ export default function WorkShowcaseGallery() {
               </div>
 
               {/* Main Image Container with Side Navigation Arrows */}
-              <div className="relative h-[55vh] sm:h-[65vh] w-full bg-slate-900 overflow-hidden group">
+              <div className="relative h-[55vh] sm:h-[65vh] w-full bg-slate-900 overflow-hidden group rounded-sm">
                 <Image
                   src={selectedImage.imageSrc}
                   alt={selectedImage.title}
@@ -292,7 +298,12 @@ export default function WorkShowcaseGallery() {
               {/* Modal Footer Controls */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted pt-2 border-t border-border">
                 <div className="flex items-center gap-2">
-                  <span>📍 {selectedImage.location}</span>
+                  <span className="flex items-center gap-1">
+                    <svg className="w-3.5 h-3.5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                    </svg>
+                    {selectedImage.location}
+                  </span>
                   <span className="text-slate-300">•</span>
                   <span className="font-semibold text-ink">تصاميم المهندسة أسماء كراوية</span>
                 </div>
@@ -301,13 +312,13 @@ export default function WorkShowcaseGallery() {
                 <div className="flex items-center gap-2 w-full sm:w-auto">
                   <button
                     onClick={handlePrev}
-                    className="flex-1 sm:flex-none border border-border bg-paper hover:bg-slate-100 text-ink px-4 py-2 text-xs font-semibold transition-colors text-center"
+                    className="flex-1 sm:flex-none border border-border bg-paper hover:bg-slate-100 text-ink px-4 py-2 text-xs font-semibold transition-colors text-center rounded-sm"
                   >
                     ← الصورة السابقة
                   </button>
                   <button
                     onClick={handleNext}
-                    className="flex-1 sm:flex-none bg-accent hover:bg-accent-hover text-white px-4 py-2 text-xs font-semibold transition-colors text-center"
+                    className="flex-1 sm:flex-none bg-accent hover:bg-accent-hover text-white px-4 py-2 text-xs font-semibold transition-colors text-center rounded-sm"
                   >
                     الصورة التالية →
                   </button>
