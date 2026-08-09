@@ -49,7 +49,7 @@ export default function AdminLoginPage() {
             <img
               src="/img/logo/logo_shafaf.png"
               alt="شعار المهندسة أسماء كراوية للتشطيبات والديكور"
-              className="w-24 h-24 object-contain drop-shadow-md transition-transform duration-300 group-hover:scale-105"
+              className="w-32 h-32 sm:w-36 sm:h-36 object-contain drop-shadow-xl transition-transform duration-300 group-hover:scale-105"
             />
           </Link>
 

@@ -150,14 +150,11 @@ export default function AdminsManagementPage() {
             <img
               src="/img/logo/logo_shafaf.png"
               alt="شعار المهندسة أسماء كراوية للتشطيبات والديكور"
-              className="h-9 w-auto object-contain"
+              className="h-11 sm:h-13 w-auto object-contain drop-shadow-sm"
             />
             <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-2.5 py-1 border border-amber-200">
-              لوحة التحكم
+              إدارة المسؤولين ({admins.length})
             </span>
-            <h1 className="text-lg font-medium text-ink">
-              إدارة حسابات المسؤولين ({admins.length})
-            </h1>
           </div>
 
           <div className="flex items-center gap-4">
