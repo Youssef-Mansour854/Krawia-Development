@@ -171,14 +171,14 @@ export default async function HomePage() {
         <div className="border-b border-border pb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2">
             <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-3 py-1 border border-amber-200 inline-block rounded-sm">
-              أحدث الإنجازات المعمارية
+              أحدث 3 مشاريع مضافة
             </span>
             <h2 className="font-serif text-3xl font-medium text-ink">
-              أحدث 3 مشاريع تم إنجازها
+              المشاريع المعمارية المختارة
             </h2>
             <FlowingUnderline className="w-36 h-3 text-accent" />
             <p className="text-xs text-muted pt-1 font-normal">
-              نستعرض هنا أحدث 3 مشاريع معمارية تم تنفيذها مؤخراً، ويمكنك تصفح باقي الأعمال بالانتقال لمعرض المشاريع الكامل.
+              عرض أحدث 3 مشاريع تم تنفيذها مؤخراً. لتصفح جميع المشاريع المعمارية يمكنك الانتقال للمعرض الشامل.
             </p>
           </div>
 
