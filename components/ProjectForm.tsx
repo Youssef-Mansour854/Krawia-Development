@@ -579,7 +579,8 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
           {blueprints.length > 0 && (
             <div className="space-y-4 mt-4">
               {blueprints.map((bp, idx) => {
-                const currentCategory = bp.category || "معماري";
+                const currentCategory =
+                  bp.category === undefined ? "معماري" : bp.category;
                 const isPreset = BLUEPRINT_PRESETS.includes(currentCategory);
                 const selectValue = isPreset ? currentCategory : "أخرى";
 
