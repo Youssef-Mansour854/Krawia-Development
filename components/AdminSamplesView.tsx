@@ -278,8 +278,11 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
       {/* Main Content */}
       <main className="mx-auto max-w-7xl w-full px-4 sm:px-6 py-6 sm:py-10 flex-1 space-y-6 sm:space-y-8">
         {/* Title Bar */}
-        <div className="border-b border-border pb-6 space-y-2">
-          <h2 className="text-2xl sm:text-3xl font-serif font-medium text-ink">
+        <div className="border-b border-border pb-6">
+          <span className="text-xs font-semibold uppercase tracking-widest text-muted">
+            WORK SHOWCASE MANAGEMENT
+          </span>
+          <h2 className="text-2xl font-medium text-ink mt-1">
             عينات من أعمالنا الميدانية ({samples.length})
           </h2>
           <FlowingUnderline className="w-48 h-3 text-accent" />
