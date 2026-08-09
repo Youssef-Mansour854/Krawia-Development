@@ -5,10 +5,10 @@ import {
   verifySessionToken,
 } from "@/lib/auth";
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
 
-  // 1. Static files & Next.js assets bypass middleware
+  // 1. Static files & Next.js assets bypass middleware/proxy
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon.ico") ||

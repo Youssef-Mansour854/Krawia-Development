@@ -24,27 +24,27 @@ export async function POST(req: NextRequest) {
     const inputPassword = password.trim();
     let isMatch = false;
 
-    // 1. Allow ADMIN_PASSWORD as a valid viewer password
-    const adminPassword = process.env.ADMIN_PASSWORD || "dev-admin-pass-99";
+    // 1. Check ADMIN_PASSWORD (fail loudly if environment variable is not configured)
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword) {
+      throw new Error("ADMIN_PASSWORD environment variable is required");
+    }
+
     if (constantTimeEqual(inputPassword, adminPassword)) {
       isMatch = true;
     }
 
     // 2. Check against DB active AccessCode entries
     if (!isMatch) {
-      try {
-        await connectToDatabase();
-        const activeCodes = await AccessCode.find({ active: true }).lean();
-        if (Array.isArray(activeCodes)) {
-          for (const item of activeCodes) {
-            if (item.code && constantTimeEqual(inputPassword, item.code)) {
-              isMatch = true;
-              break;
-            }
+      await connectToDatabase();
+      const activeCodes = await AccessCode.find({ active: true }).lean();
+      if (Array.isArray(activeCodes)) {
+        for (const item of activeCodes) {
+          if (item.code && constantTimeEqual(inputPassword, item.code)) {
+            isMatch = true;
+            break;
           }
         }
-      } catch (dbErr) {
-        console.error("Error querying AccessCodes from DB:", dbErr);
       }
     }
 
@@ -73,10 +73,9 @@ export async function POST(req: NextRequest) {
 
     return response;
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : "Internal Server Error";
     console.error("POST /api/auth/viewer-login error:", error);
     return NextResponse.json(
-      { success: false, error: message },
+      { success: false, error: "حدث خطأ في الخادم أثناء تسجيل الدخول" },
       { status: 500 }
     );
   }
