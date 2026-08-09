@@ -144,29 +144,29 @@ export default function AdminsManagementPage() {
   return (
     <div className="min-h-screen bg-paper text-ink font-sans flex flex-col" dir="rtl">
       {/* Top Header */}
-      <header className="border-b border-border bg-white px-6 py-4">
-        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+      <header className="border-b border-border bg-white px-4 sm:px-6 py-4">
+        <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-start">
             <img
               src="/img/logo/logo_shafaf.png"
               alt="شعار المهندسة أسماء كراوية للتشطيبات والديكور"
-              className="h-11 sm:h-13 w-auto object-contain drop-shadow-sm"
+              className="h-10 sm:h-12 w-auto object-contain drop-shadow-sm"
             />
-            <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-2.5 py-1 border border-amber-200">
+            <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-2.5 py-1 border border-amber-200 whitespace-nowrap">
               إدارة المسؤولين ({admins.length})
             </span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-center md:justify-end gap-2 sm:gap-3 flex-wrap w-full md:w-auto">
             <Link
               href="/admin/account"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2 py-1"
             >
               🔒 كلمة السر
             </Link>
             <Link
               href="/admin/access"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2 py-1"
             >
               🔑 أكواد الدخول
             </Link>
@@ -177,11 +177,11 @@ export default function AdminsManagementPage() {
               className="text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 transition-colors flex items-center gap-1.5"
               title="معاينة البورتفوليو الخاص بالعملاء في تبويب جديد"
             >
-              🌐 معرض الأعمال (البورتفوليو) ↗
+              🌐 معرض الأعمال ↗
             </Link>
             <Link
               href="/admin"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2 py-1"
             >
               ← إدارة المشاريع
             </Link>
@@ -266,8 +266,8 @@ export default function AdminsManagementPage() {
         </div>
 
         {/* Admins List Table */}
-        <div className="bg-white border border-border overflow-x-auto shadow-sm">
-          <table className="w-full text-right border-collapse">
+        <div className="bg-white border border-border overflow-x-auto shadow-sm w-full">
+          <table className="w-full min-w-[550px] text-right border-collapse">
             <thead>
               <tr className="border-b border-border bg-paper text-[11px] font-semibold uppercase tracking-wider text-muted">
                 <th className="py-3.5 px-4">اسم المستخدم</th>

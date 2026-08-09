@@ -166,29 +166,29 @@ export default function AdminAccessCodesView({
   return (
     <div className="min-h-screen bg-paper text-ink font-sans flex flex-col" dir="rtl">
       {/* Top Header */}
-      <header className="border-b border-border bg-white px-6 py-4">
-        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+      <header className="border-b border-border bg-white px-4 sm:px-6 py-4">
+        <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-start">
             <img
               src="/img/logo/logo_shafaf.png"
               alt="شعار المهندسة أسماء كراوية للتشطيبات والديكور"
-              className="h-11 sm:h-13 w-auto object-contain drop-shadow-sm"
+              className="h-10 sm:h-12 w-auto object-contain drop-shadow-sm"
             />
-            <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-2.5 py-1 border border-amber-200">
+            <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-2.5 py-1 border border-amber-200 whitespace-nowrap">
               لوحة التحكم — أذونات الدخول
             </span>
           </div>
 
-          <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex items-center justify-center md:justify-end gap-2 sm:gap-3 flex-wrap w-full md:w-auto">
             <Link
               href="/admin/admins"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2 py-1"
             >
               👥 الحسابات الإدارية
             </Link>
             <Link
               href="/admin/account"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2 py-1"
             >
               🔒 كلمة السر
             </Link>
@@ -199,11 +199,11 @@ export default function AdminAccessCodesView({
               className="text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 transition-colors flex items-center gap-1.5"
               title="معاينة البورتفوليو الخاص بالعملاء في تبويب جديد"
             >
-              🌐 معرض الأعمال (البورتفوليو) ↗
+              🌐 معرض الأعمال ↗
             </Link>
             <Link
               href="/admin"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2 py-1"
             >
               ← إدارة المشاريع
             </Link>
@@ -336,7 +336,7 @@ export default function AdminAccessCodesView({
 
         {/* Access Codes Table */}
         {filteredCodes.length === 0 ? (
-          <div className="bg-white border border-border p-12 text-center text-muted text-sm space-y-3">
+          <div className="bg-white border border-border p-8 sm:p-12 text-center text-muted text-sm space-y-3">
             <p>
               {searchTerm
                 ? `لا توجد نتائج مطابقة لبحثك: "${searchTerm}"`
@@ -352,8 +352,8 @@ export default function AdminAccessCodesView({
             )}
           </div>
         ) : (
-          <div className="bg-white border border-border overflow-x-auto shadow-sm">
-            <table className="w-full text-right border-collapse">
+          <div className="bg-white border border-border overflow-x-auto shadow-sm w-full">
+            <table className="w-full min-w-[650px] text-right border-collapse">
               <thead>
                 <tr className="border-b border-border bg-paper text-[11px] font-semibold uppercase tracking-wider text-muted">
                   <th className="py-3.5 px-4">الوصف / العميل</th>
