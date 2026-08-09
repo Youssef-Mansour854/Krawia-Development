@@ -166,24 +166,27 @@ export default async function HomePage() {
         <WorkShowcaseGallery initialSamples={siteSamples} />
       </div>
 
-      {/* Featured Projects Section */}
+      {/* Featured Projects Section (Latest 3 Projects) */}
       <section id="featured" className="mx-auto max-w-7xl px-4 sm:px-6 py-20 w-full space-y-12 border-t border-border">
         <div className="border-b border-border pb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
+          <div className="space-y-2">
             <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-3 py-1 border border-amber-200 inline-block rounded-sm">
-              أبرز الإنجازات
+              أحدث الإنجازات المعمارية
             </span>
-            <h2 className="font-serif text-3xl font-medium text-ink mt-2">
-              المشاريع المعمارية المختارة
+            <h2 className="font-serif text-3xl font-medium text-ink">
+              أحدث 3 مشاريع تم إنجازها
             </h2>
             <FlowingUnderline className="w-36 h-3 text-accent" />
+            <p className="text-xs text-muted pt-1 font-normal">
+              نستعرض هنا أحدث 3 مشاريع معمارية تم تنفيذها مؤخراً، ويمكنك تصفح باقي الأعمال بالانتقال لمعرض المشاريع الكامل.
+            </p>
           </div>
 
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent hover:underline"
+            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent hover:underline shrink-0"
           >
-            <span>عرض جميع المشاريع المعمارية</span>
+            <span>تصفح باقي المشاريع الكاملة</span>
             <svg className="w-4 h-4 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
@@ -245,10 +248,10 @@ export default async function HomePage() {
         <div className="pt-4 text-center">
           <Link
             href="/projects"
-            className="inline-flex items-center gap-3 border border-border bg-white hover:border-accent hover:text-accent px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-ink transition-all shadow-sm hover:shadow-md"
+            className="inline-flex items-center gap-3 border border-accent bg-amber-50 hover:bg-accent hover:text-white px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-accent transition-all shadow-sm hover:shadow-md rounded-sm"
           >
-            <span>انتقل إلى المعرض الشامل لجميع المشاريع</span>
-            <svg className="w-4 h-4 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <span>استعرض جميع باقي المشاريع المعمارية الكاملة</span>
+            <svg className="w-4 h-4 text-current shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
           </Link>
