@@ -143,7 +143,7 @@ export default function PdfViewer({ pdfUrl, title, onClose }: PdfViewerProps) {
         <div className="flex flex-wrap items-center justify-between border-b border-border bg-white px-6 py-4 gap-4 shrink-0">
           <div>
             <span className="text-xs font-semibold uppercase tracking-wider text-accent">
-              مستعرض المخططات المعمارية
+              مستعرض المستندات والرسومات الهندسية
             </span>
             <h3 className="font-sans text-lg font-medium text-ink line-clamp-1">
               {title}
@@ -220,7 +220,7 @@ export default function PdfViewer({ pdfUrl, title, onClose }: PdfViewerProps) {
             <div className="flex flex-col items-center justify-center space-y-3 py-12">
               <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin" />
               <p className="text-sm text-muted">
-                جاري تحميل واستعراض المخطط المعماري...
+                جاري تحميل واستعراض المستند...
               </p>
             </div>
           )}

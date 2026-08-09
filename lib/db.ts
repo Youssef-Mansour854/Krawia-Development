@@ -20,12 +20,7 @@ if (!cached) {
 }
 
 function applyLocalAtlasDnsFix() {
-  // Only for local development. On Vercel/production, leave system DNS alone.
-  // On some Windows setups Node's default resolver returns querySrv ECONNREFUSED
-  // for MongoDB Atlas SRV records; public DNS resolves them correctly.
-  if (process.env.NODE_ENV === "development") {
-    dns.setServers(["8.8.8.8", "1.1.1.1"]);
-  }
+  // Only apply if needed
 }
 
 export async function connectToDatabase() {

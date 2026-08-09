@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 
 export const ADMIN_COOKIE_NAME = "admin_session";
+export const VIEWER_COOKIE_NAME = "viewer_session";
 
 function getAdminSecret(): string {
   const secret = process.env.ADMIN_SECRET;
@@ -85,4 +86,12 @@ export async function isAuthorizedAdmin(req: NextRequest): Promise<boolean> {
   // Check admin session cookie
   const cookieToken = req.cookies.get(ADMIN_COOKIE_NAME)?.value;
   return verifySessionToken(cookieToken);
+}
+
+export async function isAuthorizedViewerOrAdmin(req: NextRequest): Promise<boolean> {
+  if (await isAuthorizedAdmin(req)) {
+    return true;
+  }
+  const viewerToken = req.cookies.get(VIEWER_COOKIE_NAME)?.value;
+  return verifySessionToken(viewerToken);
 }

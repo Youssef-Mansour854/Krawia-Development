@@ -4,6 +4,7 @@ export const blueprintSchema = z.object({
   name: z.string().min(1, "Blueprint name is required"),
   pdfUrl: z.string().min(1, "PDF URL is required"),
   thumbnailUrl: z.string().min(1, "Thumbnail URL is required"),
+  category: z.string().optional().default("أخرى"),
 });
 
 export const createProjectSchema = z.object({

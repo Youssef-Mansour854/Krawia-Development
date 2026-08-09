@@ -101,6 +101,12 @@ export default function AdminDashboardView({
 
           <div className="flex items-center gap-4">
             <Link
+              href="/admin/access"
+              className="text-xs font-semibold text-accent bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3 py-1.5 transition-colors"
+            >
+              🔑 أكواد الدخول
+            </Link>
+            <Link
               href="/"
               className="text-xs font-medium text-muted hover:text-ink transition-colors"
             >

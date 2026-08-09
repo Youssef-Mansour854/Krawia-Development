@@ -4,7 +4,7 @@ import { connectToDatabase } from "@/lib/db";
 import { Project, generateUniqueSlug } from "@/models/Project";
 import { getProjectBySlug } from "@/lib/projects";
 import { updateProjectSchema } from "@/lib/validations/project";
-import { isAuthorizedAdmin } from "@/lib/auth";
+import { isAuthorizedAdmin, isAuthorizedViewerOrAdmin } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -17,6 +17,12 @@ interface RouteParams {
 
 export async function GET(req: NextRequest, { params }: RouteParams) {
   try {
+    if (!(await isAuthorizedViewerOrAdmin(req))) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized: Access code or login required" },
+        { status: 401 }
+      );
+    }
     const { slug } = await params;
     const project = await getProjectBySlug(slug);
 

@@ -2,29 +2,48 @@ import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "@/lib/db";
 import { Project, generateUniqueSlug } from "@/models/Project";
-import { getAllProjects } from "@/lib/projects";
+import { getAllProjects, getPaginatedProjects } from "@/lib/projects";
 import { createProjectSchema } from "@/lib/validations/project";
-import { isAuthorizedAdmin } from "@/lib/auth";
+import { isAuthorizedAdmin, isAuthorizedViewerOrAdmin } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET(req: NextRequest) {
   try {
+    if (!(await isAuthorizedViewerOrAdmin(req))) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized: Access code or login required" },
+        { status: 401 }
+      );
+    }
     const { searchParams } = new URL(req.url);
     const category = searchParams.get("category") || undefined;
     const featuredParam = searchParams.get("featured");
+    const search = searchParams.get("search") || undefined;
+    const page = parseInt(searchParams.get("page") || "1", 10);
+    const limit = parseInt(searchParams.get("limit") || "12", 10);
 
     let featured: boolean | undefined = undefined;
     if (featuredParam === "true") featured = true;
     if (featuredParam === "false") featured = false;
 
-    const projects = await getAllProjects({ category, featured });
+    const result = await getPaginatedProjects({
+      category,
+      featured,
+      search,
+      page,
+      limit,
+    });
 
     return NextResponse.json(
       {
         success: true,
-        data: projects,
+        data: result.projects,
+        total: result.total,
+        page: result.page,
+        limit: result.limit,
+        totalPages: result.totalPages,
       },
       { status: 200 }
     );

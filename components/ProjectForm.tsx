@@ -11,7 +11,10 @@ interface BlueprintItem {
   name: string;
   pdfUrl: string;
   thumbnailUrl: string;
+  category?: string;
 }
+
+const BLUEPRINT_PRESETS = ["معماري", "كهرباء", "سباكة", "تكييف", "تصميم 3D"];
 
 interface ProjectFormProps {
   mode: "create" | "edit";
@@ -217,12 +220,13 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
         }
 
         const defaultLabel =
-          pdfFile.name.replace(/\.[^/.]+$/, "") || "المخطط المعماري";
+          pdfFile.name.replace(/\.[^/.]+$/, "") || "المخطط الهندي";
 
         newBlueprints.push({
           name: defaultLabel,
           pdfUrl,
           thumbnailUrl,
+          category: "معماري",
         });
       }
 
@@ -240,6 +244,14 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
     setBlueprints((prev) => {
       const updated = [...prev];
       updated[index] = { ...updated[index], name: newName };
+      return updated;
+    });
+  };
+
+  const updateBlueprintCategory = (index: number, newCategory: string) => {
+    setBlueprints((prev) => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], category: newCategory };
       return updated;
     });
   };
@@ -543,11 +555,11 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
         <div className="space-y-3 border-t border-border pt-6">
           <div className="flex items-center justify-between">
             <label className="block text-xs font-semibold uppercase tracking-wider text-ink">
-              المخططات الهندسية والمعمارية (PDF Blueprints)
+              المستندات والمخططات الفنية (PDF Documents)
             </label>
           </div>
           <p className="text-xs text-muted">
-            حدد ملفات PDF. سيتم تلقائياً استخراج الصفحة الأولى كصورة مصغرة للمخطط.
+            حدد ملفات PDF. سيتم تلقائياً استخراج الصفحة الأولى كصورة مصغرة للمستند.
           </p>
 
           <input
@@ -565,51 +577,105 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
           )}
 
           {blueprints.length > 0 && (
-            <div className="space-y-3 mt-4">
-              {blueprints.map((bp, idx) => (
-                <div
-                  key={idx}
-                  className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 border border-border bg-paper"
-                >
-                  <div className="flex items-center gap-4">
-                    {bp.thumbnailUrl ? (
-                      <div className="relative w-16 h-16 border border-border overflow-hidden bg-white shrink-0">
-                        <Image
-                          src={bp.thumbnailUrl}
-                          alt={bp.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                    ) : (
-                      <div className="w-16 h-16 border border-border bg-slate-200 flex items-center justify-center text-[10px] text-muted shrink-0">
-                        PDF
-                      </div>
-                    )}
+            <div className="space-y-4 mt-4">
+              {blueprints.map((bp, idx) => {
+                const currentCategory = bp.category || "معماري";
+                const isPreset = BLUEPRINT_PRESETS.includes(currentCategory);
+                const selectValue = isPreset ? currentCategory : "أخرى";
 
-                    <div className="space-y-1">
-                      <input
-                        type="text"
-                        value={bp.name}
-                        onChange={(e) => updateBlueprintName(idx, e.target.value)}
-                        placeholder="عنوان المخطط..."
-                        className="border border-border bg-white px-3 py-1.5 text-xs text-ink focus:border-accent focus:outline-none w-full sm:w-64"
-                      />
-                      <p className="text-[10px] text-muted truncate max-w-xs" dir="ltr">
-                        {bp.pdfUrl}
-                      </p>
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => removeBlueprint(idx)}
-                    className="border border-red-200 text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 text-xs font-medium transition-colors"
+                return (
+                  <div
+                    key={idx}
+                    className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-4 border border-border bg-paper"
                   >
-                    حذف المخطط
-                  </button>
-                </div>
-              ))}
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full md:w-auto">
+                      {bp.thumbnailUrl ? (
+                        <div className="relative w-16 h-16 border border-border overflow-hidden bg-white shrink-0">
+                          <Image
+                            src={bp.thumbnailUrl}
+                            alt={bp.name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-16 h-16 border border-border bg-slate-200 flex items-center justify-center text-[10px] text-muted shrink-0">
+                          PDF
+                        </div>
+                      )}
+
+                      <div className="space-y-2 w-full sm:w-auto">
+                        <div className="flex flex-wrap items-center gap-3">
+                          <div>
+                            <label className="block text-[10px] text-muted mb-0.5 font-semibold">
+                              اسم المستند:
+                            </label>
+                            <input
+                              type="text"
+                              value={bp.name}
+                              onChange={(e) => updateBlueprintName(idx, e.target.value)}
+                              placeholder="عنوان المستند..."
+                              className="border border-border bg-white px-3 py-1.5 text-xs text-ink focus:border-accent focus:outline-none w-full sm:w-52"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-[10px] text-muted mb-0.5 font-semibold">
+                              تصنيف المستند:
+                            </label>
+                            <select
+                              value={selectValue}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                if (val !== "أخرى") {
+                                  updateBlueprintCategory(idx, val);
+                                } else {
+                                  updateBlueprintCategory(idx, "");
+                                }
+                              }}
+                              className="border border-border bg-white px-3 py-1.5 text-xs text-ink focus:border-accent focus:outline-none"
+                            >
+                              <option value="معماري">معماري (Architectural)</option>
+                              <option value="كهرباء">كهرباء (Electrical)</option>
+                              <option value="سباكة">سباكة (Plumbing)</option>
+                              <option value="تكييف">تكييف (HVAC/AC)</option>
+                              <option value="تصميم 3D">تصميم 3D (3D Design)</option>
+                              <option value="أخرى">أخرى (Other / Custom)</option>
+                            </select>
+                          </div>
+
+                          {selectValue === "أخرى" && (
+                            <div>
+                              <label className="block text-[10px] text-muted mb-0.5 font-semibold">
+                                التسمية المخصصة:
+                              </label>
+                              <input
+                                type="text"
+                                value={bp.category === "أخرى" ? "" : bp.category || ""}
+                                onChange={(e) => updateBlueprintCategory(idx, e.target.value)}
+                                placeholder="أدخل تصنيف المستند..."
+                                className="border border-border bg-white px-3 py-1.5 text-xs text-ink focus:border-accent focus:outline-none w-full sm:w-40"
+                              />
+                            </div>
+                          )}
+                        </div>
+
+                        <p className="text-[10px] text-muted truncate max-w-xs" dir="ltr">
+                          {bp.pdfUrl}
+                        </p>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => removeBlueprint(idx)}
+                      className="border border-red-200 text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 text-xs font-medium transition-colors shrink-0"
+                    >
+                      حذف المستند
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

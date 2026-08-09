@@ -41,10 +41,73 @@ function getStatusLabel(status: string): string {
   }
 }
 
+function getCategorySectionTitle(category: string): {
+  title: string;
+  subtitle: string;
+  icon: string;
+} {
+  switch (category) {
+    case "معماري":
+      return {
+        title: "المخططات والرسومات المعمارية",
+        subtitle: "Architectural Plans & Blueprints",
+        icon: "🏛️",
+      };
+    case "كهرباء":
+      return {
+        title: "مخططات شبكات الكهرباء والإنارة",
+        subtitle: "Electrical & Lighting Drawings",
+        icon: "⚡",
+      };
+    case "سباكة":
+      return {
+        title: "مخططات السباكة والتغذية والصرف",
+        subtitle: "Plumbing & Drainage Layouts",
+        icon: "💧",
+      };
+    case "تكييف":
+      return {
+        title: "مخططات أنظمة التكييف والتهوية (HVAC)",
+        subtitle: "HVAC & Mechanical Systems",
+        icon: "❄️",
+      };
+    case "تصميم 3D":
+      return {
+        title: "التصاميم والنماذج ثلاثية الأبعاد (3D)",
+        subtitle: "3D Visualizations & Renderings",
+        icon: "🎨",
+      };
+    default:
+      return {
+        title: `مستندات فنية - ${category}`,
+        subtitle: "Technical Documents & Specifications",
+        icon: "📋",
+      };
+  }
+}
+
 export default function ProjectDetailView({ project }: ProjectDetailViewProps) {
   const [selectedBlueprint, setSelectedBlueprint] = useState<IBlueprint | null>(
     null
   );
+
+  // Group blueprints by category
+  const groupedBlueprints = (project.blueprints || []).reduce((acc, bp) => {
+    const cat = bp.category || "أخرى";
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(bp);
+    return acc;
+  }, {} as Record<string, IBlueprint[]>);
+
+  const PRESET_ORDER = ["معماري", "كهرباء", "سباكة", "تكييف", "تصميم 3D"];
+  const sortedCategories = Object.keys(groupedBlueprints).sort((a, b) => {
+    const idxA = PRESET_ORDER.indexOf(a);
+    const idxB = PRESET_ORDER.indexOf(b);
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    if (idxA !== -1) return -1;
+    if (idxB !== -1) return 1;
+    return a.localeCompare(b, "ar");
+  });
 
   return (
     <main className="min-h-screen bg-paper text-ink pb-24 font-sans">
@@ -138,66 +201,101 @@ export default function ProjectDetailView({ project }: ProjectDetailViewProps) {
           </section>
         )}
 
-        {/* Blueprints PDF Section */}
-        {project.blueprints && project.blueprints.length > 0 && (
-          <section className="space-y-8 border-t border-border pt-16">
+        {/* Blueprints & Documents PDF Section Grouped into Dedicated Sub-Sections */}
+        {sortedCategories.length > 0 && (
+          <section className="space-y-12 border-t border-border pt-16">
             <div className="space-y-2">
               <span className="text-xs font-semibold uppercase tracking-widest text-accent">
-                المخططات والتصاميم الهندسية
+                المستندات والرسومات الهندسية للمشروع
               </span>
               <h2 className="font-serif text-3xl font-medium text-ink">
-                المخططات المعمارية (PDF)
+                المخططات والملفات الفنية (PDF)
               </h2>
-              <FlowingUnderline className="w-40 h-3 text-accent" />
+              <FlowingUnderline className="w-44 h-3 text-accent" />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {project.blueprints.map((blueprint, idx) => (
-                <div
-                  key={idx}
-                  className="border border-border bg-white p-5 flex flex-col justify-between space-y-4 hover:border-accent transition-colors shadow-sm"
-                >
+            <div className="space-y-10">
+              {sortedCategories.map((catKey) => {
+                const blueprintsList = groupedBlueprints[catKey];
+                const sectionMeta = getCategorySectionTitle(catKey);
+
+                return (
                   <div
-                    className="relative h-48 w-full bg-slate-100 border border-border overflow-hidden cursor-pointer group"
-                    onClick={() => setSelectedBlueprint(blueprint)}
+                    key={catKey}
+                    className="bg-white border border-border p-6 md:p-8 space-y-6 shadow-sm"
                   >
-                    <Image
-                      src={blueprint.thumbnailUrl}
-                      alt={blueprint.name}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-slate-950/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="bg-accent text-white text-xs uppercase tracking-wider font-semibold px-4 py-2 shadow-md">
-                        عرض المخطط الهندسي
+                    {/* Sub-Section Header */}
+                    <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{sectionMeta.icon}</span>
+                        <div>
+                          <h3 className="font-serif text-xl font-semibold text-ink">
+                            {sectionMeta.title}
+                          </h3>
+                          <p className="text-[11px] text-muted font-mono tracking-wider uppercase">
+                            {sectionMeta.subtitle}
+                          </p>
+                        </div>
+                      </div>
+
+                      <span className="bg-amber-50 text-accent font-bold text-xs px-3.5 py-1 border border-amber-200">
+                        {blueprintsList.length}{" "}
+                        {blueprintsList.length === 1 ? "مستند" : "مستندات"}
                       </span>
                     </div>
-                  </div>
 
-                  <div>
-                    <h3 className="font-sans text-base font-semibold text-ink">
-                      {blueprint.name}
-                    </h3>
-                  </div>
+                    {/* Cards Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {blueprintsList.map((blueprint, idx) => (
+                        <div
+                          key={idx}
+                          className="border border-border bg-paper p-4 flex flex-col justify-between space-y-4 hover:border-accent transition-colors"
+                        >
+                          <div
+                            className="relative h-44 w-full bg-slate-100 border border-border overflow-hidden cursor-pointer group"
+                            onClick={() => setSelectedBlueprint(blueprint)}
+                          >
+                            <Image
+                              src={blueprint.thumbnailUrl}
+                              alt={blueprint.name}
+                              fill
+                              className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-slate-950/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                              <span className="bg-accent text-white text-xs uppercase tracking-wider font-semibold px-4 py-2 shadow-md">
+                                عرض المستند
+                              </span>
+                            </div>
+                          </div>
 
-                  <div className="flex items-center gap-3 pt-2 border-t border-border">
-                    <button
-                      onClick={() => setSelectedBlueprint(blueprint)}
-                      className="flex-1 bg-accent text-white text-xs font-semibold uppercase tracking-wider py-2.5 text-center hover:bg-accent-hover transition-colors"
-                    >
-                      عرض المخطط PDF
-                    </button>
-                    <a
-                      href={blueprint.pdfUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="border border-border text-ink text-xs font-semibold uppercase tracking-wider py-2.5 px-3 hover:border-ink transition-colors"
-                    >
-                      تحميل
-                    </a>
+                          <div>
+                            <h4 className="font-sans text-sm font-semibold text-ink line-clamp-2">
+                              {blueprint.name}
+                            </h4>
+                          </div>
+
+                          <div className="flex items-center gap-3 pt-2 border-t border-border">
+                            <button
+                              onClick={() => setSelectedBlueprint(blueprint)}
+                              className="flex-1 bg-accent text-white text-xs font-semibold uppercase tracking-wider py-2 text-center hover:bg-accent-hover transition-colors"
+                            >
+                              عرض المستند PDF
+                            </button>
+                            <a
+                              href={blueprint.pdfUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="border border-border bg-white text-ink text-xs font-semibold uppercase tracking-wider py-2 px-3 hover:border-ink transition-colors"
+                            >
+                              تحميل
+                            </a>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </section>
         )}

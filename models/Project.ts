@@ -5,6 +5,7 @@ export interface IBlueprint {
   name: string;
   pdfUrl: string;
   thumbnailUrl: string;
+  category?: string;
 }
 
 export interface IProject extends Document {
@@ -66,6 +67,7 @@ const BlueprintSchema = new Schema<IBlueprint>(
     name: { type: String, required: true },
     pdfUrl: { type: String, required: true },
     thumbnailUrl: { type: String, required: true },
+    category: { type: String, default: "أخرى" },
   },
   { _id: false }
 );
@@ -100,6 +102,12 @@ const ProjectSchema: Schema<IProject> = new Schema(
   },
   { timestamps: true }
 );
+
+// Indexes for fast server-side query, filtering, sorting, and search performance
+ProjectSchema.index({ category: 1 });
+ProjectSchema.index({ status: 1 });
+ProjectSchema.index({ featured: 1 });
+ProjectSchema.index({ createdAt: -1 });
 
 // Single async pre-validate hook for collision-safe slug generation
 ProjectSchema.pre("validate", async function () {
