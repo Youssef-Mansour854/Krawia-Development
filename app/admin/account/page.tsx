@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import FlowingUnderline from "@/components/FlowingUnderline";
+import AdminHeaderNav from "@/components/AdminHeaderNav";
 
 export default function AdminAccountPage() {
   const [username, setUsername] = useState<string>("");
@@ -91,56 +92,7 @@ export default function AdminAccountPage() {
   return (
     <div className="min-h-screen bg-paper text-ink font-sans flex flex-col" dir="rtl">
       {/* Top Header */}
-      <header className="border-b border-border bg-white px-4 sm:px-6 py-4">
-        <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-start">
-            <img
-              src="/img/logo/logo_shafaf.png"
-              alt="شعار المهندسة أسماء كراوية للتشطيبات والديكور"
-              className="h-10 sm:h-12 w-auto object-contain drop-shadow-sm"
-            />
-            <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-2.5 py-1 border border-amber-200 whitespace-nowrap">
-              إعدادات حساب المسؤول {username && <span className="text-accent font-bold">({username})</span>}
-            </span>
-          </div>
-
-          <div className="flex items-center justify-center md:justify-end gap-2 sm:gap-3 flex-wrap w-full md:w-auto">
-            <Link
-              href="/admin/admins"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2 py-1"
-            >
-              👥 الحسابات الإدارية
-            </Link>
-            <Link
-              href="/admin/access"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2 py-1"
-            >
-              🔑 أكواد الدخول
-            </Link>
-            <Link
-              href="/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 transition-colors flex items-center gap-1.5"
-              title="معاينة البورتفوليو الخاص بالعملاء في تبويب جديد"
-            >
-              🌐 معرض الأعمال ↗
-            </Link>
-            <Link
-              href="/admin"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2 py-1"
-            >
-              ← إدارة المشاريع
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="border border-border bg-paper hover:bg-red-50 hover:text-red-700 hover:border-red-200 px-3.5 py-1.5 text-xs font-medium text-ink transition-colors"
-            >
-              تسجيل الخروج
-            </button>
-          </div>
-        </div>
-      </header>
+      <AdminHeaderNav titleBadge={`إعدادات حساب المسؤول ${username ? `(${username})` : ""}`} activeTab="account" />
 
       {/* Main Content */}
       <main className="mx-auto max-w-2xl w-full px-6 py-12 flex-1 space-y-8">

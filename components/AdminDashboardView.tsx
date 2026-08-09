@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { IProject } from "@/models/Project";
 import FlowingUnderline from "@/components/FlowingUnderline";
+import AdminHeaderNav from "@/components/AdminHeaderNav";
 
 interface AdminDashboardViewProps {
   initialProjects: IProject[];
@@ -102,88 +103,9 @@ export default function AdminDashboardView({
   };
 
   return (
-    <div className="min-h-screen bg-paper text-ink font-sans flex flex-col">
-      {/* Admin Top Header */}
-      <header className="border-b border-border bg-white px-4 sm:px-6 py-3.5">
-        <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-3">
-          <div className="flex items-center justify-between w-full md:w-auto">
-            <div className="flex items-center gap-3">
-              <img
-                src="/img/logo/logo_shafaf.png"
-                alt="شعار المهندسة أسماء كراوية للتشطيبات والديكور"
-                className="h-10 sm:h-12 w-auto object-contain drop-shadow-sm"
-              />
-              <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-2.5 py-1 border border-amber-200">
-                لوحة التحكم الإدارية
-              </span>
-            </div>
-
-            <button
-              onClick={handleLogout}
-              className="md:hidden border border-red-200 bg-red-50 text-red-700 px-3 py-1.5 text-xs font-medium transition-colors"
-            >
-              خروج
-            </button>
-          </div>
-
-          <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 scrollbar-none">
-            <Link
-              href="/admin/samples"
-              className="text-xs font-semibold text-accent bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3 py-1.5 transition-colors whitespace-nowrap flex items-center gap-1.5"
-            >
-              <svg className="w-3.5 h-3.5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <span>عينات الأعمال</span>
-            </Link>
-            <Link
-              href="/admin/admins"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2.5 py-1.5 bg-paper border border-border whitespace-nowrap flex items-center gap-1.5"
-            >
-              <svg className="w-3.5 h-3.5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-              <span>الحسابات</span>
-            </Link>
-            <Link
-              href="/admin/access"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2.5 py-1.5 bg-paper border border-border whitespace-nowrap flex items-center gap-1.5"
-            >
-              <svg className="w-3.5 h-3.5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-              </svg>
-              <span>أكواد الدخول</span>
-            </Link>
-            <Link
-              href="/admin/account"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2.5 py-1.5 bg-paper border border-border whitespace-nowrap flex items-center gap-1.5"
-            >
-              <svg className="w-3.5 h-3.5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-              <span>كلمة السر</span>
-            </Link>
-            <Link
-              href="/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 transition-colors flex items-center gap-1.5 whitespace-nowrap"
-              title="معاينة البورتفوليو الخاص بالعملاء في تبويب جديد"
-            >
-              <svg className="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-              <span>معرض الأعمال ↗</span>
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="hidden md:inline-block border border-border bg-paper hover:bg-red-50 hover:text-red-700 hover:border-red-200 px-3.5 py-1.5 text-xs font-medium text-ink transition-colors whitespace-nowrap"
-            >
-              تسجيل الخروج
-            </button>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-paper text-ink font-sans flex flex-col" dir="rtl">
+      {/* Top Header */}
+      <AdminHeaderNav titleBadge="لوحة التحكم — إدارة المشاريع" activeTab="projects" />
 
       {/* Main Content */}
       <main className="mx-auto max-w-7xl w-full px-4 sm:px-6 py-6 sm:py-10 flex-1 space-y-6 sm:space-y-8">
