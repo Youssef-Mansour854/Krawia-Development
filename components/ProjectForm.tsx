@@ -7,9 +7,6 @@ import Link from "next/link";
 import { upload } from "@vercel/blob/client";
 import { IProject } from "@/models/Project";
 
-// Placeholder thumbnail shown for PDF blueprints (no heavy canvas rendering)
-const PDF_PLACEHOLDER_URL = "https://placehold.co/400x300/1a1a2e/c8a96a?text=PDF";
-
 interface BlueprintItem {
   name: string;
   pdfUrl: string;
@@ -38,6 +35,59 @@ async function uploadFileToBlob(
   } finally {
     clearTimeout(timeoutId);
   }
+}
+
+// Render Page 1 of PDF file into a scaled canvas thumbnail Blob (max dimension 600px)
+async function generatePdfThumbnailBlob(file: File): Promise<Blob> {
+  // Dynamically import react-pdf/pdfjs only in browser to avoid Node SSR DOMMatrix errors
+  const { pdfjs } = await import("react-pdf");
+
+  if (typeof window !== "undefined") {
+    pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+  }
+
+  const objectUrl = URL.createObjectURL(file);
+  let pdfDoc;
+  try {
+    const loadingTask = pdfjs.getDocument({ url: objectUrl });
+    pdfDoc = await loadingTask.promise;
+  } finally {
+    URL.revokeObjectURL(objectUrl);
+  }
+
+  const page = await pdfDoc.getPage(1);
+
+  const unscaledViewport = page.getViewport({ scale: 1.0 });
+
+  // Scale down canvas to max 600px wide/high to prevent browser freeze/OOM on huge blueprints
+  const TARGET_MAX_DIM = 600;
+  const maxDim = Math.max(unscaledViewport.width, unscaledViewport.height);
+  const scale = Math.min(TARGET_MAX_DIM / maxDim, 1.0);
+
+  const viewport = page.getViewport({ scale });
+
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(viewport.width);
+  canvas.height = Math.round(viewport.height);
+
+  const context = canvas.getContext("2d");
+  if (!context) {
+    throw new Error("فشل إنشاء سياق رسم الـ Canvas في المتصفح");
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await page.render({ canvasContext: context, viewport, canvas: canvas as any }).promise;
+
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (blob) resolve(blob);
+        else reject(new Error("فشل تحويل الرسم إلى صورة Blob"));
+      },
+      "image/jpeg",
+      0.85
+    );
+  });
 }
 
 export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
@@ -148,8 +198,23 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
           `blueprint-${Date.now()}-${pdfFile.name}`
         );
 
-        // 2. Use a static placeholder thumbnail (no heavy canvas rendering)
-        const thumbnailUrl = PDF_PLACEHOLDER_URL;
+        // 2. Render Page 1 to Canvas & Upload Thumbnail
+        let thumbnailUrl = "";
+        try {
+          const thumbnailBlob = await generatePdfThumbnailBlob(pdfFile);
+          thumbnailUrl = await uploadFileToBlob(
+            thumbnailBlob,
+            `thumb-${Date.now()}-${pdfFile.name.replace(/\.[^/.]+$/, "")}.jpg`
+          );
+        } catch (thumbErr) {
+          const errMessage =
+            thumbErr instanceof Error ? thumbErr.message : String(thumbErr);
+          const errStack = thumbErr instanceof Error ? thumbErr.stack : "";
+          console.error("PDF Thumbnail Generation Error Details:", errMessage, errStack, thumbErr);
+          throw new Error(
+            `فشل استخراج المعاينة للمخطط (${pdfFile.name}): ${errMessage}`
+          );
+        }
 
         const defaultLabel =
           pdfFile.name.replace(/\.[^/.]+$/, "") || "المخطط المعماري";
