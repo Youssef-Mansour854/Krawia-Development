@@ -24,13 +24,9 @@ export async function POST(req: NextRequest) {
     const inputPassword = password.trim();
     let isMatch = false;
 
-    // 1. Check ADMIN_PASSWORD (fail loudly if environment variable is not configured)
+    // 1. Check ADMIN_PASSWORD if defined in environment
     const adminPassword = process.env.ADMIN_PASSWORD;
-    if (!adminPassword) {
-      throw new Error("ADMIN_PASSWORD environment variable is required");
-    }
-
-    if (constantTimeEqual(inputPassword, adminPassword)) {
+    if (adminPassword && constantTimeEqual(inputPassword, adminPassword)) {
       isMatch = true;
     }
 
