@@ -6,6 +6,8 @@ import StatsSection from "@/components/StatsSection";
 import WorkShowcaseGallery from "@/components/WorkShowcaseGallery";
 import FlowingUnderline from "@/components/FlowingUnderline";
 import { getAllProjects } from "@/lib/projects";
+import { connectToDatabase } from "@/lib/db";
+import { SiteSample, ISiteSample } from "@/models/SiteSample";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -71,8 +73,21 @@ const SAMPLE_PROJECT_FALLBACKS = [
   },
 ];
 
+async function getDynamicSiteSamples(): Promise<ISiteSample[]> {
+  try {
+    await connectToDatabase();
+    const samples = await SiteSample.find({}).sort({ createdAt: -1 }).lean();
+    return JSON.parse(JSON.stringify(samples));
+  } catch (err) {
+    console.error("Error fetching site samples for homepage:", err);
+    return [];
+  }
+}
+
 export default async function HomePage() {
   const allProjects = await getAllProjects();
+  const siteSamples = await getDynamicSiteSamples();
+
   const homepageProjects = allProjects.length > 0 ? allProjects.slice(0, 3) : SAMPLE_PROJECT_FALLBACKS;
 
   return (
@@ -146,9 +161,9 @@ export default async function HomePage() {
       {/* About Us Section with Real Owner Photo */}
       <AboutSection />
 
-      {/* Real Work Showcase Gallery (Featuring 9 Site Work Images) */}
+      {/* Real Work Showcase Gallery (Dynamic from Database) */}
       <div id="showcase">
-        <WorkShowcaseGallery />
+        <WorkShowcaseGallery initialSamples={siteSamples} />
       </div>
 
       {/* Featured Projects Section */}

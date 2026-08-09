@@ -3,101 +3,109 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import FlowingUnderline from "./FlowingUnderline";
+import { ISiteSample } from "@/models/SiteSample";
 
-interface ShowcaseItem {
-  id: string;
-  title: string;
-  category: "interiors" | "execution" | "lighting";
-  categoryLabel: string;
-  imageSrc: string;
-  location: string;
-}
-
-const SHOWCASE_ITEMS: ShowcaseItem[] = [
+const DEFAULT_FALLBACK_SAMPLES: ISiteSample[] = [
   {
-    id: "1",
+    _id: "1",
     title: "تشطيبات فاخرة وتصاميم أسقف حديثة",
     category: "interiors",
     categoryLabel: "تشطيبات وديكورات فاخرة",
     imageSrc: "/img/site-images/IMG-20260809-WA0030.jpg",
     location: "دمنهور - شارع الضغط العالي",
+    createdAt: new Date(),
   },
   {
-    id: "2",
+    _id: "2",
     title: "تنفيذ وإشراف معماري شامل",
     category: "execution",
     categoryLabel: "تنفيذ وتطوير معماري",
     imageSrc: "/img/site-images/IMG-20260809-WA0031.jpg",
     location: "دمنهور - شارع الضغط العالي",
+    createdAt: new Date(),
   },
   {
-    id: "3",
+    _id: "3",
     title: "إضاءات مخفية وديكورات مودرن",
     category: "lighting",
     categoryLabel: "إضاءات وديكورات حديثة",
     imageSrc: "/img/site-images/IMG-20260809-WA0032.jpg",
     location: "دمنهور - شارع الضغط العالي",
+    createdAt: new Date(),
   },
   {
-    id: "4",
+    _id: "4",
     title: "تصميم غرف وصالات فاخرة",
     category: "interiors",
     categoryLabel: "تشطيبات وديكورات فاخرة",
     imageSrc: "/img/site-images/IMG-20260809-WA0033.jpg",
     location: "دمنهور - شارع الضغط العالي",
+    createdAt: new Date(),
   },
   {
-    id: "5",
+    _id: "5",
     title: "تجهيز مساحات سكنية متكاملة",
     category: "execution",
     categoryLabel: "تنفيذ وتطوير معماري",
     imageSrc: "/img/site-images/IMG-20260809-WA0034.jpg",
     location: "دمنهور - شارع الضغط العالي",
+    createdAt: new Date(),
   },
   {
-    id: "6",
+    _id: "6",
     title: "لمسات ديكورية راقية وخامات نادرة",
     category: "interiors",
     categoryLabel: "تشطيبات وديكورات فاخرة",
     imageSrc: "/img/site-images/IMG-20260809-WA0035.jpg",
     location: "دمنهور - شارع الضغط العالي",
+    createdAt: new Date(),
   },
   {
-    id: "7",
+    _id: "7",
     title: "توزيع إضاءة ذكي ومساحات معمارية",
     category: "lighting",
     categoryLabel: "إضاءات وديكورات حديثة",
     imageSrc: "/img/site-images/IMG-20260809-WA0036.jpg",
     location: "دمنهور - شارع الضغط العالي",
+    createdAt: new Date(),
   },
   {
-    id: "8",
+    _id: "8",
     title: "تشطيبات أجنحة ومجموعات فاخرة",
     category: "interiors",
     categoryLabel: "تشطيبات وديكورات فاخرة",
     imageSrc: "/img/site-images/IMG-20260809-WA0037.jpg",
     location: "دمنهور - شارع الضغط العالي",
+    createdAt: new Date(),
   },
   {
-    id: "9",
+    _id: "9",
     title: "استغلال مساحات وهندسة تفاصيل",
     category: "execution",
     categoryLabel: "تنفيذ وتطوير معماري",
     imageSrc: "/img/site-images/IMG-20260809-WA0038.jpg",
     location: "دمنهور - شارع الضغط العالي",
+    createdAt: new Date(),
   },
 ];
 
-export default function WorkShowcaseGallery() {
+interface WorkShowcaseGalleryProps {
+  initialSamples?: ISiteSample[];
+}
+
+export default function WorkShowcaseGallery({ initialSamples }: WorkShowcaseGalleryProps) {
+  const [samples] = useState<ISiteSample[]>(
+    initialSamples && initialSamples.length > 0 ? initialSamples : DEFAULT_FALLBACK_SAMPLES
+  );
   const [activeTab, setActiveTab] = useState<"all" | "interiors" | "execution" | "lighting">("all");
-  const [selectedImage, setSelectedImage] = useState<ShowcaseItem | null>(null);
+  const [selectedImage, setSelectedImage] = useState<ISiteSample | null>(null);
 
   const filteredItems = activeTab === "all"
-    ? SHOWCASE_ITEMS
-    : SHOWCASE_ITEMS.filter((item) => item.category === activeTab);
+    ? samples
+    : samples.filter((item) => item.category === activeTab);
 
   const currentIndex = selectedImage
-    ? filteredItems.findIndex((item) => item.id === selectedImage.id)
+    ? filteredItems.findIndex((item) => item._id.toString() === selectedImage._id.toString())
     : -1;
 
   const handleNext = useCallback(() => {
@@ -152,7 +160,7 @@ export default function WorkShowcaseGallery() {
                   : "bg-white text-muted hover:text-ink border border-border hover:border-accent"
               }`}
             >
-              الكل ({SHOWCASE_ITEMS.length})
+              الكل ({samples.length})
             </button>
             <button
               onClick={() => setActiveTab("interiors")}
@@ -191,7 +199,7 @@ export default function WorkShowcaseGallery() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredItems.map((item) => (
             <div
-              key={item.id}
+              key={item._id.toString()}
               onClick={() => setSelectedImage(item)}
               className="group relative bg-white border border-border overflow-hidden cursor-pointer shadow-sm hover:shadow-md hover:border-accent transition-all duration-300 rounded-sm"
             >
