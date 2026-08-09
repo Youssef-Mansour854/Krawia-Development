@@ -20,7 +20,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     category: "interiors",
     categoryLabel: "تشطيبات وديكورات فاخرة",
     imageSrc: "/img/site-images/IMG-20260809-WA0030.jpg",
-    location: "دمنهور - البحيرة",
+    location: "دمنهور - شارع الضغط العالي",
   },
   {
     id: "2",
@@ -28,7 +28,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     category: "execution",
     categoryLabel: "تنفيذ وتطوير معماري",
     imageSrc: "/img/site-images/IMG-20260809-WA0031.jpg",
-    location: "دمنهور - شارع الجمهورية",
+    location: "دمنهور - شارع الضغط العالي",
   },
   {
     id: "3",
@@ -36,7 +36,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     category: "lighting",
     categoryLabel: "إضاءات وديكورات حديثة",
     imageSrc: "/img/site-images/IMG-20260809-WA0032.jpg",
-    location: "دمنهور",
+    location: "دمنهور - شارع الضغط العالي",
   },
   {
     id: "4",
@@ -44,7 +44,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     category: "interiors",
     categoryLabel: "تشطيبات وديكورات فاخرة",
     imageSrc: "/img/site-images/IMG-20260809-WA0033.jpg",
-    location: "دمنهور",
+    location: "دمنهور - شارع الضغط العالي",
   },
   {
     id: "5",
@@ -52,7 +52,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     category: "execution",
     categoryLabel: "تنفيذ وتطوير معماري",
     imageSrc: "/img/site-images/IMG-20260809-WA0034.jpg",
-    location: "دمنهور",
+    location: "دمنهور - شارع الضغط العالي",
   },
   {
     id: "6",
@@ -60,7 +60,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     category: "interiors",
     categoryLabel: "تشطيبات وديكورات فاخرة",
     imageSrc: "/img/site-images/IMG-20260809-WA0035.jpg",
-    location: "دمنهور",
+    location: "دمنهور - شارع الضغط العالي",
   },
   {
     id: "7",
@@ -68,7 +68,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     category: "lighting",
     categoryLabel: "إضاءات وديكورات حديثة",
     imageSrc: "/img/site-images/IMG-20260809-WA0036.jpg",
-    location: "دمنهور",
+    location: "دمنهور - شارع الضغط العالي",
   },
   {
     id: "8",
@@ -76,7 +76,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     category: "interiors",
     categoryLabel: "تشطيبات وديكورات فاخرة",
     imageSrc: "/img/site-images/IMG-20260809-WA0037.jpg",
-    location: "دمنهور",
+    location: "دمنهور - شارع الضغط العالي",
   },
   {
     id: "9",
@@ -84,7 +84,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     category: "execution",
     categoryLabel: "تنفيذ وتطوير معماري",
     imageSrc: "/img/site-images/IMG-20260809-WA0038.jpg",
-    location: "دمنهور",
+    location: "دمنهور - شارع الضغط العالي",
   },
 ];
 
