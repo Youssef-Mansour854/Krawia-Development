@@ -190,12 +190,14 @@ export default function AdminDashboardView({
         {/* Title Bar & Actions */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border pb-6">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-widest text-muted">
-              إدارة الأعمال المعمارية
-            </span>
-            <h2 className="text-2xl font-medium text-ink mt-1">
-              قائمة المشاريع ({projects.length})
-            </h2>
+            <div className="flex items-center gap-3">
+              <h2 className="text-2xl font-medium text-ink">
+                قائمة المشاريع
+              </h2>
+              <span className="bg-slate-900 text-amber-300 text-xs font-bold px-2.5 py-1 border border-slate-800 rounded-sm">
+                الإجمالي: {projects.length} مشروع
+              </span>
+            </div>
             <FlowingUnderline className="w-36 h-3 text-accent" />
           </div>
 
