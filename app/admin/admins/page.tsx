@@ -144,29 +144,38 @@ export default function AdminsManagementPage() {
   return (
     <div className="min-h-screen bg-paper text-ink font-sans flex flex-col" dir="rtl">
       {/* Top Header */}
-      <header className="border-b border-border bg-white px-4 sm:px-6 py-4">
-        <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-start">
-            <img
-              src="/img/logo/logo_shafaf.png"
-              alt="شعار المهندسة أسماء كراوية للتشطيبات والديكور"
-              className="h-10 sm:h-12 w-auto object-contain drop-shadow-sm"
-            />
-            <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-2.5 py-1 border border-amber-200 whitespace-nowrap">
-              إدارة المسؤولين ({admins.length})
-            </span>
+      <header className="border-b border-border bg-white px-4 sm:px-6 py-3.5">
+        <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-3">
+          <div className="flex items-center justify-between w-full md:w-auto">
+            <div className="flex items-center gap-3">
+              <img
+                src="/img/logo/logo_shafaf.png"
+                alt="شعار المهندسة أسماء كراوية للتشطيبات والديكور"
+                className="h-10 sm:h-12 w-auto object-contain drop-shadow-sm"
+              />
+              <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-2.5 py-1 border border-amber-200 whitespace-nowrap">
+                إدارة المسؤولين ({admins.length})
+              </span>
+            </div>
+
+            <button
+              onClick={handleLogout}
+              className="md:hidden border border-red-200 bg-red-50 text-red-700 px-3 py-1.5 text-xs font-medium transition-colors"
+            >
+              خروج
+            </button>
           </div>
 
-          <div className="flex items-center justify-center md:justify-end gap-2 sm:gap-3 flex-wrap w-full md:w-auto">
+          <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 scrollbar-none">
             <Link
               href="/admin/account"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2 py-1"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2.5 py-1.5 bg-paper border border-border whitespace-nowrap"
             >
               🔒 كلمة السر
             </Link>
             <Link
               href="/admin/access"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2 py-1"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2.5 py-1.5 bg-paper border border-border whitespace-nowrap"
             >
               🔑 أكواد الدخول
             </Link>
@@ -174,20 +183,20 @@ export default function AdminsManagementPage() {
               href="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 transition-colors flex items-center gap-1.5"
+              className="text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 transition-colors flex items-center gap-1 whitespace-nowrap"
               title="معاينة البورتفوليو الخاص بالعملاء في تبويب جديد"
             >
               🌐 معرض الأعمال ↗
             </Link>
             <Link
               href="/admin"
-              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2 py-1"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors px-2.5 py-1.5 bg-paper border border-border whitespace-nowrap"
             >
               ← إدارة المشاريع
             </Link>
             <button
               onClick={handleLogout}
-              className="border border-border bg-paper hover:bg-red-50 hover:text-red-700 hover:border-red-200 px-3.5 py-1.5 text-xs font-medium text-ink transition-colors"
+              className="hidden md:inline-block border border-border bg-paper hover:bg-red-50 hover:text-red-700 hover:border-red-200 px-3.5 py-1.5 text-xs font-medium text-ink transition-colors whitespace-nowrap"
             >
               تسجيل الخروج
             </button>
@@ -196,14 +205,14 @@ export default function AdminsManagementPage() {
       </header>
 
       {/* Main Content */}
-      <main className="mx-auto max-w-7xl w-full px-6 py-10 flex-1 space-y-8">
+      <main className="mx-auto max-w-7xl w-full px-4 sm:px-6 py-6 sm:py-10 flex-1 space-y-6 sm:space-y-8">
         {/* Title Bar */}
         <div className="border-b border-border pb-6">
           <span className="text-xs font-semibold uppercase tracking-widest text-muted">
-            Admin Accounts Management
+            Admin User Management
           </span>
           <h2 className="text-2xl font-medium text-ink mt-1">
-            حسابات المسؤولين المعتمدة ({admins.length})
+            حسابات مسؤولين النظام ({admins.length})
           </h2>
           <FlowingUnderline className="w-48 h-3 text-accent" />
         </div>
@@ -220,9 +229,9 @@ export default function AdminsManagementPage() {
         )}
 
         {/* Create Admin Form Card */}
-        <div className="bg-white border border-border p-6 shadow-sm space-y-4">
+        <div className="bg-white border border-border p-4 sm:p-6 shadow-sm space-y-4">
           <h3 className="text-sm font-semibold text-ink uppercase tracking-wider">
-            + إضافة حساب مسؤول جديد
+            + إنشاء حساب مسؤول جديد
           </h3>
           <form onSubmit={handleCreateAdmin} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
             <div>
@@ -231,7 +240,7 @@ export default function AdminsManagementPage() {
               </label>
               <input
                 type="text"
-                placeholder="مثال: yossif"
+                placeholder="مثال: eng_asmaa"
                 value={newUsername}
                 onChange={(e) => setNewUsername(e.target.value)}
                 className="w-full border border-border bg-paper px-3 py-2 text-sm text-ink focus:outline-none focus:border-accent"
@@ -265,9 +274,49 @@ export default function AdminsManagementPage() {
           </form>
         </div>
 
-        {/* Admins List Table */}
-        <div className="bg-white border border-border overflow-x-auto shadow-sm w-full">
-          <table className="w-full min-w-[550px] text-right border-collapse">
+        {/* Admins List View */}
+        {/* Mobile Cards View */}
+        <div className="grid grid-cols-1 gap-4 md:hidden">
+          {admins.map((adm) => {
+            const isSelf = adm.username.toLowerCase() === currentUsername.toLowerCase();
+
+            return (
+              <div key={adm._id} className="bg-white border border-border p-4 shadow-sm space-y-3">
+                <div className="flex items-center justify-between gap-2 border-b border-border/60 pb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono font-bold text-ink text-base">{adm.username}</span>
+                    {isSelf && (
+                      <span className="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold px-2 py-0.5">
+                        أنت
+                      </span>
+                    )}
+                  </div>
+                  <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold px-2 py-0.5">
+                    مسؤول معتمد
+                  </span>
+                </div>
+
+                <div className="text-[11px] text-muted">
+                  تاريخ الإنشاء: {new Date(adm.createdAt).toLocaleDateString("ar-EG")}
+                </div>
+
+                <div className="pt-2 border-t border-border">
+                  <button
+                    onClick={() => handleDeleteAdmin(adm._id, adm.username)}
+                    disabled={deletingId === adm._id}
+                    className="w-full border border-red-200 bg-red-50 text-red-700 hover:bg-red-100 py-2 text-xs font-medium transition-colors disabled:opacity-50"
+                  >
+                    {deletingId === adm._id ? "جاري الحذف..." : "حذف الحساب"}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden md:block bg-white border border-border overflow-x-auto shadow-sm w-full">
+          <table className="w-full text-right border-collapse">
             <thead>
               <tr className="border-b border-border bg-paper text-[11px] font-semibold uppercase tracking-wider text-muted">
                 <th className="py-3.5 px-4">اسم المستخدم</th>
