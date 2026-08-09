@@ -6,9 +6,9 @@ import FlowingUnderline from "./FlowingUnderline";
 
 const NAV_LINKS = [
   { href: "/#about", label: "عن الشركة" },
-  { href: "/#services", label: "خدماتنا" },
   { href: "/#showcase", label: "عينات الأعمال" },
-  { href: "/projects", label: "المشاريع" },
+  { href: "/#featured", label: "المشاريع" },
+  { href: "/#services", label: "خدماتنا" },
 ];
 
 export default function Navbar() {
