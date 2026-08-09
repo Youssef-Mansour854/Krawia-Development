@@ -51,7 +51,7 @@ async function run() {
   await page.goto(`${LIVE_URL}/projects/brj-lml`, { waitUntil: "domcontentloaded" });
   await new Promise((r) => setTimeout(r, 2500));
   const pageText = await page.evaluate(() => document.body.innerText);
-  if (!pageText.includes("المخططات والتصاميم الهندسية") || !pageText.includes("توزيع شبكة الكهرباء والإنارة")) {
+  if (!pageText.includes("مخططات شبكات الكهرباء والإنارة") || !pageText.includes("مخططات السباكة والتغذية والصرف")) {
     throw new Error("Grouped document sub-sections not found on live project page!");
   }
   console.log("Confirmed live grouped document sub-sections render correctly.");
