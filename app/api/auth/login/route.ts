@@ -1,33 +1,46 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createSessionToken, ADMIN_COOKIE_NAME, constantTimeEqual } from "@/lib/auth";
+import bcrypt from "bcryptjs";
+import { connectToDatabase } from "@/lib/db";
+import { Admin } from "@/models/Admin";
+import { createSessionToken, ADMIN_COOKIE_NAME } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
-
-function getAdminPassword(): string {
-  const password = process.env.ADMIN_PASSWORD;
-  if (!password) {
-    throw new Error("ADMIN_PASSWORD environment variable is required");
-  }
-  return password;
-}
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { password } = body || {};
+    const { username, password } = body || {};
 
-    const expectedPassword = getAdminPassword();
-
-    if (!password || !constantTimeEqual(String(password), expectedPassword)) {
+    if (!username || !password || typeof username !== "string" || typeof password !== "string") {
       return NextResponse.json(
-        { success: false, error: "Invalid admin password" },
+        { success: false, error: "بيانات الدخول غير صحيحة" },
         { status: 401 }
       );
     }
 
-    const token = await createSessionToken();
+    await connectToDatabase();
+
+    const normalizedUsername = username.trim().toLowerCase();
+    const admin = await Admin.findOne({ username: normalizedUsername });
+
+    if (!admin) {
+      return NextResponse.json(
+        { success: false, error: "بيانات الدخول غير صحيحة" },
+        { status: 401 }
+      );
+    }
+
+    const isMatch = await bcrypt.compare(password, admin.passwordHash);
+    if (!isMatch) {
+      return NextResponse.json(
+        { success: false, error: "بيانات الدخول غير صحيحة" },
+        { status: 401 }
+      );
+    }
+
+    const token = await createSessionToken(admin.username);
     const response = NextResponse.json(
-      { success: true, message: "Authentication successful" },
+      { success: true, message: "تم تسجيل الدخول بنجاح", username: admin.username },
       { status: 200 }
     );
 
@@ -44,10 +57,9 @@ export async function POST(req: NextRequest) {
 
     return response;
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Internal server error";
+    console.error("POST /api/auth/login error:", error);
     return NextResponse.json(
-      { success: false, error: message },
+      { success: false, error: "حدث خطأ في الخادم أثناء تسجيل الدخول" },
       { status: 500 }
     );
   }

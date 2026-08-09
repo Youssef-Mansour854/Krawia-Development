@@ -99,18 +99,30 @@ export default function AdminDashboardView({
             </h1>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 flex-wrap">
             <Link
-              href="/admin/access"
+              href="/admin/admins"
               className="text-xs font-semibold text-accent bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3 py-1.5 transition-colors"
             >
+              👥 الحسابات الإدارية
+            </Link>
+            <Link
+              href="/admin/access"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors"
+            >
               🔑 أكواد الدخول
+            </Link>
+            <Link
+              href="/admin/account"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors"
+            >
+              🔒 كلمة السر
             </Link>
             <Link
               href="/"
               className="text-xs font-medium text-muted hover:text-ink transition-colors"
             >
-              عرض الموقع الحقيقي ←
+              الموقع الرئيسي ←
             </Link>
             <button
               onClick={handleLogout}

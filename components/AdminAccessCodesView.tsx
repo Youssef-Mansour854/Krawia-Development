@@ -23,12 +23,22 @@ export default function AdminAccessCodesView({
   const [codes, setCodes] = useState<IAccessCodeData[]>(initialCodes);
   const [label, setLabel] = useState("");
   const [code, setCode] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [togglingId, setTogglingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const router = useRouter();
+
+  const filteredCodes = codes.filter((item) => {
+    if (!searchTerm.trim()) return true;
+    const term = searchTerm.trim().toLowerCase();
+    return (
+      (item.label && item.label.toLowerCase().includes(term)) ||
+      (item.code && item.code.toLowerCase().includes(term))
+    );
+  });
 
   const handleLogout = async () => {
     try {
@@ -167,12 +177,24 @@ export default function AdminAccessCodesView({
             </h1>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 flex-wrap">
+            <Link
+              href="/admin/admins"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors"
+            >
+              👥 الحسابات الإدارية
+            </Link>
+            <Link
+              href="/admin/account"
+              className="text-xs font-medium text-muted hover:text-ink transition-colors"
+            >
+              🔒 كلمة السر
+            </Link>
             <Link
               href="/admin"
               className="text-xs font-medium text-muted hover:text-ink transition-colors"
             >
-              ← العودة لإدارة المشاريع
+              ← إدارة المشاريع
             </Link>
             <button
               onClick={handleLogout}
@@ -263,10 +285,60 @@ export default function AdminAccessCodesView({
           </form>
         </div>
 
+        {/* Brand Search Input Bar */}
+        <div className="bg-white border border-border p-4 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          <div className="relative flex-1">
+            <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-accent text-base">
+              🔍
+            </div>
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="بحث بالوصف أو الكود (مثال: tanta, Nada)..."
+              className="w-full border border-border bg-paper pr-10 pl-10 py-2.5 text-sm text-ink focus:outline-none focus:border-accent transition-colors"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm("")}
+                className="absolute inset-y-0 left-0 px-3 text-xs text-muted hover:text-ink font-bold transition-colors"
+                title="إعادة تعيين البحث"
+              >
+                ✕ مسح
+              </button>
+            )}
+          </div>
+
+          <div className="text-xs font-semibold text-muted bg-paper px-4 py-2.5 border border-border text-center whitespace-nowrap">
+            {searchTerm ? (
+              <span>
+                تم العثور على <strong className="text-accent">{filteredCodes.length}</strong> من أصل{" "}
+                {codes.length} كود
+              </span>
+            ) : (
+              <span>
+                إجمالي أكواد الدخول: <strong className="text-ink">{codes.length}</strong>
+              </span>
+            )}
+          </div>
+        </div>
+
         {/* Access Codes Table */}
-        {codes.length === 0 ? (
-          <div className="bg-white border border-border p-12 text-center text-muted text-sm">
-            لا توجد أكواد دخول حالية. قم بإنشاء أول كود دخول للعملاء أعلاه.
+        {filteredCodes.length === 0 ? (
+          <div className="bg-white border border-border p-12 text-center text-muted text-sm space-y-3">
+            <p>
+              {searchTerm
+                ? `لا توجد نتائج مطابقة لبحثك: "${searchTerm}"`
+                : "لا توجد أكواد دخول حالية. قم بإنشاء أول كود دخول للعملاء أعلاه."}
+            </p>
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm("")}
+                className="inline-block bg-accent hover:bg-accent-hover text-white text-xs font-semibold uppercase tracking-wider px-4 py-2 transition-colors"
+              >
+                عرض جميع الأكواد ({codes.length})
+              </button>
+            )}
           </div>
         ) : (
           <div className="bg-white border border-border overflow-x-auto shadow-sm">
@@ -281,7 +353,7 @@ export default function AdminAccessCodesView({
                 </tr>
               </thead>
               <tbody className="divide-y divide-border text-sm">
-                {codes.map((item) => (
+                {filteredCodes.map((item) => (
                   <tr
                     key={item._id.toString()}
                     className="hover:bg-slate-50/80 transition-colors"

@@ -42,50 +42,87 @@ async function hmacSha256(data: string, secret: string): Promise<string> {
     .join("");
 }
 
-export async function createSessionToken(): Promise<string> {
+export async function createSessionToken(username: string = "admin"): Promise<string> {
   const secret = getAdminSecret();
   const timestamp = Date.now().toString();
-  const sig = await hmacSha256(timestamp, secret);
-  return `${timestamp}.${sig}`;
+  const payload = `${username}.${timestamp}`;
+  const sig = await hmacSha256(payload, secret);
+  return `${payload}.${sig}`;
+}
+
+export interface VerifyTokenResult {
+  valid: boolean;
+  username?: string;
 }
 
 export async function verifySessionToken(
   token: string | undefined | null
-): Promise<boolean> {
-  if (!token) return false;
+): Promise<VerifyTokenResult> {
+  if (!token) return { valid: false };
   const parts = token.split(".");
-  if (parts.length !== 2) return false;
 
-  const [timestampStr, sig] = parts;
-  const timestamp = parseInt(timestampStr, 10);
-  if (isNaN(timestamp)) return false;
+  // Support 3-part format: username.timestamp.sig
+  if (parts.length === 3) {
+    const [username, timestampStr, sig] = parts;
+    const timestamp = parseInt(timestampStr, 10);
+    if (isNaN(timestamp)) return { valid: false };
 
-  // Session expires in 7 days, and cannot be from the future
-  const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
-  const age = Date.now() - timestamp;
-  if (age > SEVEN_DAYS_MS || age < -60000) return false;
+    const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
+    const age = Date.now() - timestamp;
+    if (age > SEVEN_DAYS_MS || age < -60000) return { valid: false };
 
-  const secret = getAdminSecret();
-  const expectedSig = await hmacSha256(timestampStr, secret);
+    const secret = getAdminSecret();
+    const expectedSig = await hmacSha256(`${username}.${timestampStr}`, secret);
 
-  return constantTimeEqual(sig, expectedSig);
+    if (constantTimeEqual(sig, expectedSig)) {
+      return { valid: true, username };
+    }
+    return { valid: false };
+  }
+
+  // Fallback for 2-part legacy format: timestamp.sig
+  if (parts.length === 2) {
+    const [timestampStr, sig] = parts;
+    const timestamp = parseInt(timestampStr, 10);
+    if (isNaN(timestamp)) return { valid: false };
+
+    const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
+    const age = Date.now() - timestamp;
+    if (age > SEVEN_DAYS_MS || age < -60000) return { valid: false };
+
+    const secret = getAdminSecret();
+    const expectedSig = await hmacSha256(timestampStr, secret);
+
+    if (constantTimeEqual(sig, expectedSig)) {
+      return { valid: true, username: "admin" };
+    }
+    return { valid: false };
+  }
+
+  return { valid: false };
 }
 
-export async function isAuthorizedAdmin(req: NextRequest): Promise<boolean> {
+export async function getAdminSessionUser(req: NextRequest): Promise<string | null> {
   const secretHeader = req.headers.get("x-admin-secret");
   const authHeader = req.headers.get("authorization")?.replace("Bearer ", "");
   const expectedSecret = getAdminSecret();
 
-  if (secretHeader && constantTimeEqual(secretHeader, expectedSecret)) {
-    return true;
-  }
-  if (authHeader && constantTimeEqual(authHeader, expectedSecret)) {
-    return true;
+  if ((secretHeader && constantTimeEqual(secretHeader, expectedSecret)) ||
+      (authHeader && constantTimeEqual(authHeader, expectedSecret))) {
+    return "system";
   }
 
-  // Check admin session cookie
   const cookieToken = req.cookies.get(ADMIN_COOKIE_NAME)?.value;
-  return verifySessionToken(cookieToken);
+  const res = await verifySessionToken(cookieToken);
+  if (res.valid && res.username) {
+    return res.username;
+  }
+  return null;
+}
+
+export async function isAuthorizedAdmin(req: NextRequest): Promise<boolean> {
+  const user = await getAdminSessionUser(req);
+  return user !== null;
 }
 
 export async function isAuthorizedViewerOrAdmin(req: NextRequest): Promise<boolean> {
@@ -93,5 +130,6 @@ export async function isAuthorizedViewerOrAdmin(req: NextRequest): Promise<boole
     return true;
   }
   const viewerToken = req.cookies.get(VIEWER_COOKIE_NAME)?.value;
-  return verifySessionToken(viewerToken);
+  const res = await verifySessionToken(viewerToken);
+  return res.valid;
 }

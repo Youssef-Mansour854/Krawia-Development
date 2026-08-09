@@ -24,25 +24,14 @@ export async function POST(req: NextRequest) {
     const inputPassword = password.trim();
     let isMatch = false;
 
-    // 1. Check ADMIN_PASSWORD (fail loudly if environment variable is not configured)
-    const adminPassword = process.env.ADMIN_PASSWORD;
-    if (!adminPassword) {
-      throw new Error("ADMIN_PASSWORD environment variable is required");
-    }
-    if (constantTimeEqual(inputPassword, adminPassword)) {
-      isMatch = true;
-    }
-
-    // 2. Check against DB active AccessCode entries
-    if (!isMatch) {
-      await connectToDatabase();
-      const activeCodes = await AccessCode.find({ active: true }).lean();
-      if (Array.isArray(activeCodes)) {
-        for (const item of activeCodes) {
-          if (item.code && constantTimeEqual(inputPassword, item.code)) {
-            isMatch = true;
-            break;
-          }
+    // Check against DB active AccessCode entries
+    await connectToDatabase();
+    const activeCodes = await AccessCode.find({ active: true }).lean();
+    if (Array.isArray(activeCodes)) {
+      for (const item of activeCodes) {
+        if (item.code && constantTimeEqual(inputPassword, item.code)) {
+          isMatch = true;
+          break;
         }
       }
     }
@@ -54,7 +43,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const token = await createSessionToken();
+    const token = await createSessionToken("viewer");
     const response = NextResponse.json(
       { success: true, message: "تم تسجيل الدخول بنجاح" },
       { status: 200 }

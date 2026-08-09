@@ -33,8 +33,11 @@ export async function proxy(req: NextRequest) {
         (authHeader && authHeader === expectedSecret))
   );
 
-  const isAdminAuth = isAdminSecret || (await verifySessionToken(adminToken));
-  const isViewerAuth = await verifySessionToken(viewerToken);
+  const adminTokenRes = await verifySessionToken(adminToken);
+  const viewerTokenRes = await verifySessionToken(viewerToken);
+
+  const isAdminAuth = isAdminSecret || adminTokenRes.valid;
+  const isViewerAuth = viewerTokenRes.valid;
   const isAuthenticated = isAdminAuth || isViewerAuth;
 
   // 2. Admin routes protection

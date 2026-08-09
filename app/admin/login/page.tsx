@@ -6,6 +6,7 @@ import Link from "next/link";
 import FlowingUnderline from "@/components/FlowingUnderline";
 
 export default function AdminLoginPage() {
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,13 +21,13 @@ export default function AdminLoginPage() {
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        setError(data.error || "فشل التحقق من كلمة المرور.");
+        setError(data.error || "بيانات الدخول غير صحيحة.");
         setLoading(false);
         return;
       }
@@ -61,7 +62,7 @@ export default function AdminLoginPage() {
               تسجيل دخول الأدمن
             </h1>
             <p className="text-xs text-muted font-normal mt-1">
-              يرجى إدخال كلمة المرور السرية للوصول إلى لوحة إدارة المعرض
+              يرجى إدخال اسم المستخدم وكلمة المرور للوصول إلى لوحة التحكم
             </p>
           </div>
         </div>
@@ -75,6 +76,24 @@ export default function AdminLoginPage() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <label
+                htmlFor="username"
+                className="block text-xs font-semibold uppercase tracking-wider text-ink"
+              >
+                اسم المستخدم *
+              </label>
+              <input
+                id="username"
+                type="text"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="أدخل اسم المستخدم..."
+                className="w-full border border-border bg-paper px-4 py-3 text-sm text-ink focus:border-accent focus:outline-none transition-colors"
+              />
+            </div>
+
             <div className="space-y-2">
               <label
                 htmlFor="password"
