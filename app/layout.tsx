@@ -22,10 +22,10 @@ export const metadata: Metadata = {
     "معرض الأعمال المعمارية والمشاريع السكنية والتجارية الفاخرة لشركة أسماء كراوية للتطوير العقاري.",
   icons: {
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/img/logo/logo_shafaf.png", type: "image/png" },
     ],
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
+    shortcut: "/img/logo/logo_shafaf.png",
+    apple: "/img/logo/logo_shafaf.png",
   },
 };
 

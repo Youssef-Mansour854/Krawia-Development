@@ -8,16 +8,20 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
           {/* Column 1: Brand Info */}
           <div className="space-y-4 md:col-span-1">
-            <Link href="/" className="group inline-flex flex-col" dir="ltr">
-              <div className="flex items-baseline gap-2">
-                <span className="font-serif text-2xl font-semibold tracking-tight text-white">
-                  Asmaa Krawia
+            <Link href="/" className="group flex items-center gap-3" dir="rtl">
+              <img
+                src="/img/logo/logo_shafaf.png"
+                alt="شعار المهندسة أسماء كراوية للتشطيبات والديكور"
+                className="h-14 sm:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="flex flex-col text-right">
+                <span className="font-serif text-xl font-bold tracking-tight text-white">
+                  أسماء كراوية
                 </span>
-                <span className="text-xs font-light tracking-widest text-amber-400 uppercase">
-                  Designs
+                <span className="text-xs font-semibold tracking-widest text-amber-400 uppercase">
+                  للتشطيبات والديكور والتطوير العقاري
                 </span>
               </div>
-              <FlowingUnderline className="w-28 h-2 -mt-1 text-amber-500" />
             </Link>
             <p className="text-xs text-slate-400 leading-relaxed">
               شركة رائدة في التطوير العقاري والهندسة المعمارية، تبتكر معالم فاخرة تدمج بين الأصالة الاستثنائية والتصميم الرؤيوي المعاصر.

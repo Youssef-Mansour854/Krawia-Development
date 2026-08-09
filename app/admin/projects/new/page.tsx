@@ -11,11 +11,16 @@ export default function NewProjectPage() {
       <header className="border-b border-border bg-white px-6 py-4">
         <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
+            <img
+              src="/img/logo/logo_shafaf.png"
+              alt="شعار المهندسة أسماء كراوية للتشطيبات والديكور"
+              className="h-9 w-auto object-contain"
+            />
             <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-2.5 py-1 border border-amber-200">
               لوحة التحكم
             </span>
             <h1 className="text-lg font-medium text-ink">
-              أسماء كراوية للتطوير العقاري
+              أسماء كراوية للتشطيبات والديكور
             </h1>
           </div>
 

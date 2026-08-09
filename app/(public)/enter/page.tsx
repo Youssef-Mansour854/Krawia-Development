@@ -51,12 +51,17 @@ function EnterForm() {
   return (
     <div className="w-full max-w-md bg-white border border-border p-8 md:p-10 shadow-xl space-y-6">
       {/* Brand Header */}
-      <div className="text-center space-y-2">
+      <div className="text-center space-y-3 flex flex-col items-center">
+        <img
+          src="/img/logo/logo_shafaf.png"
+          alt="شعار المهندسة أسماء كراوية للتشطيبات والديكور"
+          className="w-20 h-20 object-contain drop-shadow-md transition-transform hover:scale-105"
+        />
         <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-3 py-1 border border-amber-200 inline-block">
           معرض الأعمال والابتكارات المعمارية
         </span>
         <h1 className="text-2xl font-bold text-ink tracking-tight">
-          أسماء كراوية للتطوير العقاري
+          أسماء كراوية للتشطيبات والديكور
         </h1>
         <p className="text-xs text-muted leading-relaxed">
           يرجى إدخال كود الدخول الخاص بك لاستعراض المشاريع والتفاصيل المعمارية.

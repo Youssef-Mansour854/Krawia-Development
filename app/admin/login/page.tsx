@@ -43,21 +43,17 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen bg-paper text-ink flex flex-col justify-center py-12 px-6 font-sans">
       <div className="mx-auto w-full max-w-md space-y-8">
-        {/* Header with English Brand Logo */}
+        {/* Header with Brand Logo */}
         <div className="text-center space-y-4 flex flex-col items-center">
-          <Link href="/" className="group inline-flex flex-col items-center" dir="ltr">
-            <div className="flex items-baseline gap-2">
-              <span className="font-serif text-3xl font-semibold tracking-tight text-ink">
-                Asmaa Krawia
-              </span>
-              <span className="text-xs font-light tracking-widest text-muted uppercase">
-                Designs
-              </span>
-            </div>
-            <FlowingUnderline className="w-32 h-2 -mt-1 text-accent transition-transform duration-300 group-hover:scale-x-105 origin-center" />
+          <Link href="/" className="group inline-flex flex-col items-center">
+            <img
+              src="/img/logo/logo_shafaf.png"
+              alt="شعار المهندسة أسماء كراوية للتشطيبات والديكور"
+              className="w-24 h-24 object-contain drop-shadow-md transition-transform duration-300 group-hover:scale-105"
+            />
           </Link>
 
-          <div className="pt-2">
+          <div className="pt-1">
             <h1 className="font-sans text-2xl font-medium text-ink tracking-tight">
               تسجيل دخول الأدمن
             </h1>

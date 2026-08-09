@@ -16,16 +16,20 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-paper/90 backdrop-blur-md font-sans">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-4 sm:py-5">
-        <Link href="/" className="group flex flex-col" dir="ltr" onClick={() => setMenuOpen(false)}>
-          <div className="flex items-baseline gap-2">
-            <span className="font-serif text-xl sm:text-2xl font-semibold tracking-tight text-ink whitespace-nowrap">
-              Asmaa Krawia
+        <Link href="/" className="group flex items-center gap-3" dir="rtl" onClick={() => setMenuOpen(false)}>
+          <img
+            src="/img/logo/logo_shafaf.png"
+            alt="شعار المهندسة أسماء كراوية للتشطيبات والديكور"
+            className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+          />
+          <div className="flex flex-col text-right">
+            <span className="font-serif text-lg sm:text-xl font-bold tracking-tight text-ink whitespace-nowrap">
+              أسماء كراوية
             </span>
-            <span className="hidden sm:inline text-xs font-light tracking-widest text-muted uppercase">
-              Designs
+            <span className="text-[10px] font-semibold tracking-widest text-accent uppercase">
+              للتشطيبات والديكور
             </span>
           </div>
-          <FlowingUnderline className="w-28 h-2 -mt-1 text-accent transition-transform duration-300 group-hover:scale-x-105 origin-left" />
         </Link>
 
         {/* Desktop Navigation */}
