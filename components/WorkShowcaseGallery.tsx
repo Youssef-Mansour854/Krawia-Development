@@ -150,7 +150,7 @@ export default function WorkShowcaseGallery({ initialSamples }: WorkShowcaseGall
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-border pb-6">
           <div className="space-y-3">
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2.5">
               <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-3 py-1 border border-amber-200 inline-flex items-center gap-1.5 rounded-sm">
                 <svg className="w-3.5 h-3.5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -158,11 +158,11 @@ export default function WorkShowcaseGallery({ initialSamples }: WorkShowcaseGall
                 معرض النماذج الحية
               </span>
 
-              {/* Dedicated Separate Box for Total Samples Count */}
-              <div className="inline-flex items-center gap-1.5 bg-slate-900 text-amber-300 text-xs font-bold px-3 py-1 border border-slate-800 shadow-sm rounded-sm">
-                <span>إجمالي العينات المتاحة:</span>
-                <span className="text-white bg-amber-600 px-1.5 py-0.5 text-[11px] rounded-xs font-mono">{samples.length}</span>
-              </div>
+              {/* Dedicated Luxury Gold Count Pill */}
+              <span className="text-xs font-semibold text-amber-900 bg-amber-100/80 border border-amber-300 px-3 py-1 rounded-sm flex items-center gap-1.5 shadow-2xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse"></span>
+                <span>{samples.length} نموذج محقق</span>
+              </span>
             </div>
 
             <h2 className="font-serif text-3xl sm:text-4xl font-medium text-ink">

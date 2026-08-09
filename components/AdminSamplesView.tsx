@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -34,6 +34,18 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const router = useRouter();
+
+  // Lock body scroll when edit modal is active to prevent backdrop overflow gaps
+  useEffect(() => {
+    if (editingSample) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [editingSample]);
 
   const handleLogout = async () => {
     try {
@@ -214,7 +226,7 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
                 className="h-10 sm:h-12 w-auto object-contain drop-shadow-sm"
               />
               <span className="text-xs font-semibold uppercase tracking-widest text-accent bg-amber-50 px-2.5 py-1 border border-amber-200 whitespace-nowrap">
-                إدارة عينات الأعمال الميدانية ({samples.length})
+                إدارة عينات الأعمال الميدانية
               </span>
             </div>
 
@@ -267,12 +279,13 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
       <main className="mx-auto max-w-7xl w-full px-4 sm:px-6 py-6 sm:py-10 flex-1 space-y-6 sm:space-y-8">
         {/* Title Bar */}
         <div className="border-b border-border pb-6 space-y-2">
-          <div className="flex items-center gap-3">
-            <h2 className="text-2xl font-medium text-ink">
+          <div className="flex flex-wrap items-center gap-3">
+            <h2 className="text-2xl sm:text-3xl font-serif font-medium text-ink">
               عينات من أعمالنا الميدانية
             </h2>
-            <span className="bg-slate-900 text-amber-300 text-xs font-bold px-2.5 py-1 border border-slate-800 rounded-sm">
-              إجمالي العينات: {samples.length}
+            <span className="text-xs font-semibold text-amber-900 bg-amber-100/80 border border-amber-300 px-3 py-1 rounded-sm flex items-center gap-1.5 shadow-2xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse"></span>
+              <span>{samples.length} عينة مسجلة</span>
             </span>
           </div>
           <FlowingUnderline className="w-48 h-3 text-accent" />
@@ -290,7 +303,7 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
         )}
 
         {/* Create Form Card */}
-        <div className="bg-white border border-border p-4 sm:p-6 shadow-sm space-y-4">
+        <div className="bg-white border border-border p-4 sm:p-6 shadow-sm space-y-4 rounded-sm">
           <h3 className="text-sm font-semibold text-ink uppercase tracking-wider">
             + إضافة عينة عمل ميداني جديدة
           </h3>
@@ -361,7 +374,7 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
               <button
                 type="submit"
                 disabled={loading || uploading}
-                className="w-full sm:w-auto bg-accent hover:bg-accent-hover text-white text-xs font-semibold uppercase tracking-widest px-8 py-3 transition-colors disabled:opacity-50"
+                className="w-full sm:w-auto bg-accent hover:bg-accent-hover text-white text-xs font-semibold uppercase tracking-widest px-8 py-3 transition-colors disabled:opacity-50 rounded-sm"
               >
                 {loading ? "جاري الإضافة..." : "حفظ وإضافة عينة العمل"}
               </button>
@@ -369,21 +382,21 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
           </form>
         </div>
 
-        {/* Edit Modal */}
+        {/* Edit Modal - 100% Full Viewport Backdrop Overlay */}
         {editingSample && (
           <div
-            className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4"
+            className="fixed inset-0 top-0 left-0 w-full h-full min-h-screen z-[999] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-fade-in"
             onClick={() => setEditingSample(null)}
           >
             <div
-              className="bg-white border border-border p-6 max-w-lg w-full shadow-2xl space-y-4"
+              className="relative bg-white border border-border p-6 max-w-lg w-full shadow-2xl space-y-4 rounded-sm my-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between border-b border-border pb-3">
                 <h3 className="text-base font-bold text-ink">
                   تعديل عينة العمل
                 </h3>
-                <button onClick={() => setEditingSample(null)} className="text-muted font-bold">✕</button>
+                <button onClick={() => setEditingSample(null)} className="text-muted hover:text-ink font-bold text-lg">✕</button>
               </div>
 
               <form onSubmit={handleUpdate} className="space-y-4">
@@ -443,14 +456,14 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
                   <button
                     type="button"
                     onClick={() => setEditingSample(null)}
-                    className="border border-border bg-paper px-4 py-2 text-xs font-medium text-muted"
+                    className="border border-border bg-paper px-4 py-2 text-xs font-medium text-muted rounded-sm"
                   >
                     إلغاء
                   </button>
                   <button
                     type="submit"
                     disabled={editLoading || editUploading}
-                    className="bg-accent text-white px-5 py-2 text-xs font-semibold uppercase tracking-wider disabled:opacity-50"
+                    className="bg-accent text-white px-5 py-2 text-xs font-semibold uppercase tracking-wider disabled:opacity-50 rounded-sm"
                   >
                     {editLoading ? "جاري..." : "حفظ التعديلات"}
                   </button>
@@ -463,7 +476,7 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
         {/* Samples Grid View */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {samples.map((item) => (
-            <div key={item._id.toString()} className="bg-white border border-border overflow-hidden shadow-sm flex flex-col justify-between group">
+            <div key={item._id.toString()} className="bg-white border border-border overflow-hidden shadow-sm flex flex-col justify-between group rounded-sm">
               <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
                 <Image
                   src={item.imageSrc}
@@ -472,7 +485,7 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute top-2 right-2">
-                  <span className="bg-amber-500 text-slate-950 text-[10px] font-bold px-2 py-0.5 shadow-sm">
+                  <span className="bg-amber-500 text-slate-950 text-[10px] font-bold px-2 py-0.5 shadow-sm rounded-sm">
                     {item.categoryLabel}
                   </span>
                 </div>
@@ -487,14 +500,14 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
                 <div className="pt-3 border-t border-border flex items-center gap-2">
                   <button
                     onClick={() => handleStartEdit(item)}
-                    className="flex-1 border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-900 py-1.5 text-xs font-medium transition-colors text-center"
+                    className="flex-1 border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-900 py-1.5 text-xs font-medium transition-colors text-center rounded-sm"
                   >
                     تعديل
                   </button>
                   <button
                     onClick={() => handleDelete(item._id.toString(), item.title)}
                     disabled={deletingId === item._id.toString()}
-                    className="flex-1 border border-red-200 bg-red-50 hover:bg-red-100 text-red-700 py-1.5 text-xs font-medium transition-colors text-center disabled:opacity-50"
+                    className="flex-1 border border-red-200 bg-red-50 hover:bg-red-100 text-red-700 py-1.5 text-xs font-medium transition-colors text-center disabled:opacity-50 rounded-sm"
                   >
                     {deletingId === item._id.toString() ? "حذف..." : "حذف"}
                   </button>
