@@ -158,7 +158,7 @@ export default function WorkShowcaseGallery({ initialSamples }: WorkShowcaseGall
             </span>
 
             <h2 className="font-serif text-3xl sm:text-4xl font-medium text-ink">
-              عينات من أعمالنا ({samples.length})
+              عينات من أعمالنا
             </h2>
             <FlowingUnderline className="w-48 h-3 text-accent" />
           </div>
@@ -173,7 +173,7 @@ export default function WorkShowcaseGallery({ initialSamples }: WorkShowcaseGall
                   : "bg-white text-muted hover:text-ink border border-border hover:border-accent"
               }`}
             >
-              الكل ({samples.length})
+              الكل
             </button>
             <button
               onClick={() => setActiveTab("interiors")}
