@@ -5,9 +5,9 @@ import { useState } from "react";
 import FlowingUnderline from "./FlowingUnderline";
 
 const NAV_LINKS = [
-  { href: "/projects", label: "المشاريع" },
   { href: "/#about", label: "عن الشركة" },
   { href: "/#services", label: "خدماتنا" },
+  { href: "/projects", label: "المشاريع" },
 ];
 
 export default function Navbar() {
