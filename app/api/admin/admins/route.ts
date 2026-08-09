@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { username, password } = body || {};
+    const { username, password, employeeName } = body || {};
 
     if (!username || !password || typeof username !== "string" || typeof password !== "string") {
       return NextResponse.json(
@@ -71,12 +71,14 @@ export async function POST(req: NextRequest) {
     const passwordHash = await bcrypt.hash(password, 10);
     const newAdmin = await Admin.create({
       username: trimmedUsername,
+      employeeName: employeeName ? String(employeeName).trim() : "",
       passwordHash,
     });
 
     const result = {
       _id: newAdmin._id.toString(),
       username: newAdmin.username,
+      employeeName: newAdmin.employeeName || "",
       createdAt: newAdmin.createdAt,
     };
 

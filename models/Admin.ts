@@ -3,6 +3,7 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 export interface IAdmin {
   _id: mongoose.Types.ObjectId | string;
   username: string;
+  employeeName?: string;
   passwordHash: string;
   createdAt: Date;
 }
@@ -18,9 +19,14 @@ const AdminSchema = new Schema<IAdminDocument>(
       trim: true,
       lowercase: true,
     },
+    employeeName: {
+      type: String,
+      default: "",
+      trim: true,
+    },
     passwordHash: {
       type: String,
-      required: [true, "كلمة السر المرفرة مطلوبة"],
+      required: [true, "كلمة السر المشفرة مطلوبة"],
     },
     createdAt: {
       type: Date,
