@@ -51,8 +51,8 @@ export default function AdminAccountPage() {
       setError("يرجى إدخال كلمة السر الحالية.");
       return;
     }
-    if (newPassword.length < 6) {
-      setError("كلمة السر الجديدة يجب أن تكون 6 أحرف على الأقل.");
+    if (newPassword.length < 8) {
+      setError("كلمة السر الجديدة يجب أن تكون 8 أحرف على الأقل.");
       return;
     }
     if (newPassword !== confirmPassword) {

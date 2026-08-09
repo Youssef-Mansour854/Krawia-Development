@@ -19,9 +19,9 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { currentPassword, newPassword } = body || {};
 
-    if (!currentPassword || !newPassword || typeof newPassword !== "string" || newPassword.length < 6) {
+    if (!currentPassword || !newPassword || typeof newPassword !== "string" || newPassword.length < 8) {
       return NextResponse.json(
-        { success: false, error: "يرجى إدخال كلمة سر جديدة لا تقل عن 6 أحرف" },
+        { success: false, error: "يرجى إدخال كلمة سر جديدة لا تقل عن 8 أحرف" },
         { status: 400 }
       );
     }

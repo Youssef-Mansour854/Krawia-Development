@@ -51,9 +51,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (password.length < 6) {
+    if (password.length < 8) {
       return NextResponse.json(
-        { success: false, error: "كلمة السر يجب أن تكون 6 أحرف على الأقل" },
+        { success: false, error: "كلمة السر يجب أن تكون 8 أحرف على الأقل" },
         { status: 400 }
       );
     }
@@ -86,6 +86,13 @@ export async function POST(req: NextRequest) {
     );
   } catch (error: unknown) {
     console.error("POST /api/admin/admins error:", error);
+    const errObj = error as { code?: number };
+    if (errObj && errObj.code === 11000) {
+      return NextResponse.json(
+        { success: false, error: "اسم المستخدم هذا مُستخدم بالفعل" },
+        { status: 400 }
+      );
+    }
     return NextResponse.json({ success: false, error: "حدث خطأ أثناء إضافة الحساب" }, { status: 500 });
   }
 }
