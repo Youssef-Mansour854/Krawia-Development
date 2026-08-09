@@ -40,9 +40,25 @@ export default function AdminDashboardView({
   initialProjects,
 }: AdminDashboardViewProps) {
   const [projects, setProjects] = useState<IProject[]>(initialProjects);
+  const [searchTerm, setSearchTerm] = useState("");
   const [deletingSlug, setDeletingSlug] = useState<string | null>(null);
   const [error, setError] = useState("");
   const router = useRouter();
+
+  const filteredProjects = projects.filter((project) => {
+    if (!searchTerm.trim()) return true;
+    const term = searchTerm.trim().toLowerCase();
+    const categoryLabel = getCategoryLabel(project.category).toLowerCase();
+    const statusLabel = getStatusLabel(project.status).toLowerCase();
+
+    return (
+      (project.title && project.title.toLowerCase().includes(term)) ||
+      (project.location && project.location.toLowerCase().includes(term)) ||
+      (project.category && project.category.toLowerCase().includes(term)) ||
+      categoryLabel.includes(term) ||
+      statusLabel.includes(term)
+    );
+  });
 
   const handleLogout = async () => {
     try {
@@ -120,10 +136,12 @@ export default function AdminDashboardView({
             </Link>
             <Link
               href="/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 transition-colors flex items-center gap-1.5"
-              title="معاينة البورتفوليو الخاص بالعملاء"
+              title="معاينة البورتفوليو الخاص بالعملاء في تبويب جديد"
             >
-              🌐 معرض الأعمال (البورتفوليو) ←
+              🌐 معرض الأعمال (البورتفوليو) ↗
             </Link>
             <button
               onClick={handleLogout}
@@ -163,18 +181,67 @@ export default function AdminDashboardView({
           </div>
         )}
 
+        {/* Brand Search Bar */}
+        <div className="bg-white border border-border p-4 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          <div className="relative flex-1">
+            <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-accent text-base">
+              🔍
+            </div>
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="بحث باسم المشروع أو الموقع أو التصنيف (مثال: دمنهور، برج، سكني)..."
+              className="w-full border border-border bg-paper pr-10 pl-10 py-2.5 text-sm text-ink focus:outline-none focus:border-accent transition-colors"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm("")}
+                className="absolute inset-y-0 left-0 px-3 text-xs text-muted hover:text-ink font-bold transition-colors"
+                title="إعادة تعيين البحث"
+              >
+                ✕ مسح
+              </button>
+            )}
+          </div>
+
+          <div className="text-xs font-semibold text-muted bg-paper px-4 py-2.5 border border-border text-center whitespace-nowrap">
+            {searchTerm ? (
+              <span>
+                تم العثور على <strong className="text-accent">{filteredProjects.length}</strong> من أصل{" "}
+                {projects.length} مشروع
+              </span>
+            ) : (
+              <span>
+                إجمالي المشاريع: <strong className="text-ink">{projects.length}</strong>
+              </span>
+            )}
+          </div>
+        </div>
+
         {/* Projects Table */}
-        {projects.length === 0 ? (
-          <div className="bg-white border border-border p-12 text-center space-y-4">
-            <p className="text-muted text-sm">
-              لم يتم العثور على مشاريع في قاعدة البيانات.
+        {filteredProjects.length === 0 ? (
+          <div className="bg-white border border-border p-12 text-center text-muted text-sm space-y-4">
+            <p>
+              {searchTerm
+                ? `لا توجد نتائج مطابقة لبحثك: "${searchTerm}"`
+                : "لم يتم العثور على مشاريع في قاعدة البيانات."}
             </p>
-            <Link
-              href="/admin/projects/new"
-              className="inline-block bg-accent text-white text-xs font-semibold uppercase tracking-widest px-5 py-2.5"
-            >
-              إنشاء أول مشروع
-            </Link>
+            {searchTerm ? (
+              <button
+                onClick={() => setSearchTerm("")}
+                className="inline-block bg-accent hover:bg-accent-hover text-white text-xs font-semibold uppercase tracking-wider px-4 py-2 transition-colors"
+              >
+                عرض جميع المشاريع ({projects.length})
+              </button>
+            ) : (
+              <Link
+                href="/admin/projects/new"
+                className="inline-block bg-accent text-white text-xs font-semibold uppercase tracking-widest px-5 py-2.5"
+              >
+                إنشاء أول مشروع
+              </Link>
+            )}
           </div>
         ) : (
           <div className="bg-white border border-border overflow-x-auto shadow-sm">
@@ -189,7 +256,7 @@ export default function AdminDashboardView({
                 </tr>
               </thead>
               <tbody className="divide-y divide-border text-sm">
-                {projects.map((project) => (
+                {filteredProjects.map((project) => (
                   <tr
                     key={project._id.toString()}
                     className="hover:bg-slate-50/80 transition-colors"
@@ -232,6 +299,15 @@ export default function AdminDashboardView({
 
                     {/* Actions */}
                     <td className="py-4 px-4 text-left space-x-2 space-x-reverse">
+                      <Link
+                        href={`/projects/${project.slug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block border border-border bg-paper hover:bg-slate-100 hover:text-ink px-3 py-1.5 text-xs font-medium transition-colors"
+                        title="معاينة هذا المشروع في تبويب جديد"
+                      >
+                        معاينة ↗
+                      </Link>
                       <Link
                         href={`/admin/projects/${project.slug}/edit`}
                         className="inline-block border border-border bg-white hover:border-accent hover:text-accent px-3 py-1.5 text-xs font-medium transition-colors"

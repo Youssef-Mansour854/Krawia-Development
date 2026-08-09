@@ -192,10 +192,12 @@ export default function AdminAccessCodesView({
             </Link>
             <Link
               href="/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 transition-colors flex items-center gap-1.5"
-              title="معاينة البورتفوليو الخاص بالعملاء"
+              title="معاينة البورتفوليو الخاص بالعملاء في تبويب جديد"
             >
-              🌐 معرض الأعمال (البورتفوليو) ←
+              🌐 معرض الأعمال (البورتفوليو) ↗
             </Link>
             <Link
               href="/admin"
