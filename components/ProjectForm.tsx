@@ -22,6 +22,39 @@ const BLUEPRINT_PRESETS = [
   "ملاحظات واستشارات هندسية (Notes & Recommendations)",
 ];
 
+const BLUEPRINT_WINDOWS = [
+  {
+    key: "المخططات والمعمار (Plans)",
+    title: "1. المخططات والمعمار (Plans)",
+    subtitle: "مخططات المساقط الأفقية، الواجهات، والقطاعات المعمارية",
+    icon: "📐",
+  },
+  {
+    key: "التصميم (Design)",
+    title: "2. التصميم (Design)",
+    subtitle: "التصاميم ثلاثية الأبعاد 3D والديكورات الداخلية",
+    icon: "🎨",
+  },
+  {
+    key: "الرسومات التنفيذية (Working Drawings)",
+    title: "3. الرسومات التنفيذية (Working Drawings)",
+    subtitle: "مخططات تفاصيل التنفيذ والأسقف وشوب دروينج الموقع",
+    icon: "🏗️",
+  },
+  {
+    key: "مخططات الكهرباء والسباكة (Electrical & Plumbing)",
+    title: "4. مخططات الكهرباء والسباكة (Electrical & Plumbing)",
+    subtitle: "مخططات التغذية والصرف، الكهرباء والإنارة والتكييف",
+    icon: "⚡",
+  },
+  {
+    key: "ملاحظات واستشارات هندسية (Notes & Recommendations)",
+    title: "5. ملاحظات واستشارات هندسية (Notes & Recommendations)",
+    subtitle: "الملاحظات الفنية، شروط التنفيذ والتوصيات الهندسية",
+    icon: "📝",
+  },
+];
+
 interface ProjectFormProps {
   mode: "create" | "edit";
   initialData?: IProject;
@@ -186,9 +219,10 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
     setGallery((prev) => prev.filter((_, idx) => idx !== indexToRemove));
   };
 
-  // Handle Blueprint Upload (PDF + Client Canvas Thumbnail Extraction)
-  const handleBlueprintUpload = async (
-    e: React.ChangeEvent<HTMLInputElement>
+  // Handle Blueprint Upload for a specific category window
+  const handleBlueprintUploadForCategory = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    targetCategory: string
   ) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -218,8 +252,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
         } catch (thumbErr) {
           const errMessage =
             thumbErr instanceof Error ? thumbErr.message : String(thumbErr);
-          const errStack = thumbErr instanceof Error ? thumbErr.stack : "";
-          console.error("PDF Thumbnail Generation Error Details:", errMessage, errStack, thumbErr);
+          console.error("PDF Thumbnail Generation Error Details:", errMessage, thumbErr);
           throw new Error(
             `فشل استخراج المعاينة للمخطط (${pdfFile.name}): ${errMessage}`
           );
@@ -232,7 +265,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
           name: defaultLabel,
           pdfUrl,
           thumbnailUrl,
-          category: "المخططات والمعمار (Plans)",
+          category: targetCategory,
         });
       }
 
@@ -243,6 +276,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
       );
     } finally {
       setUploadingBlueprint(false);
+      e.target.value = "";
     }
   };
 
@@ -557,134 +591,170 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
           )}
         </div>
 
-        {/* PDF Blueprints Upload */}
-        <div className="space-y-3 border-t border-border pt-6">
-          <div className="flex items-center justify-between">
-            <label className="block text-xs font-semibold uppercase tracking-wider text-ink">
-              المستندات والمخططات الفنية (PDF Documents)
-            </label>
-          </div>
-          <p className="text-xs text-muted">
-            حدد ملفات PDF. سيتم تلقائياً استخراج الصفحة الأولى كصورة مصغرة للمستند.
-          </p>
-
-          <input
-            type="file"
-            accept="application/pdf"
-            multiple
-            onChange={handleBlueprintUpload}
-            disabled={uploadingBlueprint}
-            className="text-xs text-muted file:ml-4 file:py-2 file:px-4 file:border-0 file:text-xs file:font-semibold file:bg-paper file:text-ink hover:file:bg-slate-100"
-          />
-          {uploadingBlueprint && (
-            <p className="text-xs text-accent animate-pulse font-medium">
-              جاري معالجة الـ PDF واستخراج المعاينة...
+        {/* PDF Blueprints Upload - Section Title */}
+        <div className="space-y-6 border-t-2 border-accent/40 pt-8">
+          <div className="bg-slate-900 text-white p-5 sm:p-6 border-r-4 border-amber-500 rounded-sm">
+            <span className="text-amber-400 text-[11px] font-bold uppercase tracking-widest block mb-1">
+              أرشيف وتصنيفات المخططات الهندسية (PDF DOCUMENTS)
+            </span>
+            <h3 className="font-serif text-2xl font-medium text-white">
+              المستندات والمخططات الفنية للمشروع
+            </h3>
+            <p className="text-xs text-slate-300 font-normal mt-1 leading-relaxed">
+              تم تقسيم رفع المستندات إلى 5 نوافذ مخصصة (Windows). قم برفع ملفات PDF مباشرة في النافذة المناسبة.
             </p>
+          </div>
+
+          {uploadingBlueprint && (
+            <div className="bg-amber-50 border border-amber-300 p-4 text-xs font-semibold text-amber-900 animate-pulse flex items-center gap-2">
+              <svg className="w-4 h-4 text-amber-600 animate-spin shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span>جاري معالجة ورفع ملف الـ PDF واستخراج صورة المعاينة المصغرة...</span>
+            </div>
           )}
 
-          {blueprints.length > 0 && (
-            <div className="space-y-4 mt-4">
-              {blueprints.map((bp, idx) => {
-                const currentCategory =
-                  bp.category === undefined ? "المخططات والمعمار (Plans)" : bp.category;
-                const isPreset = BLUEPRINT_PRESETS.includes(currentCategory);
-                const selectValue = isPreset ? currentCategory : "أخرى";
+          {/* Render 5 Separate Dedicated Upload Windows */}
+          <div className="space-y-6">
+            {BLUEPRINT_WINDOWS.map((win) => {
+              // Filter blueprints belonging to this category window
+              const windowBlueprints = blueprints
+                .map((bp, originalIndex) => ({ bp, originalIndex }))
+                .filter(
+                  ({ bp }) =>
+                    (bp.category || "المخططات والمعمار (Plans)") === win.key
+                );
 
-                return (
-                  <div
-                    key={idx}
-                    className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-4 border border-border bg-paper"
-                  >
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full md:w-auto">
-                      {bp.thumbnailUrl ? (
-                        <div className="relative w-16 h-16 border border-border overflow-hidden bg-white shrink-0">
-                          <Image
-                            src={bp.thumbnailUrl}
-                            alt={bp.name}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      ) : (
-                        <div className="w-16 h-16 border border-border bg-slate-200 flex items-center justify-center text-[10px] text-muted shrink-0">
-                          PDF
-                        </div>
-                      )}
-
-                      <div className="space-y-2 w-full sm:w-auto">
-                        <div className="flex flex-wrap items-center gap-3">
-                          <div>
-                            <label className="block text-[10px] text-muted mb-0.5 font-semibold">
-                              اسم المستند:
-                            </label>
-                            <input
-                              type="text"
-                              value={bp.name}
-                              onChange={(e) => updateBlueprintName(idx, e.target.value)}
-                              placeholder="عنوان المستند..."
-                              className="border border-border bg-white px-3 py-1.5 text-xs text-ink focus:border-accent focus:outline-none w-full sm:w-52"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="block text-[10px] text-muted mb-0.5 font-semibold">
-                              تصنيف المستند:
-                            </label>
-                            <select
-                              value={selectValue}
-                              onChange={(e) => {
-                                const val = e.target.value;
-                                if (val !== "أخرى") {
-                                  updateBlueprintCategory(idx, val);
-                                } else {
-                                  updateBlueprintCategory(idx, "");
-                                }
-                              }}
-                              className="border border-border bg-white px-3 py-1.5 text-xs text-ink focus:border-accent focus:outline-none"
-                            >
-                              <option value="المخططات والمعمار (Plans)">المخططات والمعمار (Plans)</option>
-                              <option value="التصميم (Design)">التصميم (Design)</option>
-                              <option value="الرسومات التنفيذية (Working Drawings)">الرسومات التنفيذية (Working Drawings)</option>
-                              <option value="مخططات الكهرباء والسباكة (Electrical & Plumbing)">مخططات الكهرباء والسباكة (Electrical & Plumbing)</option>
-                              <option value="ملاحظات واستشارات هندسية (Notes & Recommendations)">ملاحظات واستشارات هندسية (Notes & Recommendations)</option>
-                              <option value="أخرى">أخرى (Other / Custom)</option>
-                            </select>
-                          </div>
-
-                          {selectValue === "أخرى" && (
-                            <div>
-                              <label className="block text-[10px] text-muted mb-0.5 font-semibold">
-                                التسمية المخصصة:
-                              </label>
-                              <input
-                                type="text"
-                                value={bp.category === "أخرى" ? "" : bp.category || ""}
-                                onChange={(e) => updateBlueprintCategory(idx, e.target.value)}
-                                placeholder="أدخل تصنيف المستند..."
-                                className="border border-border bg-white px-3 py-1.5 text-xs text-ink focus:border-accent focus:outline-none w-full sm:w-40"
-                              />
-                            </div>
-                          )}
-                        </div>
-
-                        <p className="text-[10px] text-muted truncate max-w-xs" dir="ltr">
-                          {bp.pdfUrl}
+              return (
+                <div
+                  key={win.key}
+                  className="border border-border bg-white p-5 sm:p-6 space-y-4 shadow-xs hover:border-amber-400 transition-colors"
+                >
+                  {/* Window Header */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-3">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">{win.icon}</span>
+                      <div>
+                        <h4 className="font-serif text-lg font-bold text-ink">
+                          {win.title}
+                        </h4>
+                        <p className="text-xs text-muted font-normal">
+                          {win.subtitle}
                         </p>
                       </div>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => removeBlueprint(idx)}
-                      className="border border-red-200 text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 text-xs font-medium transition-colors shrink-0"
-                    >
-                      حذف المستند
-                    </button>
+                    <span className="text-xs font-semibold bg-amber-50 text-accent border border-amber-200 px-3 py-1 self-start sm:self-auto">
+                      {windowBlueprints.length}{" "}
+                      {windowBlueprints.length === 1
+                        ? "مستند مرفوع"
+                        : "مستندات مرفوعة"}
+                    </span>
                   </div>
-                );
-              })}
-            </div>
-          )}
+
+                  {/* Window Upload File Input Button */}
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-paper p-3 border border-dashed border-border hover:border-accent transition-colors">
+                    <label className="cursor-pointer inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-4 py-2.5 uppercase tracking-wider transition-colors shrink-0 shadow-xs">
+                      <svg
+                        className="w-4 h-4 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 4v16m8-8H4"
+                        />
+                      </svg>
+                      <span>رفع مستند PDF في هذه النافذة</span>
+                      <input
+                        type="file"
+                        accept="application/pdf"
+                        multiple
+                        onChange={(e) =>
+                          handleBlueprintUploadForCategory(e, win.key)
+                        }
+                        disabled={uploadingBlueprint}
+                        className="hidden"
+                      />
+                    </label>
+                    <span className="text-xs text-muted">
+                      انقر هنا لاختيار ملفات PDF المخصصة لقسم ({win.title})
+                    </span>
+                  </div>
+
+                  {/* List of Uploaded Documents in this Window */}
+                  {windowBlueprints.length > 0 ? (
+                    <div className="space-y-3 pt-2">
+                      {windowBlueprints.map(({ bp, originalIndex }) => (
+                        <div
+                          key={originalIndex}
+                          className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-3 border border-border bg-slate-50"
+                        >
+                          <div className="flex items-center gap-3">
+                            {bp.thumbnailUrl ? (
+                              <div className="relative w-14 h-14 border border-border overflow-hidden bg-white shrink-0">
+                                <Image
+                                  src={bp.thumbnailUrl}
+                                  alt={bp.name}
+                                  fill
+                                  className="object-cover"
+                                />
+                              </div>
+                            ) : (
+                              <div className="w-14 h-14 border border-border bg-slate-200 flex items-center justify-center text-[10px] text-muted shrink-0 font-bold">
+                                PDF
+                              </div>
+                            )}
+
+                            <div className="space-y-1">
+                              <div className="flex items-center gap-2">
+                                <label className="text-[10px] text-muted font-semibold">
+                                  اسم المستند:
+                                </label>
+                                <input
+                                  type="text"
+                                  value={bp.name}
+                                  onChange={(e) =>
+                                    updateBlueprintName(
+                                      originalIndex,
+                                      e.target.value
+                                    )
+                                  }
+                                  placeholder="عنوان المستند..."
+                                  className="border border-border bg-white px-3 py-1 text-xs text-ink focus:border-accent focus:outline-none w-full sm:w-64 font-semibold"
+                                />
+                              </div>
+                              <p
+                                className="text-[10px] text-muted truncate max-w-xs"
+                                dir="ltr"
+                              >
+                                {bp.pdfUrl}
+                              </p>
+                            </div>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => removeBlueprint(originalIndex)}
+                            className="border border-red-200 text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 text-xs font-medium transition-colors shrink-0 self-end sm:self-auto"
+                          >
+                            حذف المستند
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-xs text-muted italic py-1">
+                      لا يوجد مستندات مرفوعة في هذه النافذة حتى الآن.
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
