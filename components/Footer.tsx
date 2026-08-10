@@ -27,17 +27,22 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs text-slate-300">
               <li>
-                <Link href="/projects" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
-                  <span>←</span> معرض جميع المشاريع
-                </Link>
-              </li>
-              <li>
-                <Link href="/#about" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                <Link href="/about" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
                   <span>←</span> عن الشركة والفلسفة
                 </Link>
               </li>
               <li>
-                <Link href="/#services" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                <Link href="/showcase" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                  <span>←</span> عينات الأعمال الواقعية
+                </Link>
+              </li>
+              <li>
+                <Link href="/projects" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                  <span>←</span> معرض المشاريع المعمارية
+                </Link>
+              </li>
+              <li>
+                <Link href="/services" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
                   <span>←</span> خدماتنا ونطاق العمل
                 </Link>
               </li>
