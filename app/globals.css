@@ -86,15 +86,15 @@ label,
   background: #b08d57;
 }
 
-/* Micro Animations */
-@keyframes fadeIn {
+/* GPU-Accelerated Hardware Entrance Animations (Zero JS, 0ms load overhead) */
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translate3d(0, 14px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -108,7 +108,18 @@ label,
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+}
+
+.animate-fade-in-delay-1 {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  will-change: opacity, transform;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+  will-change: opacity, transform;
 }
 
 .animate-pulse-subtle {

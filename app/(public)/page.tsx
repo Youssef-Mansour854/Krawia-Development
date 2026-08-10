@@ -123,7 +123,7 @@ export default async function HomePage() {
       </section>
 
       {/* Architectural Navigation Hub Cards (Section 1 Below Hero) */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 bg-slate-900 text-white border-b border-border font-sans">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 bg-slate-900 text-white border-b border-border font-sans animate-fade-in-delay-1">
         <div className="mx-auto max-w-7xl space-y-10">
           <div className="text-center space-y-2">
             <h2 className="font-serif text-2xl sm:text-4xl font-medium text-white">
@@ -276,7 +276,7 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Projects Preview Grid (Section 2 Below Hero) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-20 w-full space-y-10 font-sans">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-20 w-full space-y-10 font-sans animate-fade-in-delay-2">
         <div className="border-b border-border pb-4 flex items-center justify-between">
           <div>
             <h2 className="font-serif text-2xl sm:text-3xl font-medium text-ink">
