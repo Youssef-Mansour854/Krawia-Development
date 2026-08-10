@@ -111,30 +111,30 @@ function getCategorySectionTitle(category: string): {
     case "المخططات والمعمار (Plans)":
     case "معماري":
       return {
-        title: "1. المخططات والمعمار (Plans)",
+        title: "المخططات والمعمار (Plans)",
         subtitle: "Architectural Plans & Master Blueprints",
       };
     case "التصميم (Design)":
     case "تصميم 3D":
       return {
-        title: "2. التصميم (Design)",
+        title: "التصميم (Design)",
         subtitle: "3D Design & Architectural Visualizations",
       };
     case "الرسومات التنفيذية (Working Drawings)":
       return {
-        title: "3. الرسومات التنفيذية (Working Drawings)",
+        title: "الرسومات التنفيذية (Working Drawings)",
         subtitle: "Working Drawings & Execution Details",
       };
     case "مخططات الكهرباء والسباكة (Electrical & Plumbing)":
     case "كهرباء":
     case "سباكة":
       return {
-        title: "4. مخططات الكهرباء والسباكة (Electrical & Plumbing)",
+        title: "مخططات الكهرباء والسباكة (Electrical & Plumbing)",
         subtitle: "MEP Electrical & Plumbing Layouts",
       };
     case "ملاحظات واستشارات هندسية (Notes & Recommendations)":
       return {
-        title: "5. ملاحظات واستشارات هندسية (Notes & Recommendations)",
+        title: "ملاحظات واستشارات هندسية (Notes & Recommendations)",
         subtitle: "Engineering Notes & Client Recommendations",
       };
     default:

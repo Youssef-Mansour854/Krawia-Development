@@ -88,27 +88,27 @@ function CategoryVectorIcon({ iconKey }: { iconKey: string }) {
 const BLUEPRINT_WINDOWS = [
   {
     key: "المخططات والمعمار (Plans)",
-    title: "1. المخططات والمعمار (Plans)",
+    title: "المخططات والمعمار (Plans)",
     subtitle: "مخططات المساقط الأفقية، الواجهات، والقطاعات المعمارية",
   },
   {
     key: "التصميم (Design)",
-    title: "2. التصميم (Design)",
+    title: "التصميم (Design)",
     subtitle: "التصاميم ثلاثية الأبعاد 3D والديكورات الداخلية",
   },
   {
     key: "الرسومات التنفيذية (Working Drawings)",
-    title: "3. الرسومات التنفيذية (Working Drawings)",
+    title: "الرسومات التنفيذية (Working Drawings)",
     subtitle: "مخططات تفاصيل التنفيذ والأسقف وشوب دروينج الموقع",
   },
   {
     key: "مخططات الكهرباء والسباكة (Electrical & Plumbing)",
-    title: "4. مخططات الكهرباء والسباكة (Electrical & Plumbing)",
+    title: "مخططات الكهرباء والسباكة (Electrical & Plumbing)",
     subtitle: "مخططات التغذية والصرف، الكهرباء والإنارة والتكييف",
   },
   {
     key: "ملاحظات واستشارات هندسية (Notes & Recommendations)",
-    title: "5. ملاحظات واستشارات هندسية (Notes & Recommendations)",
+    title: "ملاحظات واستشارات هندسية (Notes & Recommendations)",
     subtitle: "الملاحظات الفنية، شروط التنفيذ والتوصيات الهندسية",
   },
 ];
