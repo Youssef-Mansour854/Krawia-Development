@@ -233,8 +233,11 @@ export default function AdminsManagementPage() {
 
         {/* Create Admin Form Card */}
         <div className="bg-white border border-border p-4 sm:p-6 shadow-sm space-y-4">
-          <h3 className="text-sm font-semibold text-ink uppercase tracking-wider">
-            + إنشاء حساب مسؤول / موظف جديد
+          <h3 className="text-sm font-bold text-ink uppercase tracking-wider flex items-center gap-2">
+            <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+            </svg>
+            <span>إنشاء حساب مسؤول / موظف جديد</span>
           </h3>
           <form onSubmit={handleCreateAdmin} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
             <div>
@@ -283,7 +286,16 @@ export default function AdminsManagementPage() {
                   className="absolute left-2 top-1/2 -translate-y-1/2 text-xs text-muted hover:text-ink px-1"
                   title={showNewPassword ? "إخفاء كلمة السر" : "إظهار كلمة السر"}
                 >
-                  {showNewPassword ? "🙈" : "👁️"}
+                  {showNewPassword ? (
+                    <svg className="w-4 h-4 text-slate-500 hover:text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a10.025 10.025 0 014.122-.963c4.478 0 8.268 2.943 9.542 7a9.97 9.97 0 01-2.507 4.398M9.88 9.88a3 3 0 104.24 4.24M3 3l18 18" />
+                    </svg>
+                  ) : (
+                    <svg className="w-4 h-4 text-slate-500 hover:text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  )}
                 </button>
               </div>
             </div>
@@ -292,9 +304,18 @@ export default function AdminsManagementPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-accent hover:bg-accent-hover text-white text-xs font-semibold uppercase tracking-widest px-6 py-2.5 transition-colors disabled:opacity-50"
+                className="w-full bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-bold text-xs uppercase tracking-wider px-6 py-2.5 transition-all shadow-xs hover:shadow-md rounded-xs cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2 h-9 border border-amber-600"
               >
-                {loading ? "جاري الإضافة..." : "إنشاء حساب المسؤول"}
+                {loading ? (
+                  <span>جاري الإضافة...</span>
+                ) : (
+                  <>
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>إنشاء حساب المسؤول</span>
+                  </>
+                )}
               </button>
             </div>
           </form>
@@ -355,8 +376,11 @@ export default function AdminsManagementPage() {
                 </div>
 
                 <div className="bg-amber-50/70 border border-amber-200 p-3.5 space-y-2">
-                  <label className="block text-xs font-bold text-amber-950">
-                    🔑 تعيين كلمة سر جديدة (في حال التعديل أو النسيان)
+                  <label className="block text-xs font-bold text-amber-950 flex items-center gap-1.5">
+                    <svg className="w-3.5 h-3.5 text-amber-800 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                    </svg>
+                    <span>تعيين كلمة سر جديدة (في حال التعديل أو النسيان)</span>
                   </label>
                   <div className="relative">
                     <input
@@ -372,11 +396,23 @@ export default function AdminsManagementPage() {
                       className="absolute left-2 top-1/2 -translate-y-1/2 text-xs text-muted hover:text-ink px-1"
                       title={showEditPassword ? "إخفاء" : "إظهار كلمة السر"}
                     >
-                      {showEditPassword ? "🙈" : "👁️"}
+                      {showEditPassword ? (
+                        <svg className="w-4 h-4 text-slate-500 hover:text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a10.025 10.025 0 014.122-.963c4.478 0 8.268 2.943 9.542 7a9.97 9.97 0 01-2.507 4.398M9.88 9.88a3 3 0 104.24 4.24M3 3l18 18" />
+                        </svg>
+                      ) : (
+                        <svg className="w-4 h-4 text-slate-500 hover:text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                      )}
                     </button>
                   </div>
-                  <p className="text-[11px] text-amber-800">
-                    💡 أدخل كلمة سر جديدة فقط إذا كنت تريد تغييرها أو في حال نسيتها.
+                  <p className="text-[11px] text-amber-800 flex items-center gap-1.5">
+                    <svg className="w-3.5 h-3.5 text-amber-700 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>أدخل كلمة سر جديدة فقط إذا كنت تريد تغييرها أو في حال نسيتها.</span>
                   </p>
                 </div>
 
@@ -391,7 +427,7 @@ export default function AdminsManagementPage() {
                   <button
                     type="submit"
                     disabled={editLoading}
-                    className="bg-accent hover:bg-accent-hover text-white px-5 py-2 text-xs font-semibold uppercase tracking-wider transition-colors disabled:opacity-50"
+                    className="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2 text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-50 cursor-pointer rounded-xs"
                   >
                     {editLoading ? "جاري التحديث..." : "حفظ التعديلات"}
                   </button>
@@ -435,9 +471,12 @@ export default function AdminsManagementPage() {
                 <div className="pt-2 border-t border-border flex items-center gap-2">
                   <button
                     onClick={() => handleStartEdit(adm)}
-                    className="flex-1 border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-900 py-2 text-xs font-medium transition-colors"
+                    className="flex-1 border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-900 py-2 text-xs font-medium transition-colors inline-flex items-center justify-center gap-1.5"
                   >
-                    🔑 تعديل / كلمة السر
+                    <svg className="w-3.5 h-3.5 text-amber-800 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                    </svg>
+                    <span>تعديل / كلمة السر</span>
                   </button>
                   <button
                     onClick={() => handleDeleteAdmin(adm._id, adm.username)}
@@ -506,9 +545,12 @@ export default function AdminsManagementPage() {
                     <td className="py-4 px-4 text-left space-x-2 space-x-reverse">
                       <button
                         onClick={() => handleStartEdit(adm)}
-                        className="border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-900 px-3 py-1.5 text-xs font-semibold transition-colors inline-flex items-center gap-1"
+                        className="border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-900 px-3 py-1.5 text-xs font-semibold transition-colors inline-flex items-center gap-1.5 cursor-pointer rounded-xs"
                       >
-                        🔑 تعديل / كلمة السر
+                        <svg className="w-3.5 h-3.5 text-amber-800 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                        </svg>
+                        <span>تعديل / كلمة السر</span>
                       </button>
                       <button
                         onClick={() => handleDeleteAdmin(adm._id, adm.username)}
