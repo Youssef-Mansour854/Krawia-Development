@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
-import { Tajawal, Cormorant_Garamond } from "next/font/google";
+import { Tajawal } from "next/font/google";
 import "./globals.css";
 
 const tajawal = Tajawal({
   subsets: ["arabic", "latin"],
-  weight: ["300", "400", "500", "700"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["500", "600"],
-  variable: "--font-serif",
+  weight: ["300", "400", "500", "700", "800", "900"],
+  variable: "--font-tajawal",
   display: "swap",
 });
 
@@ -38,7 +31,7 @@ export default function RootLayout({
     <html
       lang="ar"
       dir="rtl"
-      className={`${tajawal.variable} ${cormorant.variable}`}
+      className={tajawal.variable}
     >
       <body className="min-h-screen bg-paper text-ink font-sans antialiased selection:bg-accent selection:text-white">
         {children}
@@ -46,3 +39,4 @@ export default function RootLayout({
     </html>
   );
 }
+

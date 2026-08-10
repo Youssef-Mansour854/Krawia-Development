@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-outfit), system-ui, sans-serif;
-  --font-serif: var(--font-serif), Georgia, serif;
+  --font-sans: var(--font-tajawal), "Tajawal", system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-tajawal), "Tajawal", system-ui, -apple-system, sans-serif;
   
   --color-ink: #1A1A1A;
   --color-paper: #FAFAF8;
@@ -15,22 +15,25 @@
 :root {
   --background: #FAFAF8;
   --foreground: #1A1A1A;
+  --font-sans: var(--font-tajawal), "Tajawal", system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-tajawal), "Tajawal", system-ui, -apple-system, sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+  font-family: var(--font-tajawal), "Tajawal", system-ui, -apple-system, sans-serif !important;
 }
 
-body {
+body, button, input, select, textarea {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans);
+  font-family: var(--font-tajawal), "Tajawal", system-ui, -apple-system, sans-serif !important;
   overflow-x: hidden;
 }
 
-h1, h2 {
-  font-family: var(--font-serif);
+h1, h2, h3, h4, h5, h6, .font-serif, .font-sans {
+  font-family: var(--font-tajawal), "Tajawal", system-ui, -apple-system, sans-serif !important;
 }
 
 /* Custom Scrollbar */
