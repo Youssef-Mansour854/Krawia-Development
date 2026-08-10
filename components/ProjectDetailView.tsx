@@ -47,39 +47,43 @@ function getCategorySectionTitle(category: string): {
   icon: string;
 } {
   switch (category) {
+    case "المخططات والمعمار (Plans)":
     case "معماري":
       return {
-        title: "المخططات والرسومات المعمارية",
-        subtitle: "Architectural Plans & Blueprints",
-        icon: "🏛️",
+        title: "1. المخططات والمعمار (Plans)",
+        subtitle: "Architectural Plans & Master Blueprints",
+        icon: "📐",
       };
-    case "كهرباء":
-      return {
-        title: "مخططات شبكات الكهرباء والإنارة",
-        subtitle: "Electrical & Lighting Drawings",
-        icon: "⚡",
-      };
-    case "سباكة":
-      return {
-        title: "مخططات السباكة والتغذية والصرف",
-        subtitle: "Plumbing & Drainage Layouts",
-        icon: "💧",
-      };
-    case "تكييف":
-      return {
-        title: "مخططات أنظمة التكييف والتهوية (HVAC)",
-        subtitle: "HVAC & Mechanical Systems",
-        icon: "❄️",
-      };
+    case "التصميم (Design)":
     case "تصميم 3D":
       return {
-        title: "التصاميم والنماذج ثلاثية الأبعاد (3D)",
-        subtitle: "3D Visualizations & Renderings",
+        title: "2. التصميم (Design)",
+        subtitle: "3D Design & Architectural Visualizations",
         icon: "🎨",
+      };
+    case "الرسومات التنفيذية (Working Drawings)":
+      return {
+        title: "3. الرسومات التنفيذية (Working Drawings)",
+        subtitle: "Working Drawings & Execution Details",
+        icon: "🏗️",
+      };
+    case "مخططات الكهرباء والسباكة (Electrical & Plumbing)":
+    case "كهرباء":
+    case "سباكة":
+      return {
+        title: "4. مخططات الكهرباء والسباكة (Electrical & Plumbing)",
+        subtitle: "MEP Electrical & Plumbing Layouts",
+        icon: "⚡",
+      };
+    case "ملاحظات واستشارات هندسية (Notes & Recommendations)":
+      return {
+        title: "5. ملاحظات واستشارات هندسية (Notes & Recommendations)",
+        subtitle: "Engineering Notes & Client Recommendations",
+        icon: "📝",
       };
     default:
       return {
-        title: `مستندات فنية - ${category}`,
+        title: category,
         subtitle: "Technical Documents & Specifications",
         icon: "📋",
       };
@@ -99,7 +103,17 @@ export default function ProjectDetailView({ project }: ProjectDetailViewProps) {
     return acc;
   }, {} as Record<string, IBlueprint[]>);
 
-  const PRESET_ORDER = ["معماري", "كهرباء", "سباكة", "تكييف", "تصميم 3D"];
+  const PRESET_ORDER = [
+    "المخططات والمعمار (Plans)",
+    "معماري",
+    "التصميم (Design)",
+    "تصميم 3D",
+    "الرسومات التنفيذية (Working Drawings)",
+    "مخططات الكهرباء والسباكة (Electrical & Plumbing)",
+    "كهرباء",
+    "سباكة",
+    "ملاحظات واستشارات هندسية (Notes & Recommendations)",
+  ];
   const sortedCategories = Object.keys(groupedBlueprints).sort((a, b) => {
     const idxA = PRESET_ORDER.indexOf(a);
     const idxB = PRESET_ORDER.indexOf(b);

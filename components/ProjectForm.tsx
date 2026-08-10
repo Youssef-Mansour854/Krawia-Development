@@ -14,7 +14,13 @@ interface BlueprintItem {
   category?: string;
 }
 
-const BLUEPRINT_PRESETS = ["معماري", "كهرباء", "سباكة", "تكييف", "تصميم 3D"];
+const BLUEPRINT_PRESETS = [
+  "المخططات والمعمار (Plans)",
+  "التصميم (Design)",
+  "الرسومات التنفيذية (Working Drawings)",
+  "مخططات الكهرباء والسباكة (Electrical & Plumbing)",
+  "ملاحظات واستشارات هندسية (Notes & Recommendations)",
+];
 
 interface ProjectFormProps {
   mode: "create" | "edit";
@@ -226,7 +232,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
           name: defaultLabel,
           pdfUrl,
           thumbnailUrl,
-          category: "معماري",
+          category: "المخططات والمعمار (Plans)",
         });
       }
 
@@ -580,7 +586,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
             <div className="space-y-4 mt-4">
               {blueprints.map((bp, idx) => {
                 const currentCategory =
-                  bp.category === undefined ? "معماري" : bp.category;
+                  bp.category === undefined ? "المخططات والمعمار (Plans)" : bp.category;
                 const isPreset = BLUEPRINT_PRESETS.includes(currentCategory);
                 const selectValue = isPreset ? currentCategory : "أخرى";
 
@@ -636,11 +642,11 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
                               }}
                               className="border border-border bg-white px-3 py-1.5 text-xs text-ink focus:border-accent focus:outline-none"
                             >
-                              <option value="معماري">معماري (Architectural)</option>
-                              <option value="كهرباء">كهرباء (Electrical)</option>
-                              <option value="سباكة">سباكة (Plumbing)</option>
-                              <option value="تكييف">تكييف (HVAC/AC)</option>
-                              <option value="تصميم 3D">تصميم 3D (3D Design)</option>
+                              <option value="المخططات والمعمار (Plans)">المخططات والمعمار (Plans)</option>
+                              <option value="التصميم (Design)">التصميم (Design)</option>
+                              <option value="الرسومات التنفيذية (Working Drawings)">الرسومات التنفيذية (Working Drawings)</option>
+                              <option value="مخططات الكهرباء والسباكة (Electrical & Plumbing)">مخططات الكهرباء والسباكة (Electrical & Plumbing)</option>
+                              <option value="ملاحظات واستشارات هندسية (Notes & Recommendations)">ملاحظات واستشارات هندسية (Notes & Recommendations)</option>
                               <option value="أخرى">أخرى (Other / Custom)</option>
                             </select>
                           </div>
