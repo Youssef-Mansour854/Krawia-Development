@@ -304,8 +304,17 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
                   className="w-full border border-border bg-paper px-3 py-2 text-xs text-ink focus:outline-none focus:border-accent"
                   required
                 />
-                <label className="cursor-pointer bg-slate-100 hover:bg-slate-200 border border-border text-ink px-3 py-2 text-xs font-semibold whitespace-nowrap">
-                  {uploading ? "جاري..." : "رفع 📁"}
+                <label className="cursor-pointer bg-slate-100 hover:bg-slate-200 border border-border text-ink px-3 py-2 text-xs font-semibold whitespace-nowrap inline-flex items-center gap-1.5 rounded-sm">
+                  {uploading ? (
+                    <span>جاري...</span>
+                  ) : (
+                    <>
+                      <svg className="w-3.5 h-3.5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                      </svg>
+                      <span>رفع</span>
+                    </>
+                  )}
                   <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, false)} />
                 </label>
               </div>
@@ -386,8 +395,17 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
                       className="w-full border border-border bg-paper px-3 py-2 text-xs text-ink focus:outline-none focus:border-accent"
                       required
                     />
-                    <label className="cursor-pointer bg-slate-100 hover:bg-slate-200 border border-border text-ink px-3 py-2 text-xs font-semibold whitespace-nowrap">
-                      {editUploading ? "جاري..." : "تغيير 📁"}
+                    <label className="cursor-pointer bg-slate-100 hover:bg-slate-200 border border-border text-ink px-3 py-2 text-xs font-semibold whitespace-nowrap inline-flex items-center gap-1.5 rounded-sm">
+                      {editUploading ? (
+                        <span>جاري...</span>
+                      ) : (
+                        <>
+                          <svg className="w-3.5 h-3.5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                          </svg>
+                          <span>تغيير</span>
+                        </>
+                      )}
                       <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, true)} />
                     </label>
                   </div>
@@ -434,7 +452,13 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
 
               <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">
                 <div>
-                  <p className="text-[11px] text-muted">📍 {item.location}</p>
+                  <p className="text-[11px] text-muted flex items-center gap-1">
+                    <svg className="w-3.5 h-3.5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span>{item.location}</span>
+                  </p>
                   <h4 className="font-serif font-bold text-ink text-base mt-0.5">{item.title}</h4>
                 </div>
 

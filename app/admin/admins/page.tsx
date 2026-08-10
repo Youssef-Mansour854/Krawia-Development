@@ -234,7 +234,7 @@ export default function AdminsManagementPage() {
         {/* Create Admin Form Card */}
         <div className="bg-white border border-border p-4 sm:p-6 shadow-sm space-y-4">
           <h3 className="text-sm font-bold text-ink uppercase tracking-wider flex items-center gap-2">
-            <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
             </svg>
             <span>إنشاء حساب مسؤول / موظف جديد</span>
@@ -249,7 +249,7 @@ export default function AdminsManagementPage() {
                 placeholder="مثال: م. أسماء كراوية"
                 value={newEmployeeName}
                 onChange={(e) => setNewEmployeeName(e.target.value)}
-                className="w-full h-10 border border-border bg-paper focus:bg-white px-3 text-sm text-ink focus:outline-none focus:border-amber-600 rounded-sm transition-colors"
+                className="w-full h-10 border border-border bg-paper focus:bg-white px-3 text-sm text-ink focus:outline-none focus:border-accent rounded-sm transition-colors"
               />
             </div>
 
@@ -262,7 +262,7 @@ export default function AdminsManagementPage() {
                 placeholder="مثال: eng_asmaa"
                 value={newUsername}
                 onChange={(e) => setNewUsername(e.target.value)}
-                className="w-full h-10 border border-border bg-paper focus:bg-white px-3 text-sm text-ink focus:outline-none focus:border-amber-600 font-mono rounded-sm transition-colors"
+                className="w-full h-10 border border-border bg-paper focus:bg-white px-3 text-sm text-ink focus:outline-none focus:border-accent font-mono rounded-sm transition-colors"
                 required
               />
             </div>
@@ -277,7 +277,7 @@ export default function AdminsManagementPage() {
                   placeholder="••••••••••••"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full h-10 border border-border bg-paper focus:bg-white px-3 pl-10 text-sm text-ink focus:outline-none focus:border-amber-600 font-mono rounded-sm transition-colors"
+                  className="w-full h-10 border border-border bg-paper focus:bg-white px-3 pl-10 text-sm text-ink focus:outline-none focus:border-accent font-mono rounded-sm transition-colors"
                   required
                 />
                 <button
@@ -304,7 +304,7 @@ export default function AdminsManagementPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full h-10 bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-bold text-xs uppercase tracking-wider px-4 transition-all shadow-xs hover:shadow-md rounded-sm cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2 border border-amber-600 shrink-0"
+                className="w-full h-10 bg-accent hover:bg-accent-hover text-white font-bold text-xs uppercase tracking-wider px-4 transition-all shadow-xs hover:shadow-md rounded-sm cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2 border border-accent shrink-0"
               >
                 {loading ? (
                   <span>جاري الإضافة...</span>
@@ -427,7 +427,7 @@ export default function AdminsManagementPage() {
                   <button
                     type="submit"
                     disabled={editLoading}
-                    className="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2 text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-50 cursor-pointer rounded-xs"
+                    className="bg-accent hover:bg-accent-hover text-white px-5 py-2 text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-50 cursor-pointer rounded-sm"
                   >
                     {editLoading ? "جاري التحديث..." : "حفظ التعديلات"}
                   </button>

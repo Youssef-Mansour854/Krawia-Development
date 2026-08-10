@@ -201,13 +201,16 @@ export default function AdminAccessCodesView({
         )}
 
         {/* Create Code Form Card */}
-        <div className="bg-white border border-border p-4 sm:p-6 shadow-sm space-y-4">
-          <h3 className="text-sm font-semibold text-ink uppercase tracking-wider">
-            + إنشاء كود دخول جديد لعميل
+        <div className="bg-white border border-border p-4 sm:p-6 shadow-sm space-y-4 rounded-sm">
+          <h3 className="text-sm font-bold text-ink uppercase tracking-wider flex items-center gap-2">
+            <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+            </svg>
+            <span>إنشاء كود دخول جديد لعميل</span>
           </h3>
           <form onSubmit={handleCreate} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
             <div>
-              <label className="block text-xs font-medium text-muted mb-1">
+              <label className="block text-xs font-semibold text-muted mb-1.5">
                 الوصف / اسم العميل والمشروع
               </label>
               <input
@@ -215,22 +218,25 @@ export default function AdminAccessCodesView({
                 placeholder="مثال: Nada - Tanta project"
                 value={label}
                 onChange={(e) => setLabel(e.target.value)}
-                className="w-full border border-border bg-paper px-3 py-2 text-sm text-ink focus:outline-none focus:border-accent"
+                className="w-full h-10 border border-border bg-paper focus:bg-white px-3 text-sm text-ink focus:outline-none focus:border-accent rounded-sm transition-colors"
                 required
               />
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-medium text-muted">
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-xs font-semibold text-muted">
                   كود الدخول (الكلمة السرية)
                 </label>
                 <button
                   type="button"
                   onClick={handleAutoGenerate}
-                  className="text-[11px] font-semibold text-accent hover:underline"
+                  className="text-[11px] font-semibold text-accent hover:text-amber-700 flex items-center gap-1 cursor-pointer transition-colors"
                 >
-                  ⚡ توليد كود تلقائي
+                  <svg className="w-3.5 h-3.5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  <span>توليد كود تلقائي</span>
                 </button>
               </div>
               <input
@@ -238,7 +244,7 @@ export default function AdminAccessCodesView({
                 placeholder="مثال: tanta-2026"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="w-full border border-border bg-paper px-3 py-2 text-sm text-ink font-mono focus:outline-none focus:border-accent"
+                className="w-full h-10 border border-border bg-paper focus:bg-white px-3 text-sm text-ink font-mono focus:outline-none focus:border-accent rounded-sm transition-colors"
                 required
               />
             </div>
@@ -247,31 +253,42 @@ export default function AdminAccessCodesView({
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-accent hover:bg-accent-hover text-white text-xs font-semibold uppercase tracking-widest px-6 py-2.5 transition-colors disabled:opacity-50"
+                className="w-full h-10 bg-accent hover:bg-accent-hover text-white font-bold text-xs uppercase tracking-wider px-6 transition-all shadow-xs hover:shadow-md rounded-sm cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2 border border-accent shrink-0"
               >
-                {loading ? "جاري الإضافة..." : "حفظ وإنشاء الكود"}
+                {loading ? (
+                  <span>جاري الإضافة...</span>
+                ) : (
+                  <>
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>حفظ وإنشاء الكود</span>
+                  </>
+                )}
               </button>
             </div>
           </form>
         </div>
 
         {/* Brand Search Input Bar */}
-        <div className="bg-white border border-border p-4 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+        <div className="bg-white border border-border p-4 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 rounded-sm">
           <div className="relative flex-1">
-            <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-accent text-base">
-              🔍
+            <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-accent">
+              <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
             </div>
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="بحث بالوصف أو الكود (مثال: tanta, Nada)..."
-              className="w-full border border-border bg-paper pr-10 pl-10 py-2.5 text-sm text-ink focus:outline-none focus:border-accent transition-colors"
+              className="w-full border border-border bg-paper pr-10 pl-10 py-2.5 text-sm text-ink focus:outline-none focus:border-accent transition-colors rounded-sm"
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm("")}
-                className="absolute inset-y-0 left-0 px-3 text-xs text-muted hover:text-ink font-bold transition-colors"
+                className="absolute inset-y-0 left-0 px-3 text-xs text-muted hover:text-ink font-bold transition-colors cursor-pointer"
                 title="إعادة تعيين البحث"
               >
                 ✕ مسح
@@ -279,7 +296,7 @@ export default function AdminAccessCodesView({
             )}
           </div>
 
-          <div className="text-xs font-semibold text-muted bg-paper px-4 py-2.5 border border-border text-center whitespace-nowrap">
+          <div className="text-xs font-semibold text-muted bg-paper px-4 py-2.5 border border-border text-center whitespace-nowrap rounded-sm">
             {searchTerm ? (
               <span>
                 تم العثور على <strong className="text-accent">{filteredCodes.length}</strong> من أصل{" "}
@@ -295,7 +312,7 @@ export default function AdminAccessCodesView({
 
         {/* Access Codes View */}
         {filteredCodes.length === 0 ? (
-          <div className="bg-white border border-border p-8 sm:p-12 text-center text-muted text-sm space-y-3">
+          <div className="bg-white border border-border p-8 sm:p-12 text-center text-muted text-sm space-y-3 rounded-sm">
             <p>
               {searchTerm
                 ? `لا توجد نتائج مطابقة لبحثك: "${searchTerm}"`
@@ -304,7 +321,7 @@ export default function AdminAccessCodesView({
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm("")}
-                className="inline-block bg-accent hover:bg-accent-hover text-white text-xs font-semibold uppercase tracking-wider px-4 py-2 transition-colors"
+                className="inline-block bg-accent hover:bg-accent-hover text-white text-xs font-semibold uppercase tracking-wider px-4 py-2 transition-colors rounded-sm cursor-pointer"
               >
                 عرض جميع الأكواد ({codes.length})
               </button>
@@ -317,32 +334,36 @@ export default function AdminAccessCodesView({
               {filteredCodes.map((item) => (
                 <div
                   key={item._id.toString()}
-                  className="bg-white border border-border p-4 shadow-sm space-y-3"
+                  className="bg-white border border-border p-4 shadow-sm space-y-3 rounded-sm"
                 >
                   <div className="flex items-center justify-between gap-2 border-b border-border/60 pb-2">
                     <span className="font-medium text-ink text-sm">
                       {item.label}
                     </span>
                     {item.active ? (
-                      <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold px-2 py-0.5">
+                      <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold px-2 py-0.5 rounded-sm">
                         ✓ مفعل
                       </span>
                     ) : (
-                      <span className="bg-red-50 text-red-700 border border-red-200 text-[10px] font-bold px-2 py-0.5">
+                      <span className="bg-red-50 text-red-700 border border-red-200 text-[10px] font-bold px-2 py-0.5 rounded-sm">
                         ✕ معطل
                       </span>
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between gap-2 bg-paper p-2.5 border border-border">
+                  <div className="flex items-center justify-between gap-2 bg-paper p-2.5 border border-border rounded-sm">
                     <span className="font-mono text-accent font-bold text-base">
                       {item.code}
                     </span>
                     <button
                       onClick={() => handleCopyCode(item.code)}
-                      className="text-[11px] font-semibold text-ink bg-white border border-border px-2.5 py-1 hover:border-accent transition-colors"
+                      className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-700 hover:text-accent bg-white hover:bg-slate-50 border border-border hover:border-accent px-2.5 py-1 rounded-sm transition-colors cursor-pointer"
+                      title="نسخ الكود"
                     >
-                      نسخ الكود 📋
+                      <svg className="w-3.5 h-3.5 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      <span>نسخ الكود</span>
                     </button>
                   </div>
 
@@ -354,7 +375,7 @@ export default function AdminAccessCodesView({
                     <button
                       onClick={() => handleToggleActive(item._id.toString(), item.active)}
                       disabled={togglingId === item._id.toString()}
-                      className={`border text-center py-2 text-xs font-medium transition-colors disabled:opacity-50 ${
+                      className={`border text-center py-2 text-xs font-semibold rounded-sm transition-colors disabled:opacity-50 cursor-pointer ${
                         item.active
                           ? "border-amber-200 bg-amber-50 text-amber-900 hover:bg-amber-100"
                           : "border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
@@ -369,7 +390,7 @@ export default function AdminAccessCodesView({
                     <button
                       onClick={() => handleDelete(item._id.toString(), item.label)}
                       disabled={deletingId === item._id.toString()}
-                      className="border border-red-200 bg-red-50 text-red-700 hover:bg-red-100 text-center py-2 text-xs font-medium transition-colors disabled:opacity-50"
+                      className="border border-red-200 bg-red-50 text-red-700 hover:bg-red-100 text-center py-2 text-xs font-semibold rounded-sm transition-colors disabled:opacity-50 cursor-pointer"
                     >
                       {deletingId === item._id.toString() ? "حذف..." : "حذف الكود"}
                     </button>
@@ -379,7 +400,7 @@ export default function AdminAccessCodesView({
             </div>
 
             {/* Desktop Table View */}
-            <div className="hidden md:block bg-white border border-border overflow-x-auto shadow-sm w-full">
+            <div className="hidden md:block bg-white border border-border overflow-x-auto shadow-sm w-full rounded-sm">
               <table className="w-full text-right border-collapse">
                 <thead>
                   <tr className="border-b border-border bg-paper text-[11px] font-semibold uppercase tracking-wider text-muted">
@@ -405,22 +426,25 @@ export default function AdminAccessCodesView({
                           <span>{item.code}</span>
                           <button
                             onClick={() => handleCopyCode(item.code)}
-                            className="text-[10px] text-muted hover:text-accent font-sans bg-paper px-1.5 py-0.5 border border-border"
+                            className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-700 hover:text-accent bg-paper hover:bg-white px-2 py-0.5 border border-border hover:border-accent rounded-xs transition-colors cursor-pointer"
                             title="نسخ الكود"
                           >
-                            نسخ 📋
+                            <svg className="w-3 h-3 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            <span>نسخ</span>
                           </button>
                         </div>
                       </td>
 
                       <td className="py-4 px-4">
                         {item.active ? (
-                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 border border-emerald-200">
+                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 border border-emerald-200 rounded-sm">
                             <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                             نشط (Active)
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-red-800 bg-red-50 px-2.5 py-1 border border-red-200">
+                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-red-800 bg-red-50 px-2.5 py-1 border border-red-200 rounded-sm">
                             <span className="w-2 h-2 rounded-full bg-red-500"></span>
                             ملغى (Revoked)
                           </span>
@@ -435,32 +459,48 @@ export default function AdminAccessCodesView({
                         })}
                       </td>
 
-                      <td className="py-4 px-4 text-left space-x-2 space-x-reverse">
-                        <button
-                          onClick={() =>
-                            handleToggleActive(item._id.toString(), item.active)
-                          }
-                          disabled={togglingId === item._id.toString()}
-                          className={`border px-3 py-1.5 text-xs font-medium transition-colors disabled:opacity-50 ${
-                            item.active
-                              ? "border-amber-300 bg-amber-50 text-amber-900 hover:bg-amber-100"
-                              : "border-emerald-300 bg-emerald-50 text-emerald-900 hover:bg-emerald-100"
-                          }`}
-                        >
-                          {togglingId === item._id.toString()
-                            ? "جاري التغيير..."
-                            : item.active
-                            ? "إلغاء التفعيل (Revoke)"
-                            : "تفعيل (Activate)"}
-                        </button>
+                      <td className="py-4 px-4">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() =>
+                              handleToggleActive(item._id.toString(), item.active)
+                            }
+                            disabled={togglingId === item._id.toString()}
+                            className={`inline-flex items-center gap-1.5 border px-3 py-1.5 text-xs font-semibold rounded-sm transition-colors cursor-pointer disabled:opacity-50 ${
+                              item.active
+                                ? "border-amber-300 bg-amber-50 text-amber-900 hover:bg-amber-100"
+                                : "border-emerald-300 bg-emerald-50 text-emerald-900 hover:bg-emerald-100"
+                            }`}
+                          >
+                            {item.active ? (
+                              <svg className="w-3.5 h-3.5 text-amber-700 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                              </svg>
+                            ) : (
+                              <svg className="w-3.5 h-3.5 text-emerald-700 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                            )}
+                            <span>
+                              {togglingId === item._id.toString()
+                                ? "جاري التغيير..."
+                                : item.active
+                                ? "إلغاء التفعيل (Revoke)"
+                                : "تفعيل (Activate)"}
+                            </span>
+                          </button>
 
-                        <button
-                          onClick={() => handleDelete(item._id.toString(), item.label)}
-                          disabled={deletingId === item._id.toString()}
-                          className="border border-red-200 bg-red-50 hover:bg-red-100 text-red-700 px-3 py-1.5 text-xs font-medium transition-colors disabled:opacity-50"
-                        >
-                          {deletingId === item._id.toString() ? "جاري الحذف..." : "حذف"}
-                        </button>
+                          <button
+                            onClick={() => handleDelete(item._id.toString(), item.label)}
+                            disabled={deletingId === item._id.toString()}
+                            className="inline-flex items-center gap-1.5 border border-red-200 bg-red-50 hover:bg-red-100 text-red-700 px-3 py-1.5 text-xs font-semibold rounded-sm transition-colors cursor-pointer disabled:opacity-50"
+                          >
+                            <svg className="w-3.5 h-3.5 text-red-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            <span>{deletingId === item._id.toString() ? "جاري الحذف..." : "حذف"}</span>
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
