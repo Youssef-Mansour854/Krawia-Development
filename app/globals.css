@@ -36,6 +36,21 @@ h1, h2, h3, h4, h5, h6, .font-serif, .font-sans {
   font-family: var(--font-tajawal), "Tajawal", system-ui, -apple-system, sans-serif !important;
 }
 
+/* Unified Cursor Pointer for all buttons, links, inputs, and interactive elements */
+button,
+a,
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+select,
+label,
+[role="button"],
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

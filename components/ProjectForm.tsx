@@ -797,23 +797,30 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
       </div>
 
       {/* Form Action Buttons */}
-      <div className="flex items-center justify-end space-x-4 space-x-reverse border-t border-border pt-6">
+      <div className="flex items-center justify-end gap-4 border-t border-border pt-6">
         <Link
           href="/admin"
-          className="border border-border bg-white hover:border-ink px-6 py-3 text-xs font-semibold uppercase tracking-wider text-ink transition-colors"
+          className="border border-border bg-white hover:bg-slate-100 text-ink text-xs font-bold uppercase tracking-wider px-6 py-3.5 transition-colors rounded-sm cursor-pointer shadow-xs"
         >
           إلغاء
         </Link>
         <button
           type="submit"
           disabled={submitting}
-          className="bg-accent hover:bg-accent-hover text-white text-xs font-semibold uppercase tracking-widest px-8 py-3.5 transition-colors disabled:opacity-50"
+          className="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold uppercase tracking-widest px-8 py-3.5 transition-all shadow-md hover:shadow-lg rounded-sm cursor-pointer disabled:opacity-50 flex items-center gap-2"
         >
-          {submitting
-            ? "جاري الحفظ..."
-            : mode === "create"
-            ? "إنشاء المشروع"
-            : "تحديث بيانات المشروع"}
+          {submitting ? (
+            <>
+              <svg className="w-4 h-4 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span>جاري الحفظ...</span>
+            </>
+          ) : mode === "create" ? (
+            <span>إنشاء المشروع</span>
+          ) : (
+            <span>تحديث بيانات المشروع</span>
+          )}
         </button>
       </div>
     </form>
