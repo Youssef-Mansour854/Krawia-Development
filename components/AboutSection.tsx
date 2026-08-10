@@ -115,7 +115,7 @@ export default function AboutSection() {
               </div>
               <div>
                 <p className="text-xs font-bold text-ink">م. أسماء كراوية</p>
-                <p className="text-[10px] text-muted font-normal">الإشراف الإبداعي والهندسي</p>
+                <p className="text-[10px] text-muted font-normal">المؤسس والرئيس التنفيذي للشركة</p>
               </div>
             </div>
             <span className="text-accent font-serif font-bold text-base tracking-wider">ASMAA KRAWIA</span>
