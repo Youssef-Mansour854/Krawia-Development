@@ -968,7 +968,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
                   <button
                     type="button"
                     onClick={handleAddCustomWindow}
-                    className="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-6 py-2.5 uppercase transition-colors shrink-0 shadow-xs cursor-pointer rounded-xs"
+                    className="bg-accent hover:bg-accent-hover text-white text-xs font-bold px-6 py-2.5 uppercase transition-colors shrink-0 shadow-xs cursor-pointer rounded-sm border border-accent"
                   >
                     حفظ وإضافة النافذة
                   </button>
@@ -978,7 +978,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
                       setShowAddWindowForm(false);
                       setNewWindowName("");
                     }}
-                    className="border border-border text-ink bg-white hover:bg-slate-100 text-xs font-bold px-4 py-2.5 uppercase transition-colors shrink-0 cursor-pointer rounded-xs"
+                    className="border border-border text-ink bg-white hover:bg-slate-100 text-xs font-bold px-4 py-2.5 uppercase transition-colors shrink-0 cursor-pointer rounded-sm"
                   >
                     إلغاء
                   </button>
@@ -1000,7 +1000,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white text-xs font-bold uppercase tracking-wider px-6 py-3 border border-amber-600 transition-colors rounded-sm cursor-pointer shadow-xs disabled:opacity-50 gap-2 h-11"
+          className="inline-flex items-center justify-center bg-accent hover:bg-accent-hover text-white text-xs font-bold uppercase tracking-wider px-6 py-3 border border-accent transition-colors rounded-sm cursor-pointer shadow-xs disabled:opacity-50 gap-2 h-11"
         >
           {submitting ? (
             <>

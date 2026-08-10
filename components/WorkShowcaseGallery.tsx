@@ -300,7 +300,7 @@ export default function WorkShowcaseGallery({ initialSamples }: WorkShowcaseGall
                   type="button"
                   onClick={handleNext}
                   aria-label="الصورة التالية"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-slate-950/70 hover:bg-amber-600 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center backdrop-blur-md border border-white/20 transition-all shadow-xl hover:scale-110"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-slate-950/70 hover:bg-accent text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center backdrop-blur-md border border-white/20 transition-all shadow-xl hover:scale-110 cursor-pointer"
                 >
                   <span className="text-xl sm:text-2xl font-bold">›</span>
                 </button>
@@ -310,7 +310,7 @@ export default function WorkShowcaseGallery({ initialSamples }: WorkShowcaseGall
                   type="button"
                   onClick={handlePrev}
                   aria-label="الصورة السابقة"
-                  className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-slate-950/70 hover:bg-amber-600 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center backdrop-blur-md border border-white/20 transition-all shadow-xl hover:scale-110"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-slate-950/70 hover:bg-accent text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center backdrop-blur-md border border-white/20 transition-all shadow-xl hover:scale-110 cursor-pointer"
                 >
                   <span className="text-xl sm:text-2xl font-bold">‹</span>
                 </button>

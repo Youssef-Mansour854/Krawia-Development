@@ -164,7 +164,7 @@ export default function AdminAccountPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-accent hover:bg-accent-hover text-white text-xs font-semibold uppercase tracking-widest py-3.5 px-4 transition-colors disabled:opacity-50"
+              className="w-full bg-accent hover:bg-accent-hover text-white text-xs font-bold uppercase tracking-wider py-3 px-6 transition-all shadow-xs hover:shadow-md rounded-sm cursor-pointer disabled:opacity-50 border border-accent h-11 flex items-center justify-center gap-2"
             >
               {loading ? "جاري الحفظ..." : "تحديث كلمة السر"}
             </button>
