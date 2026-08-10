@@ -796,7 +796,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
 
                 {/* Window Upload File Input Button */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-paper p-3 border border-dashed border-border hover:border-accent transition-colors">
-                  <label className="cursor-pointer inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-4 py-2.5 uppercase tracking-wider transition-colors shrink-0 shadow-xs rounded-xs">
+                  <label className="cursor-pointer inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white text-xs font-bold px-4 py-2.5 uppercase tracking-wider transition-colors shrink-0 shadow-xs rounded-sm border border-accent">
                     <svg
                       className="w-4 h-4 text-white"
                       fill="none"
@@ -929,14 +929,14 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
           })}
 
           {/* Button / Form to Add New Custom Category Window */}
-          <div className="bg-slate-50 border-2 border-dashed border-amber-300 p-5 rounded-sm">
+          <div className="bg-paper border-2 border-dashed border-border hover:border-accent p-5 rounded-sm transition-colors">
             {!showAddWindowForm ? (
               <button
                 type="button"
                 onClick={() => setShowAddWindowForm(true)}
-                className="w-full py-3.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 hover:border-amber-500 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-xs rounded-xs cursor-pointer"
+                className="w-full py-3.5 bg-amber-50/70 hover:bg-amber-100/90 text-amber-950 border border-amber-300 hover:border-accent font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-xs rounded-sm cursor-pointer"
               >
-                <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
                 <span>إضافة نافذة / تصنيف مستندات جديد (+ Add New Category Window)</span>
