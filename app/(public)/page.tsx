@@ -131,31 +131,32 @@ export default async function HomePage() {
             {/* Card 1: About */}
             <Link
               href="/about"
-              className="group relative overflow-hidden rounded-md border border-amber-500/30 bg-slate-950 p-6 transition-all duration-300 hover:border-amber-400 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/10 flex flex-col justify-between h-64"
+              className="group relative overflow-hidden rounded-md border border-amber-500/30 bg-slate-950 p-5 sm:p-6 transition-all duration-300 hover:border-amber-400 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/20 flex flex-col justify-between h-64 sm:h-72"
             >
-              <div className="absolute inset-0 opacity-20 group-hover:opacity-35 transition-opacity">
+              <div className="absolute inset-0 opacity-30 group-hover:opacity-45 transition-opacity">
                 <Image
-                  src="/img/site-images/IMG-20260809-WA0019.jpg"
-                  alt="عن المهندسة أسماء كراوية"
+                  src="/img/manger-images/IMG-20260809-WA0024.jpg"
+                  alt="المهندسة أسماء كراوية - عن الشركة"
                   fill
-                  className="object-cover"
+                  className="object-cover object-top"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/30" />
               </div>
               <div className="relative z-10 space-y-2">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-amber-950/80 border border-amber-500/30 px-2.5 py-1 rounded-sm inline-block">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-amber-950/90 border border-amber-500/40 px-2.5 py-1 rounded-sm inline-block backdrop-blur-xs">
                   الرؤية والخبرة
                 </span>
-                <h3 className="font-serif text-2xl font-medium text-white group-hover:text-amber-300 transition-colors">
+                <h3 className="font-serif text-xl sm:text-2xl font-medium text-white group-hover:text-amber-300 transition-colors">
                   عن الشركة
                 </h3>
                 <p className="text-xs text-slate-300 line-clamp-3 leading-relaxed">
                   تعرف على الخبرة المعمارية وفلسفة المهندسة أسماء كراوية وسجل النجاحات.
                 </p>
               </div>
-              <div className="relative z-10 pt-4 flex items-center gap-2 text-xs font-semibold text-amber-400 group-hover:translate-x-[-4px] transition-transform">
+              <div className="relative z-10 pt-3 flex items-center gap-2 text-xs font-semibold text-amber-400 group-hover:translate-x-[-4px] transition-transform">
                 <span>تصفح عن المهندسة</span>
-                <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
               </div>
@@ -164,31 +165,32 @@ export default async function HomePage() {
             {/* Card 2: Showcase */}
             <Link
               href="/showcase"
-              className="group relative overflow-hidden rounded-md border border-amber-500/30 bg-slate-950 p-6 transition-all duration-300 hover:border-amber-400 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/10 flex flex-col justify-between h-64"
+              className="group relative overflow-hidden rounded-md border border-amber-500/30 bg-slate-950 p-5 sm:p-6 transition-all duration-300 hover:border-amber-400 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/20 flex flex-col justify-between h-64 sm:h-72"
             >
-              <div className="absolute inset-0 opacity-20 group-hover:opacity-35 transition-opacity">
+              <div className="absolute inset-0 opacity-25 group-hover:opacity-40 transition-opacity">
                 <Image
                   src="/img/site-images/IMG-20260809-WA0030.jpg"
                   alt="عينات الأعمال الواقعية"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/30" />
               </div>
               <div className="relative z-10 space-y-2">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-amber-950/80 border border-amber-500/30 px-2.5 py-1 rounded-sm inline-block">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-amber-950/90 border border-amber-500/40 px-2.5 py-1 rounded-sm inline-block backdrop-blur-xs">
                   تنفيذ ميداني 100%
                 </span>
-                <h3 className="font-serif text-2xl font-medium text-white group-hover:text-amber-300 transition-colors">
+                <h3 className="font-serif text-xl sm:text-2xl font-medium text-white group-hover:text-amber-300 transition-colors">
                   عينات الأعمال
                 </h3>
                 <p className="text-xs text-slate-300 line-clamp-3 leading-relaxed">
                   استعرض الصور الواقعية والفيديوهات الميدانية ومخططات الأسقف والديكور.
                 </p>
               </div>
-              <div className="relative z-10 pt-4 flex items-center gap-2 text-xs font-semibold text-amber-400 group-hover:translate-x-[-4px] transition-transform">
+              <div className="relative z-10 pt-3 flex items-center gap-2 text-xs font-semibold text-amber-400 group-hover:translate-x-[-4px] transition-transform">
                 <span>استعرض المعرض الواقعي</span>
-                <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
               </div>
@@ -197,31 +199,32 @@ export default async function HomePage() {
             {/* Card 3: Projects */}
             <Link
               href="/projects"
-              className="group relative overflow-hidden rounded-md border border-amber-500/30 bg-slate-950 p-6 transition-all duration-300 hover:border-amber-400 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/10 flex flex-col justify-between h-64"
+              className="group relative overflow-hidden rounded-md border border-amber-500/30 bg-slate-950 p-5 sm:p-6 transition-all duration-300 hover:border-amber-400 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/20 flex flex-col justify-between h-64 sm:h-72"
             >
-              <div className="absolute inset-0 opacity-20 group-hover:opacity-35 transition-opacity">
+              <div className="absolute inset-0 opacity-25 group-hover:opacity-40 transition-opacity">
                 <Image
                   src="/img/site-images/IMG-20260809-WA0033.jpg"
                   alt="معرض المشاريع الكاملة"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/30" />
               </div>
               <div className="relative z-10 space-y-2">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-amber-950/80 border border-amber-500/30 px-2.5 py-1 rounded-sm inline-block">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-amber-950/90 border border-amber-500/40 px-2.5 py-1 rounded-sm inline-block backdrop-blur-xs">
                   المشروعات والمعارض
                 </span>
-                <h3 className="font-serif text-2xl font-medium text-white group-hover:text-amber-300 transition-colors">
+                <h3 className="font-serif text-xl sm:text-2xl font-medium text-white group-hover:text-amber-300 transition-colors">
                   المشاريع المعمارية
                 </h3>
                 <p className="text-xs text-slate-300 line-clamp-3 leading-relaxed">
                   تصفح المشاريع السكنية والتجارية الكاملة مع ميزة البحث والفلترة.
                 </p>
               </div>
-              <div className="relative z-10 pt-4 flex items-center gap-2 text-xs font-semibold text-amber-400 group-hover:translate-x-[-4px] transition-transform">
+              <div className="relative z-10 pt-3 flex items-center gap-2 text-xs font-semibold text-amber-400 group-hover:translate-x-[-4px] transition-transform">
                 <span>تصفح معرض المشاريع</span>
-                <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
               </div>
@@ -230,31 +233,32 @@ export default async function HomePage() {
             {/* Card 4: Services */}
             <Link
               href="/services"
-              className="group relative overflow-hidden rounded-md border border-amber-500/30 bg-slate-950 p-6 transition-all duration-300 hover:border-amber-400 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/10 flex flex-col justify-between h-64"
+              className="group relative overflow-hidden rounded-md border border-amber-500/30 bg-slate-950 p-5 sm:p-6 transition-all duration-300 hover:border-amber-400 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/20 flex flex-col justify-between h-64 sm:h-72"
             >
-              <div className="absolute inset-0 opacity-20 group-hover:opacity-35 transition-opacity">
+              <div className="absolute inset-0 opacity-25 group-hover:opacity-40 transition-opacity">
                 <Image
                   src="/img/site-images/IMG-20260809-WA0031.jpg"
                   alt="خدمات التشطيبات والديكور"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/30" />
               </div>
               <div className="relative z-10 space-y-2">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-amber-950/80 border border-amber-500/30 px-2.5 py-1 rounded-sm inline-block">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-amber-950/90 border border-amber-500/40 px-2.5 py-1 rounded-sm inline-block backdrop-blur-xs">
                   التشطيب والإشراف
                 </span>
-                <h3 className="font-serif text-2xl font-medium text-white group-hover:text-amber-300 transition-colors">
+                <h3 className="font-serif text-xl sm:text-2xl font-medium text-white group-hover:text-amber-300 transition-colors">
                   خدماتنا ونطاق العمل
                 </h3>
                 <p className="text-xs text-slate-300 line-clamp-3 leading-relaxed">
                   تفاصيل خدمات الديكور، الإشراف المعماري، وتجهيز العقارات بالكامل.
                 </p>
               </div>
-              <div className="relative z-10 pt-4 flex items-center gap-2 text-xs font-semibold text-amber-400 group-hover:translate-x-[-4px] transition-transform">
+              <div className="relative z-10 pt-3 flex items-center gap-2 text-xs font-semibold text-amber-400 group-hover:translate-x-[-4px] transition-transform">
                 <span>استكشف الخدمات</span>
-                <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
               </div>
