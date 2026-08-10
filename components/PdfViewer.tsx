@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
+import { downloadPdfFile } from "@/lib/download";
 
 // Configure worker URL matching installed react-pdf / pdfjs-dist
 if (typeof window !== "undefined") {
@@ -201,19 +202,17 @@ export default function PdfViewer({ pdfUrl, title, onClose }: PdfViewerProps) {
             </div>
 
             {/* Direct Download Button */}
-            <a
-              href={pdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              download
-              className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-1.5 text-xs font-bold transition-colors flex items-center gap-1 rounded-sm shrink-0"
-              title="تحميل مستند الـ PDF الأصلي"
+            <button
+              type="button"
+              onClick={() => downloadPdfFile(pdfUrl, title)}
+              className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-1.5 text-xs font-bold transition-colors flex items-center gap-1 rounded-sm shrink-0 cursor-pointer"
+              title="تحميل مستند الـ PDF الأصلي مباشرة لحاسوبك أو هاتفك"
             >
               <svg className="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
               <span className="hidden sm:inline">تحميل PDF</span>
-            </a>
+            </button>
 
             {/* Close Modal Button */}
             <button

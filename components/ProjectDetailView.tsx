@@ -6,6 +6,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import FlowingUnderline from "./FlowingUnderline";
 import { IProject, IBlueprint } from "@/models/Project";
+import { downloadPdfFile } from "@/lib/download";
 
 const PdfViewer = dynamic(() => import("./PdfViewer"), {
   ssr: false,
@@ -358,14 +359,14 @@ export default function ProjectDetailView({ project }: ProjectDetailViewProps) {
                             >
                               عرض المستند PDF
                             </button>
-                            <a
-                              href={blueprint.pdfUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="border border-border bg-white text-ink text-xs font-semibold uppercase tracking-wider py-2 px-3 hover:border-ink transition-colors"
+                            <button
+                              type="button"
+                              onClick={() => downloadPdfFile(blueprint.pdfUrl, blueprint.name)}
+                              className="border border-border bg-white text-ink text-xs font-semibold uppercase tracking-wider py-2 px-3 hover:border-ink transition-colors cursor-pointer"
+                              title="تحميل المستند مباشرة لحاسوبك أو هاتفك"
                             >
                               تحميل
-                            </a>
+                            </button>
                           </div>
                         </div>
                       ))}
