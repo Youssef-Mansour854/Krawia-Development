@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -150,6 +150,11 @@ export default function ProjectDetailView({ project }: ProjectDetailViewProps) {
   const [selectedBlueprint, setSelectedBlueprint] = useState<IBlueprint | null>(
     null
   );
+
+  // Force scroll position to the top of the page when opening project details
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [project?._id]);
 
   // Group blueprints by category
   const groupedBlueprints = (project.blueprints || []).reduce((acc, bp) => {
