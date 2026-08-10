@@ -4,9 +4,63 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { upload } from "@vercel/blob/client";
 import FlowingUnderline from "@/components/FlowingUnderline";
 import AdminHeaderNav from "@/components/AdminHeaderNav";
 import { ISiteSample } from "@/models/SiteSample";
+
+// Compress heavy image files on client canvas before network transmission
+async function compressImageFile(file: File | Blob, maxDim = 1920, quality = 0.82): Promise<File | Blob> {
+  if (!(file instanceof File) || !file.type.startsWith("image/") || file.type.includes("svg") || file.type.includes("gif")) {
+    return file;
+  }
+
+  return new Promise((resolve) => {
+    const img = document.createElement("img");
+    const objectUrl = URL.createObjectURL(file);
+
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      let { width, height } = img;
+
+      if (width > maxDim || height > maxDim) {
+        if (width > height) {
+          height = Math.round((height * maxDim) / width);
+          width = maxDim;
+        } else {
+          width = Math.round((width * maxDim) / height);
+          height = maxDim;
+        }
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return resolve(file);
+
+      ctx.drawImage(img, 0, 0, width, height);
+      canvas.toBlob(
+        (blob) => {
+          if (blob && blob.size < file.size) {
+            resolve(new File([blob], file.name.replace(/\.[^/.]+$/, ".jpg"), { type: "image/jpeg" }));
+          } else {
+            resolve(file);
+          }
+        },
+        "image/jpeg",
+        quality
+      );
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      resolve(file);
+    };
+
+    img.src = objectUrl;
+  });
+}
 
 interface AdminSamplesViewProps {
   initialSamples: ISiteSample[];
@@ -62,26 +116,19 @@ export default function AdminSamplesView({ initialSamples }: AdminSamplesViewPro
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append("file", file);
-
     if (isEdit) setEditUploading(true);
     else setUploading(true);
     setError("");
 
     try {
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
+      const compressed = await compressImageFile(file);
+      const blobResult = await upload(`sample-${Date.now()}-${file.name}`, compressed, {
+        access: "public",
+        handleUploadUrl: "/api/upload",
       });
 
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setError(data.error || "فشل رفع الصورة.");
-      } else {
-        if (isEdit) setEditImageSrc(data.url);
-        else setImageSrc(data.url);
-      }
+      if (isEdit) setEditImageSrc(blobResult.url);
+      else setImageSrc(blobResult.url);
     } catch {
       setError("حدث خطأ أثناء رفع الصورة.");
     } finally {

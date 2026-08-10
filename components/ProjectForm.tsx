@@ -190,6 +190,59 @@ async function generatePdfThumbnailBlob(file: File): Promise<Blob> {
   });
 }
 
+// Compress heavy image files on client canvas before network transmission
+async function compressImageFile(file: File | Blob, maxDim = 1920, quality = 0.82): Promise<File | Blob> {
+  if (!(file instanceof File) || !file.type.startsWith("image/") || file.type.includes("svg") || file.type.includes("gif")) {
+    return file;
+  }
+
+  return new Promise((resolve) => {
+    const img = document.createElement("img");
+    const objectUrl = URL.createObjectURL(file);
+
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      let { width, height } = img;
+
+      if (width > maxDim || height > maxDim) {
+        if (width > height) {
+          height = Math.round((height * maxDim) / width);
+          width = maxDim;
+        } else {
+          width = Math.round((width * maxDim) / height);
+          height = maxDim;
+        }
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return resolve(file);
+
+      ctx.drawImage(img, 0, 0, width, height);
+      canvas.toBlob(
+        (blob) => {
+          if (blob && blob.size < file.size) {
+            resolve(new File([blob], file.name.replace(/\.[^/.]+$/, ".jpg"), { type: "image/jpeg" }));
+          } else {
+            resolve(file);
+          }
+        },
+        "image/jpeg",
+        quality
+      );
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      resolve(file);
+    };
+
+    img.src = objectUrl;
+  });
+}
+
 export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
   const router = useRouter();
 
@@ -287,7 +340,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  // Handle Cover Image Upload
+  // Handle Cover Image Upload (with compression)
   const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -296,7 +349,8 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
     setError("");
 
     try {
-      const url = await uploadFileToBlob(file, `cover-${Date.now()}-${file.name}`);
+      const compressed = await compressImageFile(file);
+      const url = await uploadFileToBlob(compressed, `cover-${Date.now()}-${file.name}`);
       setCoverImage(url);
     } catch (err) {
       setError(
@@ -307,7 +361,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
     }
   };
 
-  // Handle Gallery Images Upload
+  // Handle Gallery Images Upload (Parallel Execution + Compression)
   const handleGalleryUpload = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -318,15 +372,18 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
     setError("");
 
     try {
-      const uploadedUrls: string[] = [];
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const url = await uploadFileToBlob(
-          file,
-          `gallery-${Date.now()}-${i}-${file.name}`
+      const uploadSingleImage = async (file: File, index: number) => {
+        const compressed = await compressImageFile(file);
+        return uploadFileToBlob(
+          compressed,
+          `gallery-${Date.now()}-${index}-${file.name}`
         );
-        uploadedUrls.push(url);
-      }
+      };
+
+      const uploadedUrls = await Promise.all(
+        Array.from(files).map((file, i) => uploadSingleImage(file, i))
+      );
+
       setGallery((prev) => [...prev, ...uploadedUrls]);
     } catch (err) {
       setError(
@@ -341,7 +398,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
     setGallery((prev) => prev.filter((_, idx) => idx !== indexToRemove));
   };
 
-  // Handle Blueprint Upload for a specific category window
+  // Handle Blueprint Upload for a specific category window (Parallel Execution)
   const handleBlueprintUploadForCategory = async (
     e: React.ChangeEvent<HTMLInputElement>,
     targetCategory: string
@@ -354,44 +411,47 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
     setError("");
 
     try {
-      const newBlueprints: BlueprintItem[] = [];
-      for (let i = 0; i < files.length; i++) {
-        const pdfFile = files[i];
-
+      const processSinglePdf = async (pdfFile: File) => {
         // 1. Upload original PDF
-        const pdfUrl = await uploadFileToBlob(
+        const pdfUrlPromise = uploadFileToBlob(
           pdfFile,
           `blueprint-${Date.now()}-${pdfFile.name}`
         );
 
         // 2. Render Page 1 to Canvas & Upload Thumbnail
-        let thumbnailUrl = "";
-        try {
-          const thumbnailBlob = await generatePdfThumbnailBlob(pdfFile);
-          thumbnailUrl = await uploadFileToBlob(
-            thumbnailBlob,
-            `thumb-${Date.now()}-${pdfFile.name.replace(/\.[^/.]+$/, "")}.jpg`
-          );
-        } catch (thumbErr) {
-          const errMessage =
-            thumbErr instanceof Error ? thumbErr.message : String(thumbErr);
-          console.error("PDF Thumbnail Generation Error Details:", errMessage, thumbErr);
-          throw new Error(
-            `فشل استخراج المعاينة للمخطط (${pdfFile.name}): ${errMessage}`
-          );
-        }
+        const thumbUrlPromise = (async () => {
+          try {
+            const thumbnailBlob = await generatePdfThumbnailBlob(pdfFile);
+            return await uploadFileToBlob(
+              thumbnailBlob,
+              `thumb-${Date.now()}-${pdfFile.name.replace(/\.[^/.]+$/, "")}.jpg`
+            );
+          } catch (thumbErr) {
+            const errMessage =
+              thumbErr instanceof Error ? thumbErr.message : String(thumbErr);
+            console.error("PDF Thumbnail Generation Error Details:", errMessage, thumbErr);
+            throw new Error(
+              `فشل استخراج المعاينة للمخطط (${pdfFile.name}): ${errMessage}`
+            );
+          }
+        })();
 
-        const defaultLabel =
-          pdfFile.name.replace(/\.[^/.]+$/, "") || "المخطط الهندي";
+        const [pdfUrl, thumbnailUrl] = await Promise.all([pdfUrlPromise, thumbUrlPromise]);
 
-        newBlueprints.push({
+        const defaultLabel = pdfFile.name.replace(/\.[^/.]+$/, "") || "المخطط الهندسي";
+
+        return {
           name: defaultLabel,
           pdfUrl,
           thumbnailUrl,
           category: targetCategory,
           note: "",
-        });
-      }
+        };
+      };
+
+      const newBlueprints = await Promise.all(
+        Array.from(files).map((pdfFile) => processSinglePdf(pdfFile))
+      );
 
       setBlueprints((prev) => [...prev, ...newBlueprints]);
     } catch (err) {
