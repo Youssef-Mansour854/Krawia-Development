@@ -135,10 +135,10 @@ export default async function HomePage() {
             >
               <div className="absolute inset-0 opacity-30 group-hover:opacity-45 transition-opacity">
                 <Image
-                  src="/img/manger-images/IMG-20260809-WA0024.jpg"
+                  src="/img/manger-images/IMG-20260809-WA0026.jpg"
                   alt="المهندسة أسماء كراوية - عن الشركة"
                   fill
-                  className="object-cover object-top"
+                  className="object-cover object-center"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/30" />
