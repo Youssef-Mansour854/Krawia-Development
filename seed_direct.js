@@ -1,6 +1,12 @@
+require("dotenv").config({ path: ".env.local" });
 const mongoose = require("mongoose");
 
-const MONGODB_URI = "mongodb+srv://yh809840_db_user:FCeK0XmecaDMG4P2@cluster0.edwdbhy.mongodb.net/krawia_portfolio?retryWrites=true&w=majority";
+const MONGODB_URI = process.env.MONGODB_URI;
+
+if (!MONGODB_URI) {
+  console.error("MONGODB_URI is required in process.env or .env.local");
+  process.exit(1);
+}
 
 const BlueprintSchema = new mongoose.Schema(
   {
