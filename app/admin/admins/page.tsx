@@ -56,6 +56,18 @@ export default function AdminsManagementPage() {
     fetchAdmins();
   }, []);
 
+  // Lock body scroll when edit modal is active
+  useEffect(() => {
+    if (editingAdmin) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [editingAdmin]);
+
   const handleLogout = async () => {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
