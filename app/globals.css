@@ -25,11 +25,27 @@ html {
   font-family: var(--font-tajawal), "Tajawal", system-ui, -apple-system, sans-serif !important;
 }
 
-body, button, input, select, textarea {
+body, input, select, textarea {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-tajawal), "Tajawal", system-ui, -apple-system, sans-serif !important;
+}
+
+body {
   overflow-x: hidden;
+}
+
+button {
+  color: var(--foreground);
+  font-family: var(--font-tajawal), "Tajawal", system-ui, -apple-system, sans-serif !important;
+}
+
+.password-toggle-btn,
+button.bg-transparent,
+.bg-transparent {
+  background-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 h1, h2, h3, h4, h5, h6, .font-serif, .font-sans {

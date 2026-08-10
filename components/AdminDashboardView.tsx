@@ -113,7 +113,7 @@ export default function AdminDashboardView({
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border pb-6">
           <div>
             <span className="text-xs font-semibold uppercase tracking-widest text-muted">
-              إدارة الأعمال المعمارية
+              ARCHITECTURAL PORTFOLIO MANAGEMENT
             </span>
             <h2 className="text-2xl font-medium text-ink mt-1">
               قائمة المشاريع ({projects.length})

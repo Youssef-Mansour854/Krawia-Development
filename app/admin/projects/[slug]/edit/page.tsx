@@ -56,7 +56,7 @@ export default async function EditProjectPage({ params }: EditProjectPageProps) 
         {/* Page Title Header */}
         <div className="border-b border-border pb-6">
           <span className="text-xs font-semibold uppercase tracking-widest text-muted">
-            إدارة الأعمال المعمارية
+            ARCHITECTURAL PROJECT EDITING
           </span>
           <h1 className="text-2xl sm:text-3xl font-medium text-ink mt-1 font-serif">
             تعديل المشروع: {project.title}
