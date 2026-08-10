@@ -159,6 +159,69 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
     initialData?.blueprints || []
   );
 
+  // Custom category windows added dynamically by user
+  const [customWindows, setCustomWindows] = useState<
+    { key: string; title: string; subtitle: string; icon: string; isPreset?: boolean }[]
+  >(() => {
+    if (!initialData?.blueprints) return [];
+    const presetKeys = new Set(BLUEPRINT_WINDOWS.map((w) => w.key));
+    const existingCustomKeys = new Set<string>();
+    initialData.blueprints.forEach((bp) => {
+      if (bp.category && !presetKeys.has(bp.category)) {
+        existingCustomKeys.add(bp.category);
+      }
+    });
+    return Array.from(existingCustomKeys).map((catName) => ({
+      key: catName,
+      title: catName,
+      subtitle: "قسم / تصنيف مستندات مخصص",
+      icon: "📁",
+      isPreset: false,
+    }));
+  });
+
+  const [newWindowName, setNewWindowName] = useState("");
+  const [showAddWindowForm, setShowAddWindowForm] = useState(false);
+
+  const handleAddCustomWindow = () => {
+    const trimmed = newWindowName.trim();
+    if (!trimmed) return;
+
+    const allExistingKeys = [
+      ...BLUEPRINT_WINDOWS.map((w) => w.key),
+      ...customWindows.map((w) => w.key),
+    ];
+
+    if (allExistingKeys.includes(trimmed)) {
+      setError("هذه النافذة / التصنيف موجودة بالفعل.");
+      return;
+    }
+
+    let formattedTitle = trimmed;
+    const totalCount = BLUEPRINT_WINDOWS.length + customWindows.length + 1;
+    if (!/^\d+\./.test(trimmed)) {
+      formattedTitle = `${totalCount}. ${trimmed}`;
+    }
+
+    const newWindowObj = {
+      key: formattedTitle,
+      title: formattedTitle,
+      subtitle: "قسم / تصنيف مستندات مخصص",
+      icon: "📁",
+      isPreset: false,
+    };
+
+    setCustomWindows((prev) => [...prev, newWindowObj]);
+    setNewWindowName("");
+    setShowAddWindowForm(false);
+    setError("");
+  };
+
+  const handleRemoveCustomWindow = (keyToRemove: string) => {
+    setCustomWindows((prev) => prev.filter((w) => w.key !== keyToRemove));
+    setBlueprints((prev) => prev.filter((bp) => bp.category !== keyToRemove));
+  };
+
   // Loading & error states
   const [uploadingCover, setUploadingCover] = useState(false);
   const [uploadingGallery, setUploadingGallery] = useState(false);
@@ -614,13 +677,14 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
               المستندات والمخططات الفنية للمشروع
             </h3>
             <p className="text-xs text-slate-300 font-normal mt-1 leading-relaxed">
-              تم تقسيم رفع المستندات إلى 5 نوافذ مخصصة (Windows). قم برفع ملفات PDF مباشرة في النافذة المناسبة مع إكانية إضافة ملاحظات فنية لكل مستند.
+              تم تقسيم رفع المستندات إلى نوافذ مخصصة (Windows). قم برفع ملفات PDF مباشرة في النافذة المناسبة أو قم بإنشاء نوافذ وتصنيفات جديدة حسب الحاجة.
             </p>
           </div>
 
-          {/* Render 5 Separate Dedicated Upload Windows */}
+          {/* Render All Upload Windows (Presets + Custom) */}
           <div className="space-y-6">
-            {BLUEPRINT_WINDOWS.map((win) => {
+            {[...BLUEPRINT_WINDOWS, ...customWindows].map((win) => {
+              const isCustomWin = customWindows.some((c) => c.key === win.key);
               // Filter blueprints belonging to this category window
               const windowBlueprints = blueprints
                 .map((bp, originalIndex) => ({ bp, originalIndex }))
@@ -642,8 +706,13 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
                     <div className="flex items-center gap-3">
                       <span className="text-2xl">{win.icon}</span>
                       <div>
-                        <h4 className="font-serif text-lg font-bold text-ink">
-                          {win.title}
+                        <h4 className="font-serif text-lg font-bold text-ink flex items-center gap-2">
+                          <span>{win.title}</span>
+                          {isCustomWin && (
+                            <span className="text-[10px] bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded-xs font-sans">
+                              نافذة مخصصة
+                            </span>
+                          )}
                         </h4>
                         <p className="text-xs text-muted font-normal">
                           {win.subtitle}
@@ -651,12 +720,25 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
                       </div>
                     </div>
 
-                    <span className="text-xs font-semibold bg-amber-50 text-accent border border-amber-200 px-3 py-1 self-start sm:self-auto">
-                      {windowBlueprints.length}{" "}
-                      {windowBlueprints.length === 1
-                        ? "مستند مرفوع"
-                        : "مستندات مرفوعة"}
-                    </span>
+                    <div className="flex items-center gap-3 self-start sm:self-auto">
+                      <span className="text-xs font-semibold bg-amber-50 text-accent border border-amber-200 px-3 py-1">
+                        {windowBlueprints.length}{" "}
+                        {windowBlueprints.length === 1
+                          ? "مستند مرفوع"
+                          : "مستندات مرفوعة"}
+                      </span>
+
+                      {isCustomWin && (
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveCustomWindow(win.key)}
+                          className="text-xs font-semibold text-red-600 hover:text-red-800 border border-red-200 hover:border-red-400 bg-red-50 hover:bg-red-100 px-2.5 py-1 transition-colors"
+                          title="حذف هذه النافذة بجميع مستنداتها"
+                        >
+                          🗑️ حذف النافذة
+                        </button>
+                      )}
+                    </div>
                   </div>
 
                   {/* Window Upload File Input Button */}
@@ -792,6 +874,65 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
                 </div>
               );
             })}
+
+            {/* Button / Form to Add New Custom Category Window */}
+            <div className="bg-slate-50 border-2 border-dashed border-amber-300 p-5 rounded-sm">
+              {!showAddWindowForm ? (
+                <button
+                  type="button"
+                  onClick={() => setShowAddWindowForm(true)}
+                  className="w-full py-3.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 hover:border-amber-500 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-xs rounded-xs"
+                >
+                  <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  <span>إضافة نافذة / تصنيف مستندات جديد (+ Add New Category Window)</span>
+                </button>
+              ) : (
+                <div className="space-y-4 bg-white p-5 border border-amber-400 shadow-sm">
+                  <div>
+                    <h4 className="font-serif font-bold text-ink text-base">
+                      إضافة نافذة مستندات جديدة
+                    </h4>
+                    <p className="text-xs text-muted mt-0.5">
+                      أدخل اسم النافذة أو التصنيف الجديد (مثال: 6. تقارير الفحص والتربة، أو تقارير السلامة والبيئة)
+                    </p>
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <input
+                      type="text"
+                      value={newWindowName}
+                      onChange={(e) => setNewWindowName(e.target.value)}
+                      placeholder="عنوان النافذة / التصنيف الجديد..."
+                      className="flex-1 border border-border bg-paper px-4 py-2 text-sm text-ink focus:border-accent focus:outline-none"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handleAddCustomWindow();
+                        }
+                      }}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleAddCustomWindow}
+                      className="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-6 py-2.5 uppercase transition-colors shrink-0 shadow-xs"
+                    >
+                      حفظ وإضافة النافذة
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowAddWindowForm(false);
+                        setNewWindowName("");
+                      }}
+                      className="border border-border text-ink bg-white hover:bg-slate-100 text-xs font-bold px-4 py-2.5 uppercase transition-colors shrink-0"
+                    >
+                      إلغاء
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
