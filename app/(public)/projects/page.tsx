@@ -16,23 +16,23 @@ export default async function ProjectsCatalogPage() {
       <Navbar />
 
       {/* Header Banner */}
-      <section className="border-b border-border bg-white py-16 px-6">
-        <div className="mx-auto max-w-7xl space-y-4">
+      <section className="border-b border-border bg-white py-8 sm:py-10 px-4 sm:px-6 animate-fade-in">
+        <div className="mx-auto max-w-7xl space-y-3">
           <span className="text-xs font-semibold uppercase tracking-widest text-accent">
             المعرض الكلي
           </span>
-          <h1 className="font-serif text-4xl sm:text-5xl font-medium text-ink tracking-tight">
+          <h1 className="font-serif text-3xl sm:text-5xl font-medium text-ink tracking-tight">
             جميع الأعمال والمشاريع المعمارية
           </h1>
           <FlowingUnderline className="w-48 h-3 text-accent" />
-          <p className="text-sm text-muted max-w-2xl leading-relaxed pt-2">
+          <p className="text-xs sm:text-sm text-muted max-w-2xl leading-relaxed pt-1">
             تصفح القائمة الكاملة لأعمالنا المعمارية والمشاريع الاستثمارية الفاخرة، والتي تشمل الأبراج التجارية، المجمعات السكنية، والفلل الخاصة.
           </p>
         </div>
       </section>
 
       {/* Projects Container with Server-Side Search & Pagination */}
-      <main className="mx-auto max-w-7xl px-6 py-16 w-full flex-1 space-y-12">
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 py-6 sm:py-8 w-full flex-1 space-y-12">
         {initialPaginated.total === 0 ? (
           <div className="border border-border bg-white p-16 text-center space-y-4 shadow-sm">
             <p className="text-muted text-base">

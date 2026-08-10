@@ -12,7 +12,7 @@ export default function ServicesPage() {
     <div className="min-h-screen bg-paper text-ink flex flex-col font-sans">
       <Navbar />
 
-      <main className="flex-1 py-8 sm:py-12">
+      <main className="flex-1 py-2 sm:py-4 animate-fade-in">
         <ServicesSection />
       </main>
 

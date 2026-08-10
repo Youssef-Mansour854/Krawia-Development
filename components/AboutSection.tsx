@@ -34,7 +34,7 @@ export default function AboutSection() {
   ];
 
   return (
-    <section id="about" className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-24 w-full space-y-12 font-sans">
+    <section id="about" className="mx-auto max-w-7xl px-4 sm:px-6 pt-4 sm:pt-6 pb-12 sm:pb-16 w-full space-y-12 font-sans animate-fade-in">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         {/* Left/Text Side */}
         <div className="lg:col-span-7 space-y-6">
@@ -86,10 +86,7 @@ export default function AboutSection() {
               priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-            <div className="absolute bottom-4 right-4 text-white space-y-1">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-amber-300 bg-slate-950/80 px-2.5 py-1 border border-amber-400/30 backdrop-blur-md">
-                القيادة والإبداع المعماري
-              </span>
+            <div className="absolute bottom-4 right-4 text-white space-y-0.5">
               <h3 className="font-serif text-xl font-bold text-white">
                 م. أسماء كراوية
               </h3>

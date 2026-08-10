@@ -88,11 +88,11 @@ label,
 
 /* GPU-Accelerated Hardware Entrance Animations (Zero JS, 0ms load overhead) */
 @keyframes fadeInUp {
-  from {
+  0% {
     opacity: 0;
-    transform: translate3d(0, 14px, 0);
+    transform: translate3d(0, 30px, 0);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
@@ -107,18 +107,19 @@ label,
   }
 }
 
-.animate-fade-in {
-  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+.animate-fade-in,
+.animate-fade-up {
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
   will-change: opacity, transform;
 }
 
 .animate-fade-in-delay-1 {
-  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
   will-change: opacity, transform;
 }
 
 .animate-fade-in-delay-2 {
-  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
   will-change: opacity, transform;
 }
 
