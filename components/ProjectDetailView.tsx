@@ -282,10 +282,15 @@ export default function ProjectDetailView({ project }: ProjectDetailViewProps) {
                             </div>
                           </div>
 
-                          <div>
+                          <div className="space-y-1">
                             <h4 className="font-sans text-sm font-semibold text-ink line-clamp-2">
                               {blueprint.name}
                             </h4>
+                            {blueprint.note && (
+                              <p className="text-[11px] text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-xs leading-relaxed font-normal">
+                                📝 <span className="font-semibold">ملاحظة:</span> {blueprint.note}
+                              </p>
+                            )}
                           </div>
 
                           <div className="flex items-center gap-3 pt-2 border-t border-border">

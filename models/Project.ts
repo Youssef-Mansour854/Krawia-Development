@@ -6,6 +6,7 @@ export interface IBlueprint {
   pdfUrl: string;
   thumbnailUrl: string;
   category?: string;
+  note?: string;
 }
 
 export interface IProject extends Document {
@@ -68,6 +69,7 @@ const BlueprintSchema = new Schema<IBlueprint>(
     pdfUrl: { type: String, required: true },
     thumbnailUrl: { type: String, required: true },
     category: { type: String, default: "أخرى" },
+    note: { type: String, default: "" },
   },
   { _id: false }
 );

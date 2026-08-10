@@ -12,6 +12,7 @@ interface BlueprintItem {
   pdfUrl: string;
   thumbnailUrl: string;
   category?: string;
+  note?: string;
 }
 
 const BLUEPRINT_PRESETS = [
@@ -162,6 +163,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
   const [uploadingCover, setUploadingCover] = useState(false);
   const [uploadingGallery, setUploadingGallery] = useState(false);
   const [uploadingBlueprint, setUploadingBlueprint] = useState(false);
+  const [uploadingWindowCategory, setUploadingWindowCategory] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -228,6 +230,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
     if (!files || files.length === 0) return;
 
     setUploadingBlueprint(true);
+    setUploadingWindowCategory(targetCategory);
     setError("");
 
     try {
@@ -266,6 +269,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
           pdfUrl,
           thumbnailUrl,
           category: targetCategory,
+          note: "",
         });
       }
 
@@ -276,6 +280,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
       );
     } finally {
       setUploadingBlueprint(false);
+      setUploadingWindowCategory(null);
       e.target.value = "";
     }
   };
@@ -284,6 +289,14 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
     setBlueprints((prev) => {
       const updated = [...prev];
       updated[index] = { ...updated[index], name: newName };
+      return updated;
+    });
+  };
+
+  const updateBlueprintNote = (index: number, newNote: string) => {
+    setBlueprints((prev) => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], note: newNote };
       return updated;
     });
   };
@@ -601,18 +614,9 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
               المستندات والمخططات الفنية للمشروع
             </h3>
             <p className="text-xs text-slate-300 font-normal mt-1 leading-relaxed">
-              تم تقسيم رفع المستندات إلى 5 نوافذ مخصصة (Windows). قم برفع ملفات PDF مباشرة في النافذة المناسبة.
+              تم تقسيم رفع المستندات إلى 5 نوافذ مخصصة (Windows). قم برفع ملفات PDF مباشرة في النافذة المناسبة مع إكانية إضافة ملاحظات فنية لكل مستند.
             </p>
           </div>
-
-          {uploadingBlueprint && (
-            <div className="bg-amber-50 border border-amber-300 p-4 text-xs font-semibold text-amber-900 animate-pulse flex items-center gap-2">
-              <svg className="w-4 h-4 text-amber-600 animate-spin shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              <span>جاري معالجة ورفع ملف الـ PDF واستخراج صورة المعاينة المصغرة...</span>
-            </div>
-          )}
 
           {/* Render 5 Separate Dedicated Upload Windows */}
           <div className="space-y-6">
@@ -624,6 +628,9 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
                   ({ bp }) =>
                     (bp.category || "المخططات والمعمار (Plans)") === win.key
                 );
+
+              const isUploadingThisWindow =
+                uploadingBlueprint && uploadingWindowCategory === win.key;
 
               return (
                 <div
@@ -685,17 +692,27 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
                     </span>
                   </div>
 
+                  {/* Per-Window Loading Progress Indicator */}
+                  {isUploadingThisWindow && (
+                    <div className="bg-amber-50 border border-amber-300 p-3 text-xs font-semibold text-amber-900 animate-pulse flex items-center gap-2 rounded-xs">
+                      <svg className="w-4 h-4 text-amber-600 animate-spin shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                      <span>جاري معالجة ورفع المستند واستخراج المعاينة لهذه النافذة ({win.title})...</span>
+                    </div>
+                  )}
+
                   {/* List of Uploaded Documents in this Window */}
                   {windowBlueprints.length > 0 ? (
-                    <div className="space-y-3 pt-2">
+                    <div className="space-y-4 pt-2">
                       {windowBlueprints.map(({ bp, originalIndex }) => (
                         <div
                           key={originalIndex}
-                          className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-3 border border-border bg-slate-50"
+                          className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-4 border border-border bg-slate-50"
                         >
-                          <div className="flex items-center gap-3">
+                          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full md:w-auto flex-1">
                             {bp.thumbnailUrl ? (
-                              <div className="relative w-14 h-14 border border-border overflow-hidden bg-white shrink-0">
+                              <div className="relative w-16 h-16 border border-border overflow-hidden bg-white shrink-0">
                                 <Image
                                   src={bp.thumbnailUrl}
                                   alt={bp.name}
@@ -704,31 +721,52 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
                                 />
                               </div>
                             ) : (
-                              <div className="w-14 h-14 border border-border bg-slate-200 flex items-center justify-center text-[10px] text-muted shrink-0 font-bold">
+                              <div className="w-16 h-16 border border-border bg-slate-200 flex items-center justify-center text-[10px] text-muted shrink-0 font-bold">
                                 PDF
                               </div>
                             )}
 
-                            <div className="space-y-1">
-                              <div className="flex items-center gap-2">
-                                <label className="text-[10px] text-muted font-semibold">
-                                  اسم المستند:
-                                </label>
-                                <input
-                                  type="text"
-                                  value={bp.name}
-                                  onChange={(e) =>
-                                    updateBlueprintName(
-                                      originalIndex,
-                                      e.target.value
-                                    )
-                                  }
-                                  placeholder="عنوان المستند..."
-                                  className="border border-border bg-white px-3 py-1 text-xs text-ink focus:border-accent focus:outline-none w-full sm:w-64 font-semibold"
-                                />
+                            <div className="space-y-2 w-full flex-1">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                  <label className="block text-[10px] text-muted mb-0.5 font-semibold">
+                                    اسم المستند:
+                                  </label>
+                                  <input
+                                    type="text"
+                                    value={bp.name}
+                                    onChange={(e) =>
+                                      updateBlueprintName(
+                                        originalIndex,
+                                        e.target.value
+                                      )
+                                    }
+                                    placeholder="عنوان المستند..."
+                                    className="border border-border bg-white px-3 py-1.5 text-xs text-ink focus:border-accent focus:outline-none w-full font-semibold"
+                                  />
+                                </div>
+
+                                <div>
+                                  <label className="block text-[10px] text-muted mb-0.5 font-semibold">
+                                    ملاحظات / استشارة فنية (اختياري):
+                                  </label>
+                                  <input
+                                    type="text"
+                                    value={bp.note || ""}
+                                    onChange={(e) =>
+                                      updateBlueprintNote(
+                                        originalIndex,
+                                        e.target.value
+                                      )
+                                    }
+                                    placeholder="أضف ملاحظة (مثال: نسخة معدلة، الدور الأول)..."
+                                    className="border border-border bg-white px-3 py-1.5 text-xs text-ink focus:border-accent focus:outline-none w-full font-normal"
+                                  />
+                                </div>
                               </div>
+
                               <p
-                                className="text-[10px] text-muted truncate max-w-xs"
+                                className="text-[10px] text-muted truncate max-w-sm"
                                 dir="ltr"
                               >
                                 {bp.pdfUrl}
@@ -739,7 +777,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
                           <button
                             type="button"
                             onClick={() => removeBlueprint(originalIndex)}
-                            className="border border-red-200 text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 text-xs font-medium transition-colors shrink-0 self-end sm:self-auto"
+                            className="border border-red-200 text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 text-xs font-medium transition-colors shrink-0 self-end md:self-auto"
                           >
                             حذف المستند
                           </button>
