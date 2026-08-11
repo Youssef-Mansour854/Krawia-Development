@@ -42,7 +42,7 @@ export async function proxy(req: NextRequest) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>503 - Service Unavailable</title>
+  <title>404 - الصفحة غير موجودة</title>
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -65,10 +65,11 @@ export async function proxy(req: NextRequest) {
       box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     }
     h1 {
-      font-size: 1.75rem;
+      font-size: 2rem;
       color: #f0f6fc;
       margin-top: 0;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
     }
     p {
       font-size: 1.05rem;
@@ -80,8 +81,8 @@ export async function proxy(req: NextRequest) {
 </head>
 <body>
   <div class="card">
-    <h1>الموقع غير متاح مؤقتاً</h1>
-    <p>هذا الموقع غير متاح مؤقتاً. يرجى التواصل مع مسؤول الموقع لمزيد من المعلومات.</p>
+    <h1>404 | الصفحة غير موجودة</h1>
+    <p>عذراً، لم نتمكن من العثور على الصفحة التي تبحث عنها.</p>
   </div>
 </body>
 </html>`;
