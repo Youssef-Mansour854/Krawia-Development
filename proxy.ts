@@ -4,6 +4,9 @@ import {
   VIEWER_COOKIE_NAME,
   verifySessionToken,
 } from "@/lib/auth";
+import { connectToDatabase } from "@/lib/db";
+import { SiteConfig } from "@/models/SiteConfig";
+
 
 export async function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
@@ -18,6 +21,80 @@ export async function proxy(req: NextRequest) {
   ) {
     return NextResponse.next();
   }
+
+  // 1b. Check site suspension status FIRST for all routes
+  try {
+    await connectToDatabase();
+    const siteConfig = await SiteConfig.findOne({ key: "site_status" }).lean();
+    if (siteConfig?.suspended) {
+      if (pathname.startsWith("/api/")) {
+        return NextResponse.json(
+          {
+            error: "Service Unavailable",
+            message: "هذا الموقع غير متاح مؤقتاً. يرجى التواصل مع مسؤول الموقع لمزيد من المعلومات.",
+          },
+          { status: 503 }
+        );
+      }
+
+      const suspendedHtml = `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>503 - Service Unavailable</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #0d1117;
+      color: #c9d1d9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .card {
+      background-color: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      max-width: 480px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    h1 {
+      font-size: 1.75rem;
+      color: #f0f6fc;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.05rem;
+      color: #8b949e;
+      line-height: 1.6;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>الموقع غير متاح مؤقتاً</h1>
+    <p>هذا الموقع غير متاح مؤقتاً. يرجى التواصل مع مسؤول الموقع لمزيد من المعلومات.</p>
+  </div>
+</body>
+</html>`;
+
+      return new NextResponse(suspendedHtml, {
+        status: 503,
+        headers: { "content-type": "text/html; charset=utf-8" },
+      });
+    }
+  } catch (err) {
+    console.error("Error checking site suspension status in proxy:", err);
+  }
+
 
   // Check sessions
   const adminToken = req.cookies.get(ADMIN_COOKIE_NAME)?.value;
